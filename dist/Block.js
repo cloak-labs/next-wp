@@ -1,6 +1,5 @@
 "use strict";
 
-require("core-js/modules/es.object.assign.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -11,9 +10,9 @@ var _ConditionalWrapper = _interopRequireDefault(require("./components/Condition
 var _useBlockConfig = _interopRequireDefault(require("./hooks/useBlockConfig"));
 var _classNames = _interopRequireDefault(require("./utils/classNames"));
 var _deepMerge = require("./utils/deepMerge");
+var _jsxRuntime = require("react/jsx-runtime");
 const _excluded = ["block", "isNested", "parentBlock", "customBlocks", "containerClasses", "container", "containerCondition"];
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -44,9 +43,10 @@ function Block(_ref) {
       let {
         block
       } = _ref2;
-      return /*#__PURE__*/React.createElement(_Container.default, {
-        className: (0, _classNames.default)("relative", block.config.containerClasses)
-      }, block.rendered);
+      return /*#__PURE__*/(0, _jsxRuntime.jsx)(_Container.default, {
+        className: (0, _classNames.default)("relative", block.config.containerClasses),
+        children: block.rendered
+      });
     },
     containerCondition: _ref3 => {
       let {
@@ -101,20 +101,20 @@ function Block(_ref) {
   // middle priority (global config)
   customBlocks // highest priority (Block "customBlocks" prop)
   )[block.blockName];
-  if (!blockConfig) return /*#__PURE__*/React.createElement(React.Fragment, null);
+  if (!blockConfig) return /*#__PURE__*/(0, _jsxRuntime.jsx)(_jsxRuntime.Fragment, {});
   const {
     component: Component,
     props: configProps
   } = blockConfig;
   props = _objectSpread(_objectSpread({}, configProps), props);
-  if (!Component) return /*#__PURE__*/React.createElement(React.Fragment, null);
+  if (!Component) return /*#__PURE__*/(0, _jsxRuntime.jsx)(_jsxRuntime.Fragment, {});
   const blockObj = {
     isNested,
     data: block,
     parent: parentBlock,
     config: blockConfig
   };
-  return /*#__PURE__*/React.createElement(_ConditionalWrapper.default, {
+  return /*#__PURE__*/(0, _jsxRuntime.jsx)(_ConditionalWrapper.default, {
     condition: () => containerCondition({
       block: blockObj,
       props
@@ -124,8 +124,9 @@ function Block(_ref) {
         rendered: children
       }),
       props
-    })
-  }, /*#__PURE__*/React.createElement(Component, _extends({
-    block: blockObj
-  }, props)));
+    }),
+    children: /*#__PURE__*/(0, _jsxRuntime.jsx)(Component, _objectSpread({
+      block: blockObj
+    }, props))
+  });
 }

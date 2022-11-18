@@ -5,6 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = exports.NextWP = exports.BlockContext = void 0;
 var _react = require("react");
+var _jsxRuntime = require("react/jsx-runtime");
 const BlockContext = /*#__PURE__*/(0, _react.createContext)();
 exports.BlockContext = BlockContext;
 const BlockProvider = _ref => {
@@ -12,9 +13,10 @@ const BlockProvider = _ref => {
     value,
     children
   } = _ref;
-  return /*#__PURE__*/React.createElement(BlockContext.Provider, {
-    value: value
-  }, children);
+  return /*#__PURE__*/(0, _jsxRuntime.jsx)(BlockContext.Provider, {
+    value: value,
+    children: children
+  });
 };
 var _default = BlockProvider;
 exports.default = _default;

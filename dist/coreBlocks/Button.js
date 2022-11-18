@@ -11,6 +11,7 @@ require("core-js/modules/es.string.replace.js");
 var _useBlockConfig = _interopRequireDefault(require("../hooks/useBlockConfig"));
 var _Button = _interopRequireDefault(require("../components/Button"));
 var _useBlockStyleBuilder = require("../hooks/useBlockStyleBuilder");
+var _jsxRuntime = require("react/jsx-runtime");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function ButtonBlock(_ref) {
   let {
@@ -32,9 +33,10 @@ function ButtonBlock(_ref) {
   let variant = 'outline';
   if (className.includes('is-style-fill')) variant = 'solid';
   if (url.includes(config.wpUrl)) url = url.replace(config.wpUrl, '/');
-  return /*#__PURE__*/React.createElement(_Button.default, {
+  return /*#__PURE__*/(0, _jsxRuntime.jsx)(_Button.default, {
     href: url,
     color: color,
-    variant: variant
-  }, text);
+    variant: variant,
+    children: text
+  });
 }

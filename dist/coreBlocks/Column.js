@@ -7,6 +7,7 @@ exports.default = Column;
 var _Block = _interopRequireDefault(require("../Block"));
 var _useBlockStyleBuilder = require("../hooks/useBlockStyleBuilder");
 var _classNames = _interopRequireDefault(require("../utils/classNames"));
+var _jsxRuntime = require("react/jsx-runtime");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function Column(_ref) {
   var _column$innerBlocks;
@@ -39,13 +40,13 @@ function Column(_ref) {
       lastDiff = diff;
     }
   }
-  return /*#__PURE__*/React.createElement("div", {
+  return /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
     className: (0, _classNames.default)('flex flex-col space-y-4', "col-span-".concat(colSpan), classes),
-    style: styles
-  }, column === null || column === void 0 ? void 0 : (_column$innerBlocks = column.innerBlocks) === null || _column$innerBlocks === void 0 ? void 0 : _column$innerBlocks.map((block, index) => /*#__PURE__*/React.createElement(_Block.default, {
-    key: index,
-    block: block,
-    parentBlock: column,
-    isNested: true
-  })));
+    style: styles,
+    children: column === null || column === void 0 ? void 0 : (_column$innerBlocks = column.innerBlocks) === null || _column$innerBlocks === void 0 ? void 0 : _column$innerBlocks.map((block, index) => /*#__PURE__*/(0, _jsxRuntime.jsx)(_Block.default, {
+      block: block,
+      parentBlock: column,
+      isNested: true
+    }, index))
+  });
 }

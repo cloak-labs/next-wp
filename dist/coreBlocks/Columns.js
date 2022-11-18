@@ -11,6 +11,7 @@ var _useBlockStyleBuilder = require("../hooks/useBlockStyleBuilder");
 var _react = require("react");
 var _classNames = _interopRequireDefault(require("../utils/classNames"));
 var _Column = _interopRequireDefault(require("./Column"));
+var _jsxRuntime = require("react/jsx-runtime");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function Columns(_ref) {
   let {
@@ -34,18 +35,20 @@ function Columns(_ref) {
     const adjustment = extra / columns.length;
     columnWidths = columnWidths.map(width => isOver ? width - adjustment : width + adjustment);
   }
-  return /*#__PURE__*/React.createElement(_ConditionalWrapper.default, {
+  return /*#__PURE__*/(0, _jsxRuntime.jsx)(_ConditionalWrapper.default, {
     condition: block.isNested == false,
-    wrapper: children => /*#__PURE__*/React.createElement(_Container.default, {
+    wrapper: children => /*#__PURE__*/(0, _jsxRuntime.jsx)(_Container.default, {
       className: (0, _classNames.default)("py-12", classes),
       style: styles,
-      innerClassName: "grid grid-cols-1 grid-cols-12 gap-10 lg:gap-20"
-    }, children)
-  }, columns === null || columns === void 0 ? void 0 : columns.map((column, i) => /*#__PURE__*/React.createElement(_react.Fragment, {
-    key: i
-  }, /*#__PURE__*/React.createElement(_Column.default, {
-    column: column,
-    index: i,
-    width: columnWidths[i]
-  }))));
+      innerClassName: "grid grid-cols-1 grid-cols-12 gap-10 lg:gap-20",
+      children: children
+    }),
+    children: columns === null || columns === void 0 ? void 0 : columns.map((column, i) => /*#__PURE__*/(0, _jsxRuntime.jsx)(_react.Fragment, {
+      children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_Column.default, {
+        column: column,
+        index: i,
+        width: columnWidths[i]
+      })
+    }, i))
+  });
 }

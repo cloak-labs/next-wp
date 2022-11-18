@@ -8,6 +8,7 @@ require("core-js/modules/web.dom-collections.iterator.js");
 var _useBlockStyleBuilder = require("../hooks/useBlockStyleBuilder");
 var _htmlReactParser = _interopRequireDefault(require("html-react-parser"));
 var _classNames = _interopRequireDefault(require("../utils/classNames"));
+var _jsxRuntime = require("react/jsx-runtime");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function List(_ref) {
   let {
@@ -23,8 +24,9 @@ function List(_ref) {
     values
   } = block.data.attrs;
   const ListType = ordered ? 'ol' : 'ul';
-  return /*#__PURE__*/React.createElement(ListType, {
+  return /*#__PURE__*/(0, _jsxRuntime.jsx)(ListType, {
     className: (0, _classNames.default)("space-y-3 pb-6", classes, className),
-    style: styles
-  }, (0, _htmlReactParser.default)(values));
+    style: styles,
+    children: (0, _htmlReactParser.default)(values)
+  });
 }
