@@ -1,42 +1,29 @@
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = HeroIcon;
-require("core-js/modules/web.dom-collections.iterator.js");
-var OutlineIcons = _interopRequireWildcard(require("@heroicons/react/24/outline"));
-var SolidIcons = _interopRequireWildcard(require("@heroicons/react/24/solid"));
-var _jsxRuntime = require("react/jsx-runtime");
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+Object.defineProperty(exports, "__esModule", { value: true });
+var jsx_runtime_1 = require("react/jsx-runtime");
+var OutlineIcons = require("@heroicons/react/24/outline");
+var SolidIcons = require("@heroicons/react/24/solid");
 // Allows you to dynamically show a Hero Icon (https://heroicons.com/) rather than having to manually import each icon component. You pass in the icon name as a prop, using the name as it is shown on their website rather than the component name which is different (eg. "archive" == "ArchiveIcon" component) -- abstracts away that complexity for you.
-function HeroIcon(_ref) {
-  let {
-    icon,
-    className = 'w-6 h-6 text-gray-600',
-    outline = true,
-    onClick = null
-  } = _ref;
-  if (!icon) return /*#__PURE__*/(0, _jsxRuntime.jsx)(_jsxRuntime.Fragment, {});
-  icon = icon.split('-').map(word => capitalize(word)).join('') + 'Icon'; // converts hero icon name to its component name; eg. 'dots-vertical' == 'DotsVerticalIcon'
-  const TheIcon = outline ? OutlineIcons[icon] : SolidIcons[icon];
-  if (TheIcon) return /*#__PURE__*/(0, _jsxRuntime.jsx)(TheIcon, {
-    className: className,
-    "aria-hidden": "true",
-    onClick: onClick
-  });
-  return /*#__PURE__*/(0, _jsxRuntime.jsx)(_jsxRuntime.Fragment, {});
+function HeroIcon(_a) {
+    var icon = _a.icon, _b = _a.className, className = _b === void 0 ? 'w-6 h-6 text-gray-600' : _b, _c = _a.outline, outline = _c === void 0 ? true : _c, _d = _a.onClick, onClick = _d === void 0 ? null : _d;
+    if (!icon)
+        return (0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, {});
+    icon = icon.split('-').map(function (word) { return capitalize(word); }).join('') + 'Icon'; // converts hero icon name to its component name; eg. 'dots-vertical' == 'DotsVerticalIcon'
+    var TheIcon = outline ? OutlineIcons[icon] : SolidIcons[icon];
+    if (TheIcon)
+        return (0, jsx_runtime_1.jsx)(TheIcon, { className: className, "aria-hidden": "true", onClick: onClick });
+    return (0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, {});
 }
-function capitalize(str) {
-  let all_words = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-  /** Function: capitalizes the first letter of a word, and optionally the first letter of each word in the string
-  *   @param {string} str - The string to capitalize
-  *   @param {boolean} all_words - Whether or not to capitalize each word in the string
-  */
-  str = all_words ? str.split(' ') : [str];
-  return str.map(word => {
-    const [first_letter, ...rest] = word;
-    return first_letter.toUpperCase() + rest.join('');
-  }).join(' ');
+exports.default = HeroIcon;
+function capitalize(str, all_words) {
+    if (all_words === void 0) { all_words = false; }
+    /** Function: capitalizes the first letter of a word, and optionally the first letter of each word in the string
+    *   @param {string} str - The string to capitalize
+    *   @param {boolean} all_words - Whether or not to capitalize each word in the string
+    */
+    str = all_words ? str.split(' ') : [str];
+    return str.map(function (word) {
+        var first_letter = word[0], rest = word.slice(1);
+        return first_letter.toUpperCase() + rest.join('');
+    }).join(' ');
 }

@@ -1,32 +1,25 @@
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = List;
-require("core-js/modules/web.dom-collections.iterator.js");
-var _useBlockStyleBuilder = require("../hooks/useBlockStyleBuilder");
-var _htmlReactParser = _interopRequireDefault(require("html-react-parser"));
-var _classNames = _interopRequireDefault(require("../utils/classNames"));
-var _jsxRuntime = require("react/jsx-runtime");
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function List(_ref) {
-  let {
-    block,
-    className
-  } = _ref;
-  const {
-    classes,
-    styles
-  } = (0, _useBlockStyleBuilder.useBlockStyleBuilder)(block.data);
-  const {
-    ordered,
-    values
-  } = block.data.attrs;
-  const ListType = ordered ? 'ol' : 'ul';
-  return /*#__PURE__*/(0, _jsxRuntime.jsx)(ListType, {
-    className: (0, _classNames.default)("space-y-3 pb-6", classes, className),
-    style: styles,
-    children: (0, _htmlReactParser.default)(values)
-  });
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var jsx_runtime_1 = require("react/jsx-runtime");
+var useBlockStyleBuilder_1 = require("../hooks/useBlockStyleBuilder");
+var html_react_parser_1 = require("html-react-parser");
+var classNames_1 = require("../utils/classNames");
+function List(_a) {
+    var block = _a.block, className = _a.className;
+    var _b = (0, useBlockStyleBuilder_1.useBlockStyleBuilder)(block.data), classes = _b.classes, styles = _b.styles;
+    var _c = block.data.attrs, ordered = _c.ordered, values = _c.values;
+    var ListType = ordered ? 'ol' : 'ul';
+    return ((0, jsx_runtime_1.jsx)(ListType, __assign({ className: (0, classNames_1.default)("space-y-3 pb-6", classes, className), style: styles }, { children: (0, html_react_parser_1.default)(values) })));
 }
+exports.default = List;
