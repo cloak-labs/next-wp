@@ -2,10 +2,10 @@
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
-    "rootDir": "lib-ts",
+    "rootDir": "lib",
     "outDir": "dist",
     "jsx": "react-jsx"
 
   },
-  "include": ["lib-ts/**/*"]
+  "include": ["lib/**/*"]
 }
