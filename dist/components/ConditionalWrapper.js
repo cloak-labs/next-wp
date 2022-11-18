@@ -1,19 +1,9 @@
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
+Object.defineProperty(exports, "__esModule", { value: true });
 // Code taken from: https://blog.hackages.io/conditionally-wrap-an-element-in-react-a8b9a47fab2
-const ConditionalWrapper = _ref => {
-  let {
-    condition,
-    wrapper,
-    children,
-    args
-  } = _ref;
-  const passesCondition = typeof condition === "function" ? condition() : condition;
-  return passesCondition ? wrapper(children, args) : children;
+var ConditionalWrapper = function (_a) {
+    var condition = _a.condition, wrapper = _a.wrapper, children = _a.children, args = _a.args;
+    var passesCondition = (typeof condition === "function") ? condition() : condition;
+    return passesCondition ? wrapper(children, args) : children;
 };
-var _default = ConditionalWrapper;
-exports.default = _default;
+exports.default = ConditionalWrapper;

@@ -1,32 +1,31 @@
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = Container;
-var _classNames = _interopRequireDefault(require("../utils/classNames"));
-var _jsxRuntime = require("react/jsx-runtime");
-const _excluded = ["className", "innerClassName", "mobileFullWidth", "children"];
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
-function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-function Container(_ref) {
-  let {
-      className,
-      innerClassName,
-      mobileFullWidth = false,
-      children
-    } = _ref,
-    props = _objectWithoutProperties(_ref, _excluded);
-  return /*#__PURE__*/(0, _jsxRuntime.jsx)("div", _objectSpread(_objectSpread({
-    className: (0, _classNames.default)('sm:px-6 lg:px-9', !mobileFullWidth && 'px-4', className)
-  }, props), {}, {
-    children: /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
-      className: (0, _classNames.default)('mx-auto max-w-7xl lg:max-w-8xl', innerClassName),
-      children: children
-    })
-  }));
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var jsx_runtime_1 = require("react/jsx-runtime");
+var classNames_1 = require("../utils/classNames");
+function Container(_a) {
+    var className = _a.className, innerClassName = _a.innerClassName, _b = _a.mobileFullWidth, mobileFullWidth = _b === void 0 ? false : _b, children = _a.children, props = __rest(_a, ["className", "innerClassName", "mobileFullWidth", "children"]);
+    return ((0, jsx_runtime_1.jsx)("div", __assign({ className: (0, classNames_1.default)('sm:px-6 lg:px-9', !mobileFullWidth && 'px-4', className) }, props, { children: (0, jsx_runtime_1.jsx)("div", __assign({ className: (0, classNames_1.default)('mx-auto max-w-7xl lg:max-w-8xl', innerClassName) }, { children: children })) })));
 }
+exports.default = Container;

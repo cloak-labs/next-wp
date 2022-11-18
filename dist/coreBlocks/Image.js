@@ -1,55 +1,29 @@
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = Image;
-var _image = _interopRequireDefault(require("next/image"));
-var _htmlReactParser = _interopRequireDefault(require("html-react-parser"));
-var _classNames = _interopRequireDefault(require("../utils/classNames"));
-var _ConditionalWrapper = _interopRequireDefault(require("../components/ConditionalWrapper"));
-var _Link = _interopRequireDefault(require("../components/Link"));
-var _useBlockStyleBuilder = require("../hooks/useBlockStyleBuilder");
-var _jsxRuntime = require("react/jsx-runtime");
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function Image(_ref) {
-  var _block$data, _block$parent, _block$parent$attrs;
-  let {
-    block,
-    className
-  } = _ref;
-  const {
-    classes,
-    styles
-  } = (0, _useBlockStyleBuilder.useBlockStyleBuilder)(block.data);
-  const {
-    url,
-    alt,
-    caption,
-    href
-  } = block === null || block === void 0 ? void 0 : (_block$data = block.data) === null || _block$data === void 0 ? void 0 : _block$data.attrs;
-  const captionColor = (block === null || block === void 0 ? void 0 : (_block$parent = block.parent) === null || _block$parent === void 0 ? void 0 : (_block$parent$attrs = _block$parent.attrs) === null || _block$parent$attrs === void 0 ? void 0 : _block$parent$attrs.textColor) || 'gray-700';
-  return /*#__PURE__*/(0, _jsxRuntime.jsxs)("div", {
-    className: (0, _classNames.default)('relative', className),
-    style: styles,
-    children: [/*#__PURE__*/(0, _jsxRuntime.jsx)(_ConditionalWrapper.default, {
-      condition: href,
-      wrapper: children => /*#__PURE__*/(0, _jsxRuntime.jsx)(_Link.default, {
-        href: href,
-        children: children
-      }),
-      children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_image.default, {
-        src: url,
-        className: (0, _classNames.default)("rounded-lg", classes),
-        objectFit: "cover",
-        alt: alt,
-        width: "100%",
-        height: "100%",
-        layout: "responsive"
-      })
-    }), caption && /*#__PURE__*/(0, _jsxRuntime.jsx)("p", {
-      className: (0, _classNames.default)('text-sm text-center mt-2', "text-".concat(captionColor)),
-      children: (0, _htmlReactParser.default)(caption)
-    })]
-  });
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var jsx_runtime_1 = require("react/jsx-runtime");
+var image_1 = require("next/image");
+var html_react_parser_1 = require("html-react-parser");
+var classNames_1 = require("../utils/classNames");
+var ConditionalWrapper_1 = require("../components/ConditionalWrapper");
+var Link_1 = require("../components/Link");
+var useBlockStyleBuilder_1 = require("../hooks/useBlockStyleBuilder");
+function Image(_a) {
+    var _b, _c, _d;
+    var block = _a.block, className = _a.className;
+    var _e = (0, useBlockStyleBuilder_1.useBlockStyleBuilder)(block.data), classes = _e.classes, styles = _e.styles;
+    var _f = (_b = block === null || block === void 0 ? void 0 : block.data) === null || _b === void 0 ? void 0 : _b.attrs, url = _f.url, alt = _f.alt, caption = _f.caption, href = _f.href;
+    var captionColor = ((_d = (_c = block === null || block === void 0 ? void 0 : block.parent) === null || _c === void 0 ? void 0 : _c.attrs) === null || _d === void 0 ? void 0 : _d.textColor) || 'gray-700';
+    return ((0, jsx_runtime_1.jsxs)("div", __assign({ className: (0, classNames_1.default)('relative', className), style: styles }, { children: [(0, jsx_runtime_1.jsx)(ConditionalWrapper_1.default, __assign({ condition: href, wrapper: function (children) { return (0, jsx_runtime_1.jsx)(Link_1.default, __assign({ href: href }, { children: children })); } }, { children: (0, jsx_runtime_1.jsx)(image_1.default, { src: url, className: (0, classNames_1.default)("rounded-lg", classes), objectFit: 'cover', alt: alt, width: "100%", height: "100%", layout: "responsive" }) })), caption && (0, jsx_runtime_1.jsx)("p", __assign({ className: (0, classNames_1.default)('text-sm text-center mt-2', "text-".concat(captionColor)) }, { children: (0, html_react_parser_1.default)(caption) }))] })));
 }
+exports.default = Image;

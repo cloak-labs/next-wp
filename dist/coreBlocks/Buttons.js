@@ -1,35 +1,24 @@
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = Buttons;
-var _Button = _interopRequireDefault(require("./Button"));
-var _useBlockStyleBuilder = require("../hooks/useBlockStyleBuilder");
-var _react = require("react");
-var _classNames = _interopRequireDefault(require("../utils/classNames"));
-var _jsxRuntime = require("react/jsx-runtime");
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function Buttons(_ref) {
-  let {
-    block,
-    className
-  } = _ref;
-  const {
-    classes,
-    styles
-  } = (0, _useBlockStyleBuilder.useBlockStyleBuilder)(block.data);
-  return /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
-    className: (0, _classNames.default)("flex items-start gap-3", classes, className),
-    style: styles,
-    children: block.data.innerBlocks.map((buttonBlock, i) => /*#__PURE__*/(0, _jsxRuntime.jsx)(_react.Fragment, {
-      children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_Button.default, {
-        block: {
-          data: buttonBlock,
-          parent: block.data,
-          isNested: true
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
         }
-      })
-    }, i))
-  });
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var jsx_runtime_1 = require("react/jsx-runtime");
+var Button_1 = require("./Button");
+var useBlockStyleBuilder_1 = require("../hooks/useBlockStyleBuilder");
+var react_1 = require("react");
+var classNames_1 = require("../utils/classNames");
+function Buttons(_a) {
+    var block = _a.block, className = _a.className;
+    var _b = (0, useBlockStyleBuilder_1.useBlockStyleBuilder)(block.data), classes = _b.classes, styles = _b.styles;
+    return ((0, jsx_runtime_1.jsx)("div", __assign({ className: (0, classNames_1.default)("flex items-start gap-3", classes, className), style: styles }, { children: block.data.innerBlocks.map(function (buttonBlock, i) { return ((0, jsx_runtime_1.jsx)(react_1.Fragment, { children: (0, jsx_runtime_1.jsx)(Button_1.default, { block: { data: buttonBlock, parent: block.data, isNested: true } }) }, i)); }) })));
 }
+exports.default = Buttons;

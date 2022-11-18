@@ -1,80 +1,53 @@
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = Group;
-var _Block = _interopRequireDefault(require("../Block"));
-var _ConditionalWrapper = _interopRequireDefault(require("../components/ConditionalWrapper"));
-var _Container = _interopRequireDefault(require("../components/Container"));
-var _useBlockStyleBuilder = require("../hooks/useBlockStyleBuilder");
-var _classNames = _interopRequireDefault(require("../utils/classNames"));
-var _jsxRuntime = require("react/jsx-runtime");
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function Group(_ref) {
-  var _block$data, _block$data2, _block$data2$innerBlo;
-  let {
-    block
-  } = _ref;
-  const {
-    classes,
-    styles
-  } = (0, _useBlockStyleBuilder.useBlockStyleBuilder)(block.data);
-  if (!(block !== null && block !== void 0 && (_block$data = block.data) !== null && _block$data !== void 0 && _block$data.innerBlocks)) return /*#__PURE__*/(0, _jsxRuntime.jsx)(_jsxRuntime.Fragment, {});
-  const {
-    layout,
-    align
-  } = block.data.attrs;
-  const numBlocks = block === null || block === void 0 ? void 0 : (_block$data2 = block.data) === null || _block$data2 === void 0 ? void 0 : (_block$data2$innerBlo = _block$data2.innerBlocks) === null || _block$data2$innerBlo === void 0 ? void 0 : _block$data2$innerBlo.length;
-  const groupClasses = (0, _classNames.default)('flex gap-x-4 md:gap-x-6 flex-wrap', layout.type == 'flex' ? layout.flexWrap ? 'flex-row' : 'flex-col' : 'flex-col', numBlocks <= 2 ? 'sm:flex-nowrap' : numBlocks <= 3 ? 'md:flex-nowrap' : numBlocks <= 4 ? 'lg:flex-nowrap' : '');
-  if (align != 'full') {
-    var _block$data3, _block$data3$innerBlo;
-    return /*#__PURE__*/(0, _jsxRuntime.jsx)(_Container.default, {
-      className: (0, _classNames.default)("relative"),
-      children: /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
-        className: (0, _classNames.default)(groupClasses, classes),
-        style: styles,
-        children: block === null || block === void 0 ? void 0 : (_block$data3 = block.data) === null || _block$data3 === void 0 ? void 0 : (_block$data3$innerBlo = _block$data3.innerBlocks) === null || _block$data3$innerBlo === void 0 ? void 0 : _block$data3$innerBlo.map((innerBlock, index) => /*#__PURE__*/(0, _jsxRuntime.jsx)(_Block.default, {
-          block: innerBlock,
-          parentBlock: block,
-          isNested: true,
-          className: "min-w-[150px]"
-        }, index))
-      })
-    });
-  } else {
-    var _block$data4, _block$data4$innerBlo;
-    return /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
-      className: (0, _classNames.default)(classes),
-      style: styles,
-      children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_Container.default, {
-        className: "relative",
-        innerClassName: groupClasses,
-        children: block === null || block === void 0 ? void 0 : (_block$data4 = block.data) === null || _block$data4 === void 0 ? void 0 : (_block$data4$innerBlo = _block$data4.innerBlocks) === null || _block$data4$innerBlo === void 0 ? void 0 : _block$data4$innerBlo.map((innerBlock, index) => /*#__PURE__*/(0, _jsxRuntime.jsx)(_Block.default, {
-          block: innerBlock,
-          parentBlock: block,
-          isNested: true,
-          className: "min-w-[150px]"
-        }, index))
-      })
-    });
-  }
-  // return (
-  //     <ConditionalWrapper
-  //         condition={align != 'full'}
-  //         wrapper={(children) => <Container className="relative">{children}</Container>}
-  //     >
-  //         <div
-  //             className={align != 'full' && groupClasses}
-  //             style={styles}
-  //         >
-  //             <ConditionalWrapper
-  //                 condition={align == 'full'}
-  //                 wrapper={(children) => <Container className={classNames("relative", groupClasses)}>{children}</Container>}
-  //             >
-  //                 {block?.innerBlocks?.map((innerBlock, index) => <Block key={index} block={innerBlock} parentBlock={block} isNested={true} className="min-w-[150px]" /> )}
-  //             </ConditionalWrapper>
-  //         </div>
-  //     </ConditionalWrapper>
-  // )
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var jsx_runtime_1 = require("react/jsx-runtime");
+var Block_1 = require("../Block");
+var Container_1 = require("../components/Container");
+var useBlockStyleBuilder_1 = require("../hooks/useBlockStyleBuilder");
+var classNames_1 = require("../utils/classNames");
+function Group(_a) {
+    var _b, _c, _d, _e, _f, _g, _h;
+    var block = _a.block;
+    var _j = (0, useBlockStyleBuilder_1.useBlockStyleBuilder)(block.data), classes = _j.classes, styles = _j.styles;
+    if (!((_b = block === null || block === void 0 ? void 0 : block.data) === null || _b === void 0 ? void 0 : _b.innerBlocks))
+        return (0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, {});
+    var _k = block.data.attrs, layout = _k.layout, align = _k.align;
+    var numBlocks = (_d = (_c = block === null || block === void 0 ? void 0 : block.data) === null || _c === void 0 ? void 0 : _c.innerBlocks) === null || _d === void 0 ? void 0 : _d.length;
+    var groupClasses = (0, classNames_1.default)('flex gap-x-4 md:gap-x-6 flex-wrap', layout.type == 'flex' ? (layout.flexWrap ? 'flex-row' : 'flex-col') : 'flex-col', numBlocks <= 2 ? 'sm:flex-nowrap' : (numBlocks <= 3 ? 'md:flex-nowrap' : (numBlocks <= 4 ? 'lg:flex-nowrap' : '')));
+    if (align != 'full') {
+        return ((0, jsx_runtime_1.jsx)(Container_1.default, __assign({ className: (0, classNames_1.default)("relative") }, { children: (0, jsx_runtime_1.jsx)("div", __assign({ className: (0, classNames_1.default)(groupClasses, classes), style: styles }, { children: (_f = (_e = block === null || block === void 0 ? void 0 : block.data) === null || _e === void 0 ? void 0 : _e.innerBlocks) === null || _f === void 0 ? void 0 : _f.map(function (innerBlock, index) { return (0, jsx_runtime_1.jsx)(Block_1.default, { block: innerBlock, parentBlock: block, isNested: true, className: "min-w-[150px]" }, index); }) })) })));
+    }
+    else {
+        return ((0, jsx_runtime_1.jsx)("div", __assign({ className: (0, classNames_1.default)(classes), style: styles }, { children: (0, jsx_runtime_1.jsx)(Container_1.default, __assign({ className: "relative", innerClassName: groupClasses }, { children: (_h = (_g = block === null || block === void 0 ? void 0 : block.data) === null || _g === void 0 ? void 0 : _g.innerBlocks) === null || _h === void 0 ? void 0 : _h.map(function (innerBlock, index) { return (0, jsx_runtime_1.jsx)(Block_1.default, { block: innerBlock, parentBlock: block, isNested: true, className: "min-w-[150px]" }, index); }) })) })));
+    }
+    // return (
+    //     <ConditionalWrapper
+    //         condition={align != 'full'}
+    //         wrapper={(children) => <Container className="relative">{children}</Container>}
+    //     >
+    //         <div
+    //             className={align != 'full' && groupClasses}
+    //             style={styles}
+    //         >
+    //             <ConditionalWrapper
+    //                 condition={align == 'full'}
+    //                 wrapper={(children) => <Container className={classNames("relative", groupClasses)}>{children}</Container>}
+    //             >
+    //                 {block?.innerBlocks?.map((innerBlock, index) => <Block key={index} block={innerBlock} parentBlock={block} isNested={true} className="min-w-[150px]" /> )}
+    //             </ConditionalWrapper>
+    //         </div>
+    //     </ConditionalWrapper>
+    // )
 }
+exports.default = Group;
