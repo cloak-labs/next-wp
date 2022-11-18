@@ -1,1 +1,1 @@
-delcare module 'next-wp';
+declare module 'next-wp';
