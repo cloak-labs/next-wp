@@ -1,0 +1,1 @@
+delcare module 'next-wp';
