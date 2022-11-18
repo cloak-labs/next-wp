@@ -6,7 +6,8 @@
   "typings": "dist/next-wp.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rm -rf dist && NODE_ENV=production babel lib --out-dir dist --copy-files"
+    "build": "rm -rf dist && NODE_ENV=production babel lib --out-dir dist --copy-files",
+    "watch": "rm -rf dist && NODE_ENV=production babel lib --watch --out-dir dist --copy-files"
   },
   "repository": {
     "type": "git",
