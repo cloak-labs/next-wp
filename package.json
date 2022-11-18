@@ -21,14 +21,9 @@
   },
   "homepage": "https://github.com/kaelansmith/nextwp#readme",
   "devDependencies": {
-    "@babel/cli": "^7.19.3",
-    "@babel/core": "^7.20.2",
-    "@babel/preset-env": "^7.20.2"
+    "typescript": "^4.9.3"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.12.1",
-    "@babel/preset-react": "^7.18.6",
-    "@babel/runtime": "^7.20.1",
     "@heroicons/react": "^2.0.13",
     "core-js": "^3.6.5",
     "html-react-parser": "^3.0.4",
