@@ -15,11 +15,19 @@ var jsx_runtime_1 = require("react/jsx-runtime");
 var useBlockStyleBuilder_1 = require("../hooks/useBlockStyleBuilder");
 var html_react_parser_1 = require("html-react-parser");
 var classNames_1 = require("../utils/classNames");
+var Block_1 = require("../Block");
 function List(_a) {
     var block = _a.block, className = _a.className;
     var _b = (0, useBlockStyleBuilder_1.useBlockStyleBuilder)(block.data), classes = _b.classes, styles = _b.styles;
-    var _c = block.data.attrs, ordered = _c.ordered, values = _c.values;
+    var _c = block.data, attrs = _c.attrs, innerBlocks = _c.innerBlocks;
+    var ordered = attrs.ordered, values = attrs.values;
+    console.log("These are supposed to be innerBlocks:", classes);
+    var newListItemRenderingMethod = false;
+    if (innerBlocks.length) {
+        // using WP v6.1 or later, where the core/list-item inner block was introduced rather than baking all the <li>'s into the block.attrs.values field
+        newListItemRenderingMethod = true;
+    }
     var ListType = ordered ? 'ol' : 'ul';
-    return ((0, jsx_runtime_1.jsx)(ListType, __assign({ className: (0, classNames_1.default)("space-y-3 pb-6", classes, className), style: styles }, { children: (0, html_react_parser_1.default)(values) })));
+    return ((0, jsx_runtime_1.jsx)(ListType, __assign({ className: (0, classNames_1.default)("space-y-3 pb-6", classes, className), style: styles }, { children: newListItemRenderingMethod ? (innerBlocks === null || innerBlocks === void 0 ? void 0 : innerBlocks.map(function (block, i) { return (0, jsx_runtime_1.jsx)(Block_1.default, { block: block }, i); })) : (0, html_react_parser_1.default)(values) })));
 }
 exports.default = List;

@@ -7,7 +7,7 @@ export { default as Blocks } from './Blocks'
 export { default as Block } from './Block'
 
 // Hooks
-export { default as useBlockConfig, useServerBlockConfig } from './hooks/useBlockConfig';
+export { useBlockConfig } from './hooks/useBlockConfig';
 export { useBlockStyleBuilder } from './hooks/useBlockStyleBuilder';
 export { usePage } from './hooks/usePage';
 export { usePreview } from './hooks/usePreview';

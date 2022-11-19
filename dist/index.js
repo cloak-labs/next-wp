@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.useFetchRestAPI = exports.fetchGraphAPI = exports.regenerateStaticPage = exports.usePaths = exports.usePosts = exports.usePost = exports.usePreview = exports.usePage = exports.useBlockStyleBuilder = exports.useServerBlockConfig = exports.useBlockConfig = exports.Block = exports.Blocks = exports.BlockProvider = exports.NextWP = void 0;
+exports.useFetchRestAPI = exports.fetchGraphAPI = exports.regenerateStaticPage = exports.usePaths = exports.usePosts = exports.usePost = exports.usePreview = exports.usePage = exports.useBlockStyleBuilder = exports.useBlockConfig = exports.Block = exports.Blocks = exports.BlockProvider = exports.NextWP = void 0;
 // Context
 var blockContext_1 = require("./context/blockContext");
 Object.defineProperty(exports, "NextWP", { enumerable: true, get: function () { return blockContext_1.NextWP; } });
@@ -13,8 +13,7 @@ var Block_1 = require("./Block");
 Object.defineProperty(exports, "Block", { enumerable: true, get: function () { return Block_1.default; } });
 // Hooks
 var useBlockConfig_1 = require("./hooks/useBlockConfig");
-Object.defineProperty(exports, "useBlockConfig", { enumerable: true, get: function () { return useBlockConfig_1.default; } });
-Object.defineProperty(exports, "useServerBlockConfig", { enumerable: true, get: function () { return useBlockConfig_1.useServerBlockConfig; } });
+Object.defineProperty(exports, "useBlockConfig", { enumerable: true, get: function () { return useBlockConfig_1.useBlockConfig; } });
 var useBlockStyleBuilder_1 = require("./hooks/useBlockStyleBuilder");
 Object.defineProperty(exports, "useBlockStyleBuilder", { enumerable: true, get: function () { return useBlockStyleBuilder_1.useBlockStyleBuilder; } });
 var usePage_1 = require("./hooks/usePage");

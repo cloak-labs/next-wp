@@ -32,12 +32,22 @@ export function useBlockStyleBuilder(block) {
   
   if(style?.spacing?.padding){
     const {top = '0px', right = '0px', bottom = '0px', left = '0px'} = style?.spacing?.padding
-    styles['padding'] = `${top} ${right} ${bottom} ${left}`
+    let total = 0
+    const arr = [top, right, bottom, left]
+    arr?.forEach(val => total += parseFloat(val))
+    if(total > 0){
+      styles['padding'] = `${top} ${right} ${bottom} ${left}`
+    }
   }
   
   if(style?.spacing?.margin){
     const {top = '0px', right = '0px', bottom = '0px', left = '0px'} = style?.spacing?.margin
-    styles['margin'] = `${top} ${right} ${bottom} ${left}`
+    let total = 0
+    const arr = [top, right, bottom, left]
+    arr?.forEach(val => total += parseFloat(val))
+    if(total > 0){
+      styles['margin'] = `${top} ${right} ${bottom} ${left}`
+    }
   }
     
   return {

@@ -1,7 +1,7 @@
-import { useServerBlockConfig } from "../hooks/useBlockConfig";
+import { useBlockConfig } from "../hooks/useBlockConfig";
 
 export async function fetchGraphAPI(query = '', { variables } = {}) {
-    const config = await useServerBlockConfig()
+    const config = await useBlockConfig()
     if(!config.wpGraphQlBaseURL) throw new Error('wpGraphQlBaseURL is missing from NextWP global config -- this is required to use fetchGraphAPI.')
     // if(!config.wpAuthRefreshToken) throw 'wpAuthRefreshToken is missing from NextWP global config -- this is required to use fetchGraphAPI.'
 
@@ -30,11 +30,12 @@ export async function fetchGraphAPI(query = '', { variables } = {}) {
     return json.data;
 }
 
-export async function useFetchRestAPI(endpoint, embed = true) {
+export async function useFetchRestAPI(endpoint, embed = true, modifyBaseSlugs = true) {
     if(!endpoint) throw new Error('You must pass in an endpoint to useFetchRestAPI')
-    const config = await useServerBlockConfig()
-    if(!config.wpUrl) throw new Error('wpUrl is missing from NextWP global config -- this is required to use useFetchRestAPI.')
-    if(!config.wpJwt) throw new Error('wpJwt is missing from NextWP global config -- this is required to use useFetchRestAPI.')
+    const config = await useBlockConfig()
+    // const config = blockConfig
+    if(!config?.wpUrl) throw new Error('wpUrl is missing from NextWP global config -- this is required to use useFetchRestAPI.')
+    if(!config?.wpJwt) throw new Error('wpJwt is missing from NextWP global config -- this is required to use useFetchRestAPI.')
 
     const headers = {
         'Content-Type': 'application/json',
@@ -59,7 +60,45 @@ export async function useFetchRestAPI(endpoint, embed = true) {
         }
     );
 
-    const json = await res.json();
+    let json = await res.json();
+
+    const { cptBaseSlugs } = config
+    if(modifyBaseSlugs && cptBaseSlugs){
+        // the dev has provided baseSlugs to prepend to certain post type's slugs, which we do below:
+        if(!Array.isArray(json)) json = [json]
+        json.map(post => {
+            // modify post object's slug:
+            if(post && post.type && cptBaseSlugs[post.type]){
+                post.slug = `${cptBaseSlugs[post.type]}${post.slug}`
+            }
+
+            // modify any post slugs for any posts in ACF relationship fields
+            if(post.has_blocks && post.blocksData && post.blocksData.length){
+                post.blocksData.map(block => {
+                    if(block.attrs.hasRelationshipFields){
+                        // let blockFieldValues = Object.values(block.attrs.data)
+                        let blockFields = Object.entries(block.attrs.data)
+                        blockFields = blockFields.map(([key, val]) => {
+                            if(val && val.value && (val.type == 'relationship' || val.type == 'page_link' || val.type == 'post_object')){
+                                val.value = val.value.map(relatedPost => {
+                                    if(relatedPost && relatedPost.post_type && cptBaseSlugs[relatedPost.post_type]){
+                                        relatedPost.slug = `${cptBaseSlugs[relatedPost.post_type]}${relatedPost.post_name}`
+                                    }
+                                    return relatedPost
+                                })
+                            }
+                            return [key, val]
+                        })
+                        block.attrs.data = Object.fromEntries(blockFields);
+                    }
+                    return block
+                })
+            }
+
+            return post
+        })
+    }
+
     if (json.errors) {
         console.error(json.errors);
         throw new Error('Failed to fetch data from REST API: ', json.errors);

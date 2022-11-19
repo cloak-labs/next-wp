@@ -1,14 +1,10 @@
-import { BlockContext } from '../context/blockContext'
-import { useContext } from 'react';
+// import { blockConfig } from '../../../next-wp.config';
+const path = require('path')
+const blockConfig = require(path.join(process.cwd(), 'postcss.config.js'))
 
-export default function useBlockConfig() {
-    const blockConfig = useContext(BlockContext)
+export function useBlockConfig() {
+    
+    console.log('blockConfig :', blockConfig)
+    if(!blockConfig) throw Error("You're missing a blockConfig object in your root-level next-wp.config.js file.")
     return blockConfig
-}
-
-export async function useServerBlockConfig() {
-    const baseUrl = process.env.NODE_ENV === "development" ? process.env.NEXTWP_DEV_URL : process.env.NEXTWP_PROD_URL; // Dev must have these environment variables set in order for NextWP to work
-    if(!baseUrl) throw new Error(`${process.env.NODE_ENV === "development" ? 'NEXTWP_DEV_URL' : 'NEXTWP_PROD_URL'} environment variable not set -- this is required for NextWP to work.`)
-    const res = await fetch(`${baseUrl}/api/nextwp`)
-    return res.json()
 }

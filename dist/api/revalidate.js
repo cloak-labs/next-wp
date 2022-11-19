@@ -36,14 +36,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var useBlockConfig_1 = require("nextwp/hooks/useBlockConfig");
+var useBlockConfig_1 = require("../hooks/useBlockConfig");
 function regenerateStaticPage(req, res) {
     return __awaiter(this, void 0, void 0, function () {
         var config, _a, slug, secret, error_1;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
-                    config = (0, useBlockConfig_1.default)();
+                    config = (0, useBlockConfig_1.useBlockConfig)();
                     _a = req.query, slug = _a.slug, secret = _a.secret;
                     _b.label = 1;
                 case 1:

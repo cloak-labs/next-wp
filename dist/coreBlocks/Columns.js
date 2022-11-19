@@ -22,11 +22,19 @@ function Columns(_a) {
     var block = _a.block;
     var _b = (0, useBlockStyleBuilder_1.useBlockStyleBuilder)(block.data), classes = _b.classes, styles = _b.styles;
     var columns = block.data.innerBlocks;
-    var columnWidths = columns.map(function (col) { return parseFloat(col.attrs.width); });
-    // Ensure column widths add up to 100% (Gutenberg doesn't force the columns to add up to 100%; they can add up to more or less but we don't want that)
+    var numColumns = columns.length;
+    var columnWidths = columns.map(function (col) {
+        var widthVal = parseFloat(col.attrs.width);
+        return widthVal ? widthVal : (100 / columns.length); // if no width is specified, we make this safe mathematical assumption
+    });
+    // .. Ensure column widths add up to 100% (Gutenberg doesn't force the columns to add up to 100%; they can add up to more or less but we don't want that!)
     // eg. 2 columns with 60% and 45% widths (total of 105%) will be adjusted below to become 57.5% and 42.5% (total of 100%)
+    console.log('col widths BEFORE', columnWidths);
     var totalWidth = 0;
-    columnWidths.forEach(function (width) { return totalWidth += width; });
+    columnWidths.forEach(function (width) {
+        if (width)
+            totalWidth += width;
+    });
     var isOver = totalWidth > 100;
     var isUnder = totalWidth < 100;
     if (isOver || isUnder) {
@@ -34,6 +42,7 @@ function Columns(_a) {
         var adjustment_1 = extra / columns.length;
         columnWidths = columnWidths.map(function (width) { return isOver ? width - adjustment_1 : width + adjustment_1; });
     }
-    return ((0, jsx_runtime_1.jsx)(ConditionalWrapper_1.default, __assign({ condition: block.isNested == false, wrapper: function (children) { return (0, jsx_runtime_1.jsx)(Container_1.default, __assign({ className: (0, classNames_1.default)("py-12", classes), style: styles, innerClassName: "grid grid-cols-1 grid-cols-12 gap-10 lg:gap-20" }, { children: children })); } }, { children: columns === null || columns === void 0 ? void 0 : columns.map(function (column, i) { return ((0, jsx_runtime_1.jsx)(react_1.Fragment, { children: (0, jsx_runtime_1.jsx)(Column_1.default, { column: column, index: i, width: columnWidths[i] }) }, i)); }) })));
+    console.log('col widths AFTER', columnWidths);
+    return ((0, jsx_runtime_1.jsx)(ConditionalWrapper_1.default, __assign({ condition: block.isNested == false, wrapper: function (children) { return ((0, jsx_runtime_1.jsx)(Container_1.default, __assign({ className: (0, classNames_1.default)("py-2", classes), style: styles, innerClassName: (0, classNames_1.default)("grid", numColumns == 2 && 'gap-10 lg:gap-16 2xl:gap-20 grid-cols-1 sm:grid-cols-12', (numColumns > 2 && numColumns <= 4) && 'gap-6 lg:gap-8 grid-cols-1 sm:grid-cols-8 lg:grid-cols-12', (numColumns > 4 && numColumns <= 6) && 'gap-3 lg:gap-4 grid-cols-1 xs:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-12', numColumns > 6 && 'gap-2 lg:gap-3 grid-cols-1 sm:grid-cols-12') }, { children: children }))); } }, { children: columns === null || columns === void 0 ? void 0 : columns.map(function (column, i) { return ((0, jsx_runtime_1.jsx)(react_1.Fragment, { children: (0, jsx_runtime_1.jsx)(Column_1.default, { column: column, index: i, width: columnWidths[i], numColumns: numColumns }) }, i)); }) })));
 }
 exports.default = Columns;

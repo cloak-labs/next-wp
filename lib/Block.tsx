@@ -7,13 +7,14 @@ import {
 	List,
 	Buttons,
 	Group,
+    ListItem
 } from './coreBlocks'
 import Container from './components/Container'
 import ConditionalWrapper from './components/ConditionalWrapper'
-import useBlockConfig from './hooks/useBlockConfig'
+import { useBlockConfig } from './hooks/useBlockConfig'
 import classNames from './utils/classNames'
 import { deepMerge } from './utils/deepMerge'
-
+import Html from './coreBlocks/Html'
 
 export default function Block({
 	block,
@@ -29,65 +30,97 @@ export default function Block({
     const globalConfig = useBlockConfig()
     
     /*  
-        nextwp provides simple/sensible defaults for core block components, the block container, 
+        next-wp provides simple/sensible defaults for core block components, the block container, 
         and the condition for which the block container is used (devs can override all these 
         defaults via the Block component's props or the global config's props) 
     */
     const defaults = {
         container: ({block}) => <Container className={classNames("relative", block.config.containerClasses)}>{block.rendered}</Container>,
-        containerCondition: ({block}) => block.isNested == false && block.config.hasContainer,
+        containerCondition: ({block}) => block.isNested == false && block.config.container,
         blocks: {
             'core/paragraph': {
                 component: Paragraph,
-                hasContainer: true,
+                container: true,
                 containerClasses: 'py-2',
             },
             'core/heading': {
                 component: Heading,
-                hasContainer: true,
+                container: true,
                 containerClasses: 'py-2',
             },
             'core/image': {
                 component: Image,
-                hasContainer: true,
+                container: true,
                 containerClasses: 'py-2',
             },
             'core/embed': {
                 component: Embed,
-                hasContainer: true,
+                container: true,
+                containerClasses: 'py-2',
+            },
+            'core/html': {
+                component: Html,
+                container: true,
                 containerClasses: 'py-2',
             },
             'core/columns': {
                 component: Columns,
-                hasContainer: false,
+                container: false,
             },
             'core/group': {
                 component: Group,
-                hasContainer: false,
+                container: false,
             },
             'core/list': {
                 component: List,
-                hasContainer: true,
+                container: true,
+            },
+            'core/list-item': {
+                component: ListItem,
+                container: false,
             },
             'core/buttons': {
                 component: Buttons,
-                hasContainer: true,
+                container: true,
             },
         }
     } 
 
-    container = container ?? globalConfig.container ?? defaults.container
-    containerCondition = containerCondition ?? globalConfig.containerCondition ?? defaults.containerCondition
+    // container = container ?? (typeof globalBlockSpecificContainer != "boolean" && ) ?? globalConfig.container ?? defaults.container
+
+    // * Moved the following 2 lines below
+    // container = container ?? globalConfig.container ?? defaults.container
+    // containerCondition = containerCondition ?? globalConfig.containerCondition ?? defaults.containerCondition
+
+    // A collection of Booleans that tell us whether a user-provided 'container' prop is a function at all the possible levels (helps us determine which container to use later)
+    let componentCustomBlocksLevel = typeof customBlocks[block.blockName]?.container == "function",
+        componentLevel = typeof container == "function",
+        globalCustomBlocksLevel = typeof globalConfig?.customBlocks[block.blockName]?.container == "function",
+        globalLevel = typeof globalConfig?.container == "function",
+        defaultCustomBlocksLevel = typeof defaults.blocks[block.blockName]?.container == "function"
     
-	const blockConfig = deepMerge(
-        defaults.blocks, // lowest priority
+	const blockConfig = deepMerge( // deeply merges the following configs to produce a final "master" config
+        defaults.blocks, // lowest priority (defaults)
         globalConfig.customBlocks, // middle priority (global config)
-        customBlocks // highest priority (Block "customBlocks" prop)
-    )[block.blockName]
-
+        customBlocks // highest priority (<Block customBlocks={{...}} />)
+    )[block.blockName] // immediately after deep merging, we pick out the specific block we're currently rendering from the final config
+    
     if(!blockConfig) return <></>
-
+    
     const { component: Component, props: configProps } = blockConfig
+
+    container =
+        componentCustomBlocksLevel ? customBlocks?.[block.blockName].container : (
+            componentLevel ? container : (
+                globalCustomBlocksLevel ? globalConfig?.customBlocks[block.blockName]?.container : (
+                    globalLevel ? globalConfig.container : (
+                        defaultCustomBlocksLevel ? defaults.blocks[block.blockName]?.container : defaults.container
+                    )
+                )
+            )
+        ); // lots of ways for devs to provide a custom container, each way takes a higher/lower precedent over the next way
+
+    containerCondition = containerCondition ?? globalConfig.containerCondition ?? defaults.containerCondition
 
     props = { // merge custom props provided to Block component with custom props provided by global config
         ...configProps,
