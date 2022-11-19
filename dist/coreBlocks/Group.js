@@ -31,23 +31,5 @@ function Group(_a) {
     else {
         return ((0, jsx_runtime_1.jsx)("div", __assign({ className: (0, classNames_1.default)(classes), style: styles }, { children: (0, jsx_runtime_1.jsx)(Container_1.default, __assign({ className: "relative", innerClassName: groupClasses }, { children: (_h = (_g = block === null || block === void 0 ? void 0 : block.data) === null || _g === void 0 ? void 0 : _g.innerBlocks) === null || _h === void 0 ? void 0 : _h.map(function (innerBlock, index) { return (0, jsx_runtime_1.jsx)(Block_1.default, { block: innerBlock, parentBlock: block, isNested: true, className: "min-w-[150px]" }, index); }) })) })));
     }
-    // return (
-    //     <ConditionalWrapper
-    //         condition={align != 'full'}
-    //         wrapper={(children) => <Container className="relative">{children}</Container>}
-    //     >
-    //         <div
-    //             className={align != 'full' && groupClasses}
-    //             style={styles}
-    //         >
-    //             <ConditionalWrapper
-    //                 condition={align == 'full'}
-    //                 wrapper={(children) => <Container className={classNames("relative", groupClasses)}>{children}</Container>}
-    //             >
-    //                 {block?.innerBlocks?.map((innerBlock, index) => <Block key={index} block={innerBlock} parentBlock={block} isNested={true} className="min-w-[150px]" /> )}
-    //             </ConditionalWrapper>
-    //         </div>
-    //     </ConditionalWrapper>
-    // )
 }
 exports.default = Group;

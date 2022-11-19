@@ -45,7 +45,7 @@ function fetchGraphAPI(query, _a) {
         var config, headers, res, json;
         return __generator(this, function (_c) {
             switch (_c.label) {
-                case 0: return [4 /*yield*/, (0, useBlockConfig_1.useServerBlockConfig)()];
+                case 0: return [4 /*yield*/, (0, useBlockConfig_1.useBlockConfig)()];
                 case 1:
                     config = _c.sent();
                     if (!config.wpGraphQlBaseURL)
@@ -78,21 +78,25 @@ function fetchGraphAPI(query, _a) {
     });
 }
 exports.fetchGraphAPI = fetchGraphAPI;
-function useFetchRestAPI(endpoint, embed) {
+function useFetchRestAPI(endpoint, embed, modifyBaseSlugs) {
     if (embed === void 0) { embed = true; }
+    if (modifyBaseSlugs === void 0) { modifyBaseSlugs = true; }
     return __awaiter(this, void 0, void 0, function () {
-        var config, headers, embedParam, url, res, json;
+        var config, headers, embedParam, url, res, json, cptBaseSlugs;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     if (!endpoint)
                         throw new Error('You must pass in an endpoint to useFetchRestAPI');
-                    return [4 /*yield*/, (0, useBlockConfig_1.useServerBlockConfig)()];
+                    return [4 /*yield*/, (0, useBlockConfig_1.useBlockConfig)()
+                        // const config = blockConfig
+                    ];
                 case 1:
                     config = _a.sent();
-                    if (!config.wpUrl)
+                    // const config = blockConfig
+                    if (!(config === null || config === void 0 ? void 0 : config.wpUrl))
                         throw new Error('wpUrl is missing from NextWP global config -- this is required to use useFetchRestAPI.');
-                    if (!config.wpJwt)
+                    if (!(config === null || config === void 0 ? void 0 : config.wpJwt))
                         throw new Error('wpJwt is missing from NextWP global config -- this is required to use useFetchRestAPI.');
                     headers = {
                         'Content-Type': 'application/json',
@@ -118,6 +122,42 @@ function useFetchRestAPI(endpoint, embed) {
                     return [4 /*yield*/, res.json()];
                 case 3:
                     json = _a.sent();
+                    cptBaseSlugs = config.cptBaseSlugs;
+                    if (modifyBaseSlugs && cptBaseSlugs) {
+                        // the dev has provided baseSlugs to prepend to certain post type's slugs, which we do below:
+                        if (!Array.isArray(json))
+                            json = [json];
+                        json.map(function (post) {
+                            // modify post object's slug:
+                            if (post && post.type && cptBaseSlugs[post.type]) {
+                                post.slug = "".concat(cptBaseSlugs[post.type]).concat(post.slug);
+                            }
+                            // modify any post slugs for any posts in ACF relationship fields
+                            if (post.has_blocks && post.blocksData && post.blocksData.length) {
+                                post.blocksData.map(function (block) {
+                                    if (block.attrs.hasRelationshipFields) {
+                                        // let blockFieldValues = Object.values(block.attrs.data)
+                                        var blockFields = Object.entries(block.attrs.data);
+                                        blockFields = blockFields.map(function (_a) {
+                                            var key = _a[0], val = _a[1];
+                                            if (val && val.value && (val.type == 'relationship' || val.type == 'page_link' || val.type == 'post_object')) {
+                                                val.value = val.value.map(function (relatedPost) {
+                                                    if (relatedPost && relatedPost.post_type && cptBaseSlugs[relatedPost.post_type]) {
+                                                        relatedPost.slug = "".concat(cptBaseSlugs[relatedPost.post_type]).concat(relatedPost.post_name);
+                                                    }
+                                                    return relatedPost;
+                                                });
+                                            }
+                                            return [key, val];
+                                        });
+                                        block.attrs.data = Object.fromEntries(blockFields);
+                                    }
+                                    return block;
+                                });
+                            }
+                            return post;
+                        });
+                    }
                     if (json.errors) {
                         console.error(json.errors);
                         throw new Error('Failed to fetch data from REST API: ', json.errors);

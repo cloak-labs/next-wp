@@ -49,22 +49,4 @@ export default function Group({block}) {
             </div>
         )
     }
-    // return (
-    //     <ConditionalWrapper
-    //         condition={align != 'full'}
-    //         wrapper={(children) => <Container className="relative">{children}</Container>}
-    //     >
-    //         <div
-    //             className={align != 'full' && groupClasses}
-    //             style={styles}
-    //         >
-    //             <ConditionalWrapper
-    //                 condition={align == 'full'}
-    //                 wrapper={(children) => <Container className={classNames("relative", groupClasses)}>{children}</Container>}
-    //             >
-    //                 {block?.innerBlocks?.map((innerBlock, index) => <Block key={index} block={innerBlock} parentBlock={block} isNested={true} className="min-w-[150px]" /> )}
-    //             </ConditionalWrapper>
-    //         </div>
-    //     </ConditionalWrapper>
-    // )
 }

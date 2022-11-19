@@ -1,4 +1,4 @@
-import useBlockConfig from "nextwp/hooks/useBlockConfig";
+import { useBlockConfig } from "../hooks/useBlockConfig";
 
 export default async function regenerateStaticPage(req, res){
     const config = useBlockConfig()

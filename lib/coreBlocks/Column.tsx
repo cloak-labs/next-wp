@@ -2,7 +2,7 @@ import Block from "../Block";
 import { useBlockStyleBuilder } from "../hooks/useBlockStyleBuilder";
 import classNames from "../utils/classNames";
 
-export default function Column({column, width, index}) {
+export default function Column({column, width, index, numColumns}) {
     const {classes, styles} = useBlockStyleBuilder(column)
 
     let colSpan = 6 // default to 50% if no column width is defined
@@ -26,7 +26,18 @@ export default function Column({column, width, index}) {
     }
 
     return(
-        <div className={classNames('flex flex-col space-y-4', `col-span-${colSpan}`, classes)} style={styles}>
+        <div 
+            className={classNames(
+                'flex flex-col',
+                `col-span-${colSpan}`,
+                classes,
+                numColumns == 2 && 'space-y-3',
+                (numColumns > 2 && numColumns <= 4) && 'space-y-2',
+                (numColumns > 4 && numColumns <= 6) && 'space-y-1',
+                numColumns > 6 && 'space-y-0.5',
+            )} 
+            style={styles}
+        >
             {column?.innerBlocks?.map((block, index) => <Block key={index} block={block} parentBlock={column} isNested={true} /> )}  
         </div>
     )

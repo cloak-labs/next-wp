@@ -13,5 +13,6 @@ export class NextWP {
         this.wpJwt = config.wpJwt
         this.wpGraphQlBaseURL = config.wpGraphQlBaseURL
         this.wpAuthRefreshToken = config.wpAuthRefreshToken
+        this.cptBaseSlugs = config.cptBaseSlugs
     }
 } 

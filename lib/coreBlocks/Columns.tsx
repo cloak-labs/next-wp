@@ -8,28 +8,50 @@ import Column from "./Column"
 export default function Columns({block}) {
     const {classes, styles} = useBlockStyleBuilder(block.data)
     const columns = block.data.innerBlocks
-    let columnWidths = columns.map(col => parseFloat(col.attrs.width))
+    const numColumns = columns.length
+    let columnWidths = columns.map(col => {
+        const widthVal = parseFloat(col.attrs.width)
+        return widthVal ? widthVal : (100 / columns.length) // if no width is specified, we make this safe mathematical assumption
+    })
     
-    // Ensure column widths add up to 100% (Gutenberg doesn't force the columns to add up to 100%; they can add up to more or less but we don't want that)
+    // .. Ensure column widths add up to 100% (Gutenberg doesn't force the columns to add up to 100%; they can add up to more or less but we don't want that!)
     // eg. 2 columns with 60% and 45% widths (total of 105%) will be adjusted below to become 57.5% and 42.5% (total of 100%)
+    console.log('col widths BEFORE', columnWidths)
     let totalWidth = 0
-    columnWidths.forEach(width => totalWidth += width)
+    columnWidths.forEach(width => {
+        if(width) totalWidth += width
+    })
     const isOver = totalWidth > 100
     const isUnder = totalWidth < 100
     if(isOver || isUnder){
-      const extra = Math.abs(100 - totalWidth)
-      const adjustment = extra / columns.length
-      columnWidths = columnWidths.map(width => isOver ? width - adjustment : width + adjustment)
+        const extra = Math.abs(100 - totalWidth)
+        const adjustment = extra / columns.length
+        columnWidths = columnWidths.map(width => isOver ? width - adjustment : width + adjustment)
     }
+    console.log('col widths AFTER', columnWidths)
 
     return (
         <ConditionalWrapper
             condition={block.isNested == false}
-            wrapper={(children) => <Container className={classNames("py-12", classes)} style={styles} innerClassName={`grid grid-cols-1 grid-cols-12 gap-10 lg:gap-20`}>{children}</Container>}
+            wrapper={(children) => (
+                <Container
+                    className={classNames("py-2", classes)}
+                    style={styles}
+                    innerClassName={classNames(
+                        "grid",
+                        numColumns == 2 && 'gap-10 lg:gap-16 2xl:gap-20 grid-cols-1 sm:grid-cols-12',
+                        (numColumns > 2 && numColumns <= 4) && 'gap-6 lg:gap-8 grid-cols-1 sm:grid-cols-8 lg:grid-cols-12',
+                        (numColumns > 4 && numColumns <= 6) && 'gap-3 lg:gap-4 grid-cols-1 xs:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-12',
+                        numColumns > 6 && 'gap-2 lg:gap-3 grid-cols-1 sm:grid-cols-12'
+                    )}
+                >
+                    {children}
+                </Container>
+            )}
         >
             {columns?.map((column, i) => (
                 <Fragment key={i}>
-                    <Column column={column} index={i} width={columnWidths[i]} />
+                    <Column column={column} index={i} width={columnWidths[i]} numColumns={numColumns} />
                 </Fragment>                
             ) )}
         </ConditionalWrapper>
