@@ -17,7 +17,7 @@ var Button_1 = require("../components/Button");
 var useBlockStyleBuilder_1 = require("../hooks/useBlockStyleBuilder");
 function ButtonBlock(_a) {
     var block = _a.block;
-    var config = (0, useBlockConfig_1.default)();
+    var config = (0, useBlockConfig_1.useBlockConfig)();
     var _b = (0, useBlockStyleBuilder_1.useBlockStyleBuilder)(block.data), classes = _b.classes, styles = _b.styles;
     var _c = block.data.attrs, backgroundColor = _c.backgroundColor, className = _c.className, text = _c.text, url = _c.url;
     var color = 'blue';
