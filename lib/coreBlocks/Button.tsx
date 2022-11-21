@@ -1,4 +1,4 @@
-import useBlockConfig from "../hooks/useBlockConfig"
+import { useBlockConfig } from "../hooks/useBlockConfig"
 import Button from "../components/Button" 
 import { useBlockStyleBuilder } from "../hooks/useBlockStyleBuilder"
 

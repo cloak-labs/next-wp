@@ -88,11 +88,10 @@ function useFetchRestAPI(endpoint, embed, modifyBaseSlugs) {
                 case 0:
                     if (!endpoint)
                         throw new Error('You must pass in an endpoint to useFetchRestAPI');
-                    return [4 /*yield*/, (0, useBlockConfig_1.useBlockConfig)()
-                        // const config = blockConfig
-                    ];
+                    return [4 /*yield*/, (0, useBlockConfig_1.useBlockConfig)()];
                 case 1:
                     config = _a.sent();
+                    console.log("config in useFetchRestAPI: ", config);
                     // const config = blockConfig
                     if (!(config === null || config === void 0 ? void 0 : config.wpUrl))
                         throw new Error('wpUrl is missing from NextWP global config -- this is required to use useFetchRestAPI.');
