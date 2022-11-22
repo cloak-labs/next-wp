@@ -12,12 +12,12 @@ var __assign = (this && this.__assign) || function () {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var jsx_runtime_1 = require("react/jsx-runtime");
-var useBlockConfig_1 = require("../hooks/useBlockConfig");
+var useGlobalConfig_1 = require("../hooks/useGlobalConfig");
 var Button_1 = require("../components/Button");
 var useBlockStyleBuilder_1 = require("../hooks/useBlockStyleBuilder");
 function ButtonBlock(_a) {
     var block = _a.block;
-    var config = (0, useBlockConfig_1.useBlockConfig)();
+    var config = (0, useGlobalConfig_1.useGlobalConfig)();
     var _b = (0, useBlockStyleBuilder_1.useBlockStyleBuilder)(block.data), classes = _b.classes, styles = _b.styles;
     var _c = block.data.attrs, backgroundColor = _c.backgroundColor, className = _c.className, text = _c.text, url = _c.url;
     var color = 'blue';

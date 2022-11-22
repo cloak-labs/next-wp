@@ -37,7 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.useFetchRestAPI = exports.fetchGraphAPI = void 0;
-var useBlockConfig_1 = require("../hooks/useBlockConfig");
+var useGlobalConfig_1 = require("../hooks/useGlobalConfig");
 function fetchGraphAPI(query, _a) {
     if (query === void 0) { query = ''; }
     var _b = _a === void 0 ? {} : _a, variables = _b.variables;
@@ -45,7 +45,7 @@ function fetchGraphAPI(query, _a) {
         var config, headers, res, json;
         return __generator(this, function (_c) {
             switch (_c.label) {
-                case 0: return [4 /*yield*/, (0, useBlockConfig_1.useBlockConfig)()];
+                case 0: return [4 /*yield*/, (0, useGlobalConfig_1.useGlobalConfig)()];
                 case 1:
                     config = _c.sent();
                     if (!config.wpGraphQlBaseURL)
@@ -88,7 +88,7 @@ function useFetchRestAPI(endpoint, embed, modifyBaseSlugs) {
                 case 0:
                     if (!endpoint)
                         throw new Error('You must pass in an endpoint to useFetchRestAPI');
-                    return [4 /*yield*/, (0, useBlockConfig_1.useBlockConfig)()];
+                    return [4 /*yield*/, (0, useGlobalConfig_1.useGlobalConfig)()];
                 case 1:
                     config = _a.sent();
                     console.log("config in useFetchRestAPI: ", config);

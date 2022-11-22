@@ -1,4 +1,8 @@
 "use strict";
+/* DEVELOPMENT:
+*   While testing locally, uncomment the below line and specify the absolute path to the next-wp config file of the project you're testing with via npm link
+*/
+// import devBlockConfig from 'C:/Users/Kaelan Smith/Documents/Stikky Media/Lionheart Coaching/website-2/tailwindui-pocket/next-wp.config.js';
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -36,34 +40,20 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var useGlobalConfig_1 = require("../hooks/useGlobalConfig");
-function regenerateStaticPage(req, res) {
+exports.useGlobalConfig = void 0;
+// * Below, I tried dynamically using the imported config based on whether NODE_ENV == production or development.. but a "Module not found" error will always occur for one of the above imports, so I'm abandoning this for now and just manually commenting out the development/testing import 
+// const config = {
+//     development: devBlockConfig,
+//     production: blockConfig
+// }[process.NODE_ENV]
+function useGlobalConfig() {
     return __awaiter(this, void 0, void 0, function () {
-        var config, _a, slug, secret, error_1;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0:
-                    config = (0, useGlobalConfig_1.useGlobalConfig)();
-                    _a = req.query, slug = _a.slug, secret = _a.secret;
-                    _b.label = 1;
-                case 1:
-                    _b.trys.push([1, 3, , 4]);
-                    if (secret !== config.wpSecret) {
-                        throw 'Page Revalidation - Invalid preview secret';
-                    }
-                    return [4 /*yield*/, res.revalidate("/".concat(slug)).catch(function (err) {
-                            throw "Page Revalidation - Can't revalidate slug '/".concat(slug, "'");
-                        })];
-                case 2:
-                    _b.sent();
-                    return [2 /*return*/, res.json({ page: "/".concat(slug), revalidated: true })];
-                case 3:
-                    error_1 = _b.sent();
-                    console.error(new Error(error_1));
-                    return [2 /*return*/, res.status(500).send({ error: error_1, slug: "/".concat(slug) })];
-                case 4: return [2 /*return*/];
-            }
+        return __generator(this, function (_a) {
+            // let config = blockConfig
+            if (!config)
+                throw Error("You're missing a blockConfig object in your root-level next-wp.config.js file.");
+            return [2 /*return*/, config];
         });
     });
 }
-exports.default = regenerateStaticPage;
+exports.useGlobalConfig = useGlobalConfig;

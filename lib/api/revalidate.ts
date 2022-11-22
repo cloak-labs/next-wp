@@ -1,7 +1,7 @@
-import { useBlockConfig } from "../hooks/useBlockConfig";
+import { useGlobalConfig } from "../hooks/useGlobalConfig";
 
 export default async function regenerateStaticPage(req, res){
-    const config = useBlockConfig()
+    const config = useGlobalConfig()
     const { slug, secret } = req.query;
 
     try {

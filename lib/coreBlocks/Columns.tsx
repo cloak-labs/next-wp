@@ -4,6 +4,7 @@ import { useBlockStyleBuilder } from "../hooks/useBlockStyleBuilder"
 import { Fragment } from "react"
 import classNames from "../utils/classNames"
 import Column from "./Column"
+import Block from "../Block"
 
 export default function Columns({block}) {
     const {classes, styles} = useBlockStyleBuilder(block.data)
@@ -51,9 +52,10 @@ export default function Columns({block}) {
         >
             {columns?.map((column, i) => (
                 <Fragment key={i}>
-                    <Column column={column} index={i} width={columnWidths[i]} numColumns={numColumns} />
+                    <Block block={column} parentBlock={block.data} isNested={true} index={i} width={columnWidths[i]} numColumns={numColumns} />
+                    {/* <Column column={column} index={i} width={columnWidths[i]} numColumns={numColumns} /> */}
                 </Fragment>                
-            ) )}
+            ))}
         </ConditionalWrapper>
     )
 }

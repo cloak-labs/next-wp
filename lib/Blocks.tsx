@@ -1,9 +1,18 @@
 import Block from './Block'
+import ConditionalWrapper from './components/ConditionalWrapper'
+import BlockConfigProvider from './context/blockConfig'
 
-export default function Blocks({data, ...props}) {
+export default function Blocks({data, blockConfig, container, ...props}) {
 	return (
-		<>
-			{data?.map((block, i) => <Block key={i} block={block} {...props} /> )}
-		</>
+		<ConditionalWrapper
+			condition={blockConfig}
+			wrapper={(children) => (
+				<BlockConfigProvider value={blockConfig} >
+					{children}
+				</BlockConfigProvider>
+			)}
+		>
+			{data?.map((block, i) => <Block key={i} index={i} block={block} container={container} {...props} /> )}
+		</ConditionalWrapper>
 	)
 }

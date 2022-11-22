@@ -1,33 +1,35 @@
 import {
 	Heading,
-	Columns,
 	Paragraph,
-	Embed,
-	Image,
-	List,
-	Buttons,
+	Columns,
+    Column,
 	Group,
-    ListItem
+	List,
+    ListItem,
+	Buttons,
+    Button,
+	Image,
+    Html,
+	Embed,
 } from './coreBlocks'
 import Container from './components/Container'
 import ConditionalWrapper from './components/ConditionalWrapper'
-import { useBlockConfig } from './hooks/useBlockConfig'
 import classNames from './utils/classNames'
 import { deepMerge } from './utils/deepMerge'
-import Html from './coreBlocks/Html'
+import { useBlockConfig } from './hooks/useBlockConfig'
 
 export default function Block({
 	block,
+	// blockConfig, at some point in future, allow this prop to override the blockConfig on a per-block basis by conditionally wrapping the rendered block with another <BlockConfigProvider />
 	isNested = false,
 	parentBlock,
-	customBlocks = [],
 	containerClasses = '',
 	container, // dev has the ability to override the default container function below: we pass all props to it so devs can do all kinds of custom/conditional rendering
 	containerCondition,	// dev has the ability to override the default condition that determines whether to wrap a block with a container
+    blockIndex,
 	...props
 }) {
-
-    const globalConfig = useBlockConfig()
+    const blockConfig = useBlockConfig()
     
     /*  
         next-wp provides simple/sensible defaults for core block components, the block container, 
@@ -67,6 +69,10 @@ export default function Block({
                 component: Columns,
                 container: false,
             },
+            'core/column': {
+                component: Column,
+                container: false,
+            },
             'core/group': {
                 component: Group,
                 container: false,
@@ -83,57 +89,61 @@ export default function Block({
                 component: Buttons,
                 container: true,
             },
+            'core/button': {
+                component: Button,
+                container: true,
+            },
         }
     } 
 
-    // container = container ?? (typeof globalBlockSpecificContainer != "boolean" && ) ?? globalConfig.container ?? defaults.container
-
-    // * Moved the following 2 lines below
-    // container = container ?? globalConfig.container ?? defaults.container
-    // containerCondition = containerCondition ?? globalConfig.containerCondition ?? defaults.containerCondition
-
     // A collection of Booleans that tell us whether a user-provided 'container' prop is a function at all the possible levels (helps us determine which container to use later)
-    let componentCustomBlocksLevel = typeof customBlocks[block.blockName]?.container == "function",
-        componentLevel = typeof container == "function",
-        globalCustomBlocksLevel = typeof globalConfig?.customBlocks[block.blockName]?.container == "function",
-        globalLevel = typeof globalConfig?.container == "function",
-        defaultCustomBlocksLevel = typeof defaults.blocks[block.blockName]?.container == "function"
+    let blockConfigComponentLevel = typeof blockConfig[block.blockName]?.container == "function",
+        componentContainerPropLevel = typeof container == "function",
+        // globalCustomBlocksLevel = typeof globalConfig?.blockConfig[block.blockName]?.container == "function",
+        blockConfigGlobalLevel = typeof blockConfig?.container == "function",
+        defaultComponentLevel = typeof defaults.blocks[block.blockName]?.container == "function"
     
-	const blockConfig = deepMerge( // deeply merges the following configs to produce a final "master" config
-        defaults.blocks, // lowest priority (defaults)
-        globalConfig.customBlocks, // middle priority (global config)
-        customBlocks // highest priority (<Block customBlocks={{...}} />)
+	const finalConfig = deepMerge( // deeply merges the following configs to produce a final "master" config
+        {...defaults.blocks}, // lowest priority (defaults)
+        // globalConfig.blockConfig, // middle priority (global config)
+        {...blockConfig} // highest priority (<Block blockConfig={{...}} />)
     )[block.blockName] // immediately after deep merging, we pick out the specific block we're currently rendering from the final config
     
-    if(!blockConfig) return <></>
+    if(!finalConfig) {
+        console.error(`Failed to render Block (${block.blockName}) due to missing config object for this particular block. You probably didn't provide a 'blockConfig' prop to your <Blocks /> component, or failed to include a sub-object for '${block.blockName}'.`)
+        return <></>
+    }
     
-    const { component: Component, props: configProps } = blockConfig
+    const { component: Component, props: configProps } = finalConfig
 
     container =
-        componentCustomBlocksLevel ? customBlocks?.[block.blockName].container : (
-            componentLevel ? container : (
-                globalCustomBlocksLevel ? globalConfig?.customBlocks[block.blockName]?.container : (
-                    globalLevel ? globalConfig.container : (
-                        defaultCustomBlocksLevel ? defaults.blocks[block.blockName]?.container : defaults.container
+        blockConfigComponentLevel ? blockConfig[block.blockName]?.container : (
+            componentContainerPropLevel ? container : (
+                // globalCustomBlocksLevel ? blockConfig?.blockConfig[block.blockName]?.container : (
+                    blockConfigGlobalLevel ? blockConfig?.container : (
+                        defaultComponentLevel ? defaults.blocks[block.blockName]?.container : defaults.container
                     )
-                )
+                // )
             )
         ); // lots of ways for devs to provide a custom container, each way takes a higher/lower precedent over the next way
 
-    containerCondition = containerCondition ?? globalConfig.containerCondition ?? defaults.containerCondition
+    containerCondition = containerCondition ?? finalConfig.containerCondition ?? blockConfig.containerCondition ?? defaults.containerCondition
 
-    props = { // merge custom props provided to Block component with custom props provided by global config
-        ...configProps,
-        ...props // props provided to Block component will override matching props in global config
+    props = deepMerge( // merge custom props provided to Block component with custom props provided by default/block config
+        configProps,
+        props
+    )
+
+    if(!Component) {
+        console.error(`Failed to render Block (${block.blockName}) due to a missing component. You probably didn't provide this block with a 'component' prop in your 'blockConfig'.`)
+        return <></>
     }
-
-    if(!Component) return <></>
 
     const blockObj = {
         isNested,
         data: block,
         parent: parentBlock,
-        config: blockConfig
+        config: finalConfig
     }
 
     return (
