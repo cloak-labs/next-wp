@@ -24,8 +24,10 @@ var __rest = (this && this.__rest) || function (s, e) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var jsx_runtime_1 = require("react/jsx-runtime");
 var Block_1 = require("./Block");
+var ConditionalWrapper_1 = require("./components/ConditionalWrapper");
+var blockConfig_1 = require("./context/blockConfig");
 function Blocks(_a) {
-    var data = _a.data, props = __rest(_a, ["data"]);
-    return ((0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, { children: data === null || data === void 0 ? void 0 : data.map(function (block, i) { return (0, jsx_runtime_1.jsx)(Block_1.default, __assign({ block: block }, props), i); }) }));
+    var data = _a.data, blockConfig = _a.blockConfig, container = _a.container, props = __rest(_a, ["data", "blockConfig", "container"]);
+    return ((0, jsx_runtime_1.jsx)(ConditionalWrapper_1.default, __assign({ condition: blockConfig, wrapper: function (children) { return ((0, jsx_runtime_1.jsx)(blockConfig_1.default, __assign({ value: blockConfig }, { children: children }))); } }, { children: data === null || data === void 0 ? void 0 : data.map(function (block, i) { return (0, jsx_runtime_1.jsx)(Block_1.default, __assign({ index: i, block: block, container: container }, props), i); }) })));
 }
 exports.default = Blocks;

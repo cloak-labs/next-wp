@@ -2,8 +2,9 @@ import Block from "../Block";
 import { useBlockStyleBuilder } from "../hooks/useBlockStyleBuilder";
 import classNames from "../utils/classNames";
 
-export default function Column({column, width, index, numColumns}) {
-    const {classes, styles} = useBlockStyleBuilder(column)
+export default function Column({block, width, index, numColumns}) {
+    console.log('** column block: ', block)
+    const {classes, styles} = useBlockStyleBuilder(block.data)
 
     let colSpan = 6 // default to 50% if no column width is defined
     
@@ -38,7 +39,7 @@ export default function Column({column, width, index, numColumns}) {
             )} 
             style={styles}
         >
-            {column?.innerBlocks?.map((block, index) => <Block key={index} block={block} parentBlock={column} isNested={true} /> )}  
+            {block?.data?.innerBlocks?.map((innerBlock, index) => <Block key={index} block={innerBlock} parentBlock={block} isNested={true} /> )}  
         </div>
     )
 }

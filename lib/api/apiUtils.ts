@@ -1,7 +1,7 @@
-import { useBlockConfig } from "../hooks/useBlockConfig";
+import { useGlobalConfig } from "../hooks/useGlobalConfig";
 
 export async function fetchGraphAPI(query = '', { variables } = {}) {
-    const config = await useBlockConfig()
+    const config = await useGlobalConfig()
     if(!config.wpGraphQlBaseURL) throw new Error('wpGraphQlBaseURL is missing from NextWP global config -- this is required to use fetchGraphAPI.')
     // if(!config.wpAuthRefreshToken) throw 'wpAuthRefreshToken is missing from NextWP global config -- this is required to use fetchGraphAPI.'
 
@@ -32,7 +32,7 @@ export async function fetchGraphAPI(query = '', { variables } = {}) {
 
 export async function useFetchRestAPI(endpoint, embed = true, modifyBaseSlugs = true) {
     if(!endpoint) throw new Error('You must pass in an endpoint to useFetchRestAPI')
-    const config = await useBlockConfig()
+    const config = await useGlobalConfig()
     console.log("config in useFetchRestAPI: ", config)
     // const config = blockConfig
     if(!config?.wpUrl) throw new Error('wpUrl is missing from NextWP global config -- this is required to use useFetchRestAPI.')

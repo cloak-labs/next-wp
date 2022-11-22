@@ -1,10 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Paragraph = exports.ListItem = exports.List = exports.Image = exports.Html = exports.Heading = exports.Group = exports.Embed = exports.Columns = exports.Buttons = void 0;
+exports.Paragraph = exports.ListItem = exports.List = exports.Image = exports.Html = exports.Heading = exports.Group = exports.Embed = exports.Column = exports.Columns = exports.Button = exports.Buttons = void 0;
 var Buttons_1 = require("./Buttons");
 Object.defineProperty(exports, "Buttons", { enumerable: true, get: function () { return Buttons_1.default; } });
+var Button_1 = require("./Button");
+Object.defineProperty(exports, "Button", { enumerable: true, get: function () { return Button_1.default; } });
 var Columns_1 = require("./Columns");
 Object.defineProperty(exports, "Columns", { enumerable: true, get: function () { return Columns_1.default; } });
+var Column_1 = require("./Column");
+Object.defineProperty(exports, "Column", { enumerable: true, get: function () { return Column_1.default; } });
 var Embed_1 = require("./Embed");
 Object.defineProperty(exports, "Embed", { enumerable: true, get: function () { return Embed_1.default; } });
 var Group_1 = require("./Group");

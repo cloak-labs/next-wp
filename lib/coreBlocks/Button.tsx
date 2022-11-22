@@ -1,9 +1,9 @@
-import { useBlockConfig } from "../hooks/useBlockConfig"
+import { useGlobalConfig } from "../hooks/useGlobalConfig"
 import Button from "../components/Button" 
 import { useBlockStyleBuilder } from "../hooks/useBlockStyleBuilder"
 
 export default function ButtonBlock({block}) {
-    const config = useBlockConfig()
+    const config = useGlobalConfig()
     const {classes, styles} = useBlockStyleBuilder(block.data)
     let { backgroundColor, className, text, url } = block.data.attrs
 

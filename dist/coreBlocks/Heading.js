@@ -19,6 +19,7 @@ function Heading(_a) {
     var block = _a.block, className = _a.className, tags = _a.tags;
     var _b = (0, useBlockStyleBuilder_1.useBlockStyleBuilder)(block.data), classes = _b.classes, styles = _b.styles;
     var _c = block.data.attrs, level = _c.level, content = _c.content;
+    console.log('heading tags: ', tags);
     var Tag = __assign({ 1: 'h1', 2: 'h2', 3: 'h3', 4: 'h4', 5: 'h5', 6: 'h6' }, tags // dev can override how 1 or more headings get rendered by providing an object "tags" in global config or as Block prop 
     )[level];
     return (0, jsx_runtime_1.jsx)(Tag, __assign({ className: (0, classNames_1.default)(classes, className), style: styles, block: block }, { children: (0, html_react_parser_1.default)(content) }));

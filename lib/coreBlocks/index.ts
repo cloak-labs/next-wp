@@ -1,5 +1,7 @@
 export { default as Buttons } from './Buttons'
+export { default as Button } from './Button'
 export { default as Columns } from './Columns'
+export { default as Column } from './Column'
 export { default as Embed } from './Embed'
 export { default as Group } from './Group'
 export { default as Heading } from './Heading'

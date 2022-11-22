@@ -16,9 +16,10 @@ var Block_1 = require("../Block");
 var useBlockStyleBuilder_1 = require("../hooks/useBlockStyleBuilder");
 var classNames_1 = require("../utils/classNames");
 function Column(_a) {
-    var _b;
-    var column = _a.column, width = _a.width, index = _a.index, numColumns = _a.numColumns;
-    var _c = (0, useBlockStyleBuilder_1.useBlockStyleBuilder)(column), classes = _c.classes, styles = _c.styles;
+    var _b, _c;
+    var block = _a.block, width = _a.width, index = _a.index, numColumns = _a.numColumns;
+    console.log('** column block: ', block);
+    var _d = (0, useBlockStyleBuilder_1.useBlockStyleBuilder)(block.data), classes = _d.classes, styles = _d.styles;
     var colSpan = 6; // default to 50% if no column width is defined
     if (width) { // given a percentage width, we need to find the closest matching column width from our 12-column grid system (i.e. 50% == col-span-6, and 52% also == col-span-6)
         var gridColWidths = [8.333, 16.667, 25, 33.333, 41.667, 50, 58.333, 66.667, 75, 83.333, 91.667, 100];
@@ -38,6 +39,6 @@ function Column(_a) {
             lastDiff = diff;
         }
     }
-    return ((0, jsx_runtime_1.jsx)("div", __assign({ className: (0, classNames_1.default)('flex flex-col', "col-span-".concat(colSpan), classes, numColumns == 2 && 'space-y-3', (numColumns > 2 && numColumns <= 4) && 'space-y-2', (numColumns > 4 && numColumns <= 6) && 'space-y-1', numColumns > 6 && 'space-y-0.5'), style: styles }, { children: (_b = column === null || column === void 0 ? void 0 : column.innerBlocks) === null || _b === void 0 ? void 0 : _b.map(function (block, index) { return (0, jsx_runtime_1.jsx)(Block_1.default, { block: block, parentBlock: column, isNested: true }, index); }) })));
+    return ((0, jsx_runtime_1.jsx)("div", __assign({ className: (0, classNames_1.default)('flex flex-col', "col-span-".concat(colSpan), classes, numColumns == 2 && 'space-y-3', (numColumns > 2 && numColumns <= 4) && 'space-y-2', (numColumns > 4 && numColumns <= 6) && 'space-y-1', numColumns > 6 && 'space-y-0.5'), style: styles }, { children: (_c = (_b = block === null || block === void 0 ? void 0 : block.data) === null || _b === void 0 ? void 0 : _b.innerBlocks) === null || _c === void 0 ? void 0 : _c.map(function (innerBlock, index) { return (0, jsx_runtime_1.jsx)(Block_1.default, { block: innerBlock, parentBlock: block, isNested: true }, index); }) })));
 }
 exports.default = Column;
