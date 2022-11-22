@@ -1,11 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.useFetchRestAPI = exports.fetchGraphAPI = exports.regenerateStaticPage = exports.deepMerge = exports.usePaths = exports.usePosts = exports.usePost = exports.usePreview = exports.usePage = exports.useBlockStyleBuilder = exports.useBlockConfig = exports.useGlobalConfig = exports.Block = exports.Blocks = exports.BlockConfigProvider = exports.NextWP = void 0;
+exports.useFetchRestAPI = exports.fetchGraphAPI = exports.regenerateStaticPage = exports.deepMerge = exports.usePaths = exports.usePosts = exports.usePost = exports.usePreview = exports.usePage = exports.useBlockStyleBuilder = exports.useBlockConfig = exports.useGlobalConfig = exports.Block = exports.Blocks = exports.BlockConfigProvider = void 0;
 // Context
+// export { NextWP } from './context/blockConfig';
 var blockConfig_1 = require("./context/blockConfig");
-Object.defineProperty(exports, "NextWP", { enumerable: true, get: function () { return blockConfig_1.NextWP; } });
-var blockConfig_2 = require("./context/blockConfig");
-Object.defineProperty(exports, "BlockConfigProvider", { enumerable: true, get: function () { return blockConfig_2.default; } });
+Object.defineProperty(exports, "BlockConfigProvider", { enumerable: true, get: function () { return blockConfig_1.default; } });
 // Components
 var Blocks_1 = require("./Blocks");
 Object.defineProperty(exports, "Blocks", { enumerable: true, get: function () { return Blocks_1.default; } });

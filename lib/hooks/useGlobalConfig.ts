@@ -15,7 +15,7 @@ import blockConfig from '../../../../next-wp.config.js';
 // }[process.NODE_ENV]
 
 export async function useGlobalConfig() {
-    // let config = blockConfig
+    let config = blockConfig
     if(!config) throw Error("You're missing a blockConfig object in your root-level next-wp.config.js file.")
     return config
 }

@@ -1,5 +1,5 @@
 // Context
-export { NextWP } from './context/blockConfig';
+// export { NextWP } from './context/blockConfig';
 export { default as BlockConfigProvider } from './context/blockConfig';
 
 // Components

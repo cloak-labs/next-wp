@@ -41,6 +41,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.useGlobalConfig = void 0;
+/* FOR PRODUCTION:
+*   In production, we grab the next-wp config using a relative path, which assumes the user's node_modules folder is at the root level, and next-wp.config is also at the root level.. can improve this later to work in edge-case scenarios
+*/
+var next_wp_config_js_1 = require("../../../../next-wp.config.js");
 // * Below, I tried dynamically using the imported config based on whether NODE_ENV == production or development.. but a "Module not found" error will always occur for one of the above imports, so I'm abandoning this for now and just manually commenting out the development/testing import 
 // const config = {
 //     development: devBlockConfig,
@@ -48,8 +52,9 @@ exports.useGlobalConfig = void 0;
 // }[process.NODE_ENV]
 function useGlobalConfig() {
     return __awaiter(this, void 0, void 0, function () {
+        var config;
         return __generator(this, function (_a) {
-            // let config = blockConfig
+            config = next_wp_config_js_1.default;
             if (!config)
                 throw Error("You're missing a blockConfig object in your root-level next-wp.config.js file.");
             return [2 /*return*/, config];
