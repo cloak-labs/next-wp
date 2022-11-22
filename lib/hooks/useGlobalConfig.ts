@@ -12,7 +12,7 @@ const blockConfig = require('../../../../next-wp.config.js'); // CommonJS versio
 // * Below, I tried dynamically using the imported config based on whether NODE_ENV == production or development.. but a "Module not found" error will always occur for one of the above imports, so I'm abandoning this for now and just manually commenting out the development/testing import 
 // const config = {
 //     development: devBlockConfig,
-//     production: blockConfig
+//     production: blockConfig`
 // }[process.NODE_ENV]
 
 export async function useGlobalConfig() {
