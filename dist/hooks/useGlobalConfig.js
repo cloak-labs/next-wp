@@ -1,8 +1,4 @@
 "use strict";
-/* DEVELOPMENT:
-*   While testing locally, uncomment the below line and specify the absolute path to the next-wp config file of the project you're testing with via npm link
-*/
-// import devBlockConfig from 'C:/Users/Kaelan Smith/Documents/Stikky Media/Lionheart Coaching/website-2/tailwindui-pocket/next-wp.config.js';
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -41,10 +37,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.useGlobalConfig = void 0;
+/* DEVELOPMENT:
+*   While testing locally, uncomment the below line and specify the absolute path to the next-wp config file of the project you're testing with via npm link
+*/
+var next_wp_config_js_1 = require("C:/Users/Kaelan Smith/Documents/Stikky Media/Lionheart Coaching/website-2/tailwindui-pocket/next-wp.config.js");
 /* FOR PRODUCTION:
 *   In production, we grab the next-wp config using a relative path, which assumes the user's node_modules folder is at the root level, and next-wp.config is also at the root level.. can improve this later to work in edge-case scenarios
 */
-var next_wp_config_js_1 = require("../../../../next-wp.config.js");
+// import blockConfig from '../../../../next-wp.config.js';
 // * Below, I tried dynamically using the imported config based on whether NODE_ENV == production or development.. but a "Module not found" error will always occur for one of the above imports, so I'm abandoning this for now and just manually commenting out the development/testing import 
 // const config = {
 //     development: devBlockConfig,
