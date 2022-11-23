@@ -37,7 +37,7 @@ function Block(_a) {
     // blockConfig, at some point in future, allow this prop to override the blockConfig on a per-block basis by conditionally wrapping the rendered block with another <BlockConfigProvider />
     isNested = _h === void 0 ? false : _h, parentBlock = _a.parentBlock, _j = _a.containerClasses, containerClasses = _j === void 0 ? '' : _j, container = _a.container, // dev has the ability to override the default container function below: we pass all props to it so devs can do all kinds of custom/conditional rendering
     containerCondition = _a.containerCondition, // dev has the ability to override the default condition that determines whether to wrap a block with a container
-    blockIndex = _a.blockIndex, props = __rest(_a, ["block", "isNested", "parentBlock", "containerClasses", "container", "containerCondition", "blockIndex"]);
+    props = __rest(_a, ["block", "isNested", "parentBlock", "containerClasses", "container", "containerCondition"]);
     var blockConfig = (0, useBlockConfig_1.useBlockConfig)();
     /*
         next-wp provides simple/sensible defaults for core block components, the block container,
@@ -118,7 +118,7 @@ function Block(_a) {
         console.error("Failed to render Block (".concat(block.blockName, ") due to missing config object for this particular block. You probably didn't provide a 'blockConfig' prop to your <Blocks /> component, or failed to include a sub-object for '").concat(block.blockName, "'."));
         return (0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, {});
     }
-    var Component = finalConfig.component, configProps = finalConfig.props;
+    var Component = finalConfig.component, _k = finalConfig.props, configProps = _k === void 0 ? {} : _k;
     container =
         blockConfigComponentLevel ? (_d = blockConfig[block.blockName]) === null || _d === void 0 ? void 0 : _d.container : (componentContainerPropLevel ? container : (
         // globalCustomBlocksLevel ? blockConfig?.blockConfig[block.blockName]?.container : (
@@ -126,7 +126,7 @@ function Block(_a) {
         // )
         )); // lots of ways for devs to provide a custom container, each way takes a higher/lower precedent over the next way
     containerCondition = (_g = (_f = containerCondition !== null && containerCondition !== void 0 ? containerCondition : finalConfig.containerCondition) !== null && _f !== void 0 ? _f : blockConfig.containerCondition) !== null && _g !== void 0 ? _g : defaults.containerCondition;
-    props = (0, deepMerge_1.deepMerge)(// merge custom props provided to Block component with custom props provided by default/block config
+    var finalProps = (0, deepMerge_1.deepMerge)(// merge custom props provided to Block component with custom props provided by default/block config
     configProps, props);
     if (!Component) {
         console.error("Failed to render Block (".concat(block.blockName, ") due to a missing component. You probably didn't provide this block with a 'component' prop in your 'blockConfig'."));
@@ -138,6 +138,6 @@ function Block(_a) {
         parent: parentBlock,
         config: finalConfig
     };
-    return ((0, jsx_runtime_1.jsx)(ConditionalWrapper_1.default, __assign({ condition: function () { return containerCondition({ block: blockObj, props: props }); }, wrapper: function (children) { return container({ block: __assign(__assign({}, blockObj), { rendered: children }), props: props }); } }, { children: (0, jsx_runtime_1.jsx)(Component, __assign({ block: blockObj }, props)) })));
+    return ((0, jsx_runtime_1.jsx)(ConditionalWrapper_1.default, __assign({ condition: function () { return containerCondition({ block: blockObj, finalProps: finalProps }); }, wrapper: function (children) { return container({ block: __assign(__assign({}, blockObj), { rendered: children }), finalProps: finalProps }); } }, { children: (0, jsx_runtime_1.jsx)(Component, __assign({ block: blockObj }, finalProps)) })));
 }
 exports.default = Block;

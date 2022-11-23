@@ -5,8 +5,8 @@ import Block from '../Block'
 
 export default function List({block, className}) {
     const {classes, styles} = useBlockStyleBuilder(block.data)
-    const { attrs, innerBlocks } = block.data
-    const { ordered, values } = attrs
+    const { attrs: { ordered, values }, innerBlocks } = block.data
+    // const { ordered, values } = attrs
 
     console.log("These are supposed to be innerBlocks:", classes)
     let newListItemRenderingMethod = false
@@ -16,8 +16,10 @@ export default function List({block, className}) {
     }
     const ListType = ordered ? 'ol' : 'ul'
 
+    console.log()
+
     return (
-        <ListType className={classNames("space-y-3 pb-6", classes, className)} style={styles}>
+        <ListType className={classNames("space-y-3 pb-6 list-disc", classes, className)} style={styles}>
             {newListItemRenderingMethod ? (
                 innerBlocks?.map((block, i) => <Block key={i} block={block} />)
             ) : parse(values)}

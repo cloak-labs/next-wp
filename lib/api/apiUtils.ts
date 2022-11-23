@@ -33,8 +33,7 @@ export async function fetchGraphAPI(query = '', { variables } = {}) {
 export async function useFetchRestAPI(endpoint, embed = true, modifyBaseSlugs = true) {
     if(!endpoint) throw new Error('You must pass in an endpoint to useFetchRestAPI')
     const config = await useGlobalConfig()
-    console.log("config in useFetchRestAPI: ", config)
-    // const config = blockConfig
+
     if(!config?.wpUrl) throw new Error('wpUrl is missing from NextWP global config -- this is required to use useFetchRestAPI.')
     if(!config?.wpJwt) throw new Error('wpJwt is missing from NextWP global config -- this is required to use useFetchRestAPI.')
 
@@ -52,7 +51,7 @@ export async function useFetchRestAPI(endpoint, embed = true, modifyBaseSlugs = 
     let url = config.wpUrl
     if(url.slice(-1) != "/") url += '/' // add trailing slash if missing
 
-    console.log('fetch endpoint: ', `${url}wp-json/wp/v2${endpoint}${embedParam}`)
+    // console.log('fetch endpoint: ', `${url}wp-json/wp/v2${endpoint}${embedParam}`)
     const res = await fetch(
         `${url}wp-json/wp/v2${endpoint}${embedParam}`,
         {

@@ -91,8 +91,6 @@ function useFetchRestAPI(endpoint, embed, modifyBaseSlugs) {
                     return [4 /*yield*/, (0, useGlobalConfig_1.useGlobalConfig)()];
                 case 1:
                     config = _a.sent();
-                    console.log("config in useFetchRestAPI: ", config);
-                    // const config = blockConfig
                     if (!(config === null || config === void 0 ? void 0 : config.wpUrl))
                         throw new Error('wpUrl is missing from NextWP global config -- this is required to use useFetchRestAPI.');
                     if (!(config === null || config === void 0 ? void 0 : config.wpJwt))
@@ -111,7 +109,6 @@ function useFetchRestAPI(endpoint, embed, modifyBaseSlugs) {
                     url = config.wpUrl;
                     if (url.slice(-1) != "/")
                         url += '/'; // add trailing slash if missing
-                    console.log('fetch endpoint: ', "".concat(url, "wp-json/wp/v2").concat(endpoint).concat(embedParam));
                     return [4 /*yield*/, fetch("".concat(url, "wp-json/wp/v2").concat(endpoint).concat(embedParam), {
                             headers: headers,
                             method: 'GET',

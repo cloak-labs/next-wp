@@ -12,7 +12,7 @@ export default function Blocks({data, blockConfig, container, ...props}) {
 				</BlockConfigProvider>
 			)}
 		>
-			{data?.map((block, i) => <Block key={i} index={i} block={block} container={container} {...props} /> )}
+			{data?.map((block, i) => <Block key={i} block={block} container={container} {...props} /> )}
 		</ConditionalWrapper>
 	)
 }

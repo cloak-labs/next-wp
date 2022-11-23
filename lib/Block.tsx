@@ -26,7 +26,6 @@ export default function Block({
 	containerClasses = '',
 	container, // dev has the ability to override the default container function below: we pass all props to it so devs can do all kinds of custom/conditional rendering
 	containerCondition,	// dev has the ability to override the default condition that determines whether to wrap a block with a container
-    blockIndex,
 	...props
 }) {
     const blockConfig = useBlockConfig()
@@ -114,7 +113,7 @@ export default function Block({
         return <></>
     }
     
-    const { component: Component, props: configProps } = finalConfig
+    const { component: Component, props: configProps = {} } = finalConfig
 
     container =
         blockConfigComponentLevel ? blockConfig[block.blockName]?.container : (
@@ -128,8 +127,8 @@ export default function Block({
         ); // lots of ways for devs to provide a custom container, each way takes a higher/lower precedent over the next way
 
     containerCondition = containerCondition ?? finalConfig.containerCondition ?? blockConfig.containerCondition ?? defaults.containerCondition
-
-    props = deepMerge( // merge custom props provided to Block component with custom props provided by default/block config
+    
+    const finalProps = deepMerge( // merge custom props provided to Block component with custom props provided by default/block config
         configProps,
         props
     )
@@ -148,10 +147,10 @@ export default function Block({
 
     return (
         <ConditionalWrapper
-            condition={() => containerCondition({block: blockObj, props})}
-            wrapper={(children) => container({block: {...blockObj, rendered: children}, props})}
+            condition={() => containerCondition({block: blockObj, finalProps})}
+            wrapper={(children) => container({block: {...blockObj, rendered: children}, finalProps})}
         >
-            <Component block={blockObj} {...props} />
+            <Component block={blockObj} {...finalProps} />
         </ConditionalWrapper>
     )
 }
