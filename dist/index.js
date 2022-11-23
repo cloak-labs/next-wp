@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.useFetchRestAPI = exports.fetchGraphAPI = exports.regenerateStaticPage = exports.deepMerge = exports.usePaths = exports.usePosts = exports.usePost = exports.usePreview = exports.usePage = exports.useBlockStyleBuilder = exports.useBlockConfig = exports.useGlobalConfig = exports.Block = exports.Blocks = exports.BlockConfigProvider = void 0;
+exports.useFetchRestAPI = exports.fetchGraphAPI = exports.regenerateStaticPage = exports.deepMerge = exports.usePaths = exports.usePosts = exports.usePost = exports.usePreview = exports.usePage = exports.useBlockStyleBuilder = exports.useSlugModifier = exports.useBlockConfig = exports.useGlobalConfig = exports.Block = exports.Blocks = exports.BlockConfigProvider = void 0;
 // Context
 // export { NextWP } from './context/blockConfig';
 var blockConfig_1 = require("./context/blockConfig");
@@ -15,6 +15,8 @@ var useGlobalConfig_1 = require("./hooks/useGlobalConfig");
 Object.defineProperty(exports, "useGlobalConfig", { enumerable: true, get: function () { return useGlobalConfig_1.useGlobalConfig; } });
 var useBlockConfig_1 = require("./hooks/useBlockConfig");
 Object.defineProperty(exports, "useBlockConfig", { enumerable: true, get: function () { return useBlockConfig_1.useBlockConfig; } });
+var useSlugModifier_1 = require("./hooks/useSlugModifier");
+Object.defineProperty(exports, "useSlugModifier", { enumerable: true, get: function () { return useSlugModifier_1.useSlugModifier; } });
 var useBlockStyleBuilder_1 = require("./hooks/useBlockStyleBuilder");
 Object.defineProperty(exports, "useBlockStyleBuilder", { enumerable: true, get: function () { return useBlockStyleBuilder_1.useBlockStyleBuilder; } });
 var usePage_1 = require("./hooks/usePage");

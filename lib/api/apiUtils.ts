@@ -1,4 +1,5 @@
 import { useGlobalConfig } from "../hooks/useGlobalConfig";
+import { useSlugModifier } from "../hooks/useSlugModifier";
 
 export async function fetchGraphAPI(query = '', { variables } = {}) {
     const config = await useGlobalConfig()
@@ -60,51 +61,52 @@ export async function useFetchRestAPI(endpoint, embed = true, modifyBaseSlugs = 
         }
     );
 
-    let json = await res.json();
+    let posts = await res.json();
+    posts = useSlugModifier(posts) // adjust post slugs if necessary
+    
+    // const { postBaseSlugs } = config
+    // if(modifyBaseSlugs && postBaseSlugs){
+    //     // the dev has provided baseSlugs to prepend to certain post type's slugs, which we do below:
+    //     if(!Array.isArray(json)) json = [json]
+    //     json.map(post => {
+    //         // modify post object's slug:
+    //         if(post && post.type && postBaseSlugs[post.type]){
+    //             post.slug = `${postBaseSlugs[post.type]}${post.slug}`
+    //         }
 
-    const { cptBaseSlugs } = config
-    if(modifyBaseSlugs && cptBaseSlugs){
-        // the dev has provided baseSlugs to prepend to certain post type's slugs, which we do below:
-        if(!Array.isArray(json)) json = [json]
-        json.map(post => {
-            // modify post object's slug:
-            if(post && post.type && cptBaseSlugs[post.type]){
-                post.slug = `${cptBaseSlugs[post.type]}${post.slug}`
-            }
+    //         // modify any post slugs for any posts in ACF relationship fields
+    //         if(post.has_blocks && post.blocksData && post.blocksData.length){
+    //             post.blocksData.map(block => {
+    //                 if(block.attrs.hasRelationshipFields){
+    //                     // let blockFieldValues = Object.values(block.attrs.data)
+    //                     let blockFields = Object.entries(block.attrs.data)
+    //                     blockFields = blockFields.map(([key, val]) => {
+    //                         if(val && val.value && (val.type == 'relationship' || val.type == 'page_link' || val.type == 'post_object')){
+    //                             val.value = val.value.map(relatedPost => {
+    //                                 if(relatedPost && relatedPost.post_type && postBaseSlugs[relatedPost.post_type]){
+    //                                     relatedPost.slug = `${postBaseSlugs[relatedPost.post_type]}${relatedPost.post_name}`
+    //                                 }
+    //                                 return relatedPost
+    //                             })
+    //                         }
+    //                         return [key, val]
+    //                     })
+    //                     block.attrs.data = Object.fromEntries(blockFields);
+    //                 }
+    //                 return block
+    //             })
+    //         }
 
-            // modify any post slugs for any posts in ACF relationship fields
-            if(post.has_blocks && post.blocksData && post.blocksData.length){
-                post.blocksData.map(block => {
-                    if(block.attrs.hasRelationshipFields){
-                        // let blockFieldValues = Object.values(block.attrs.data)
-                        let blockFields = Object.entries(block.attrs.data)
-                        blockFields = blockFields.map(([key, val]) => {
-                            if(val && val.value && (val.type == 'relationship' || val.type == 'page_link' || val.type == 'post_object')){
-                                val.value = val.value.map(relatedPost => {
-                                    if(relatedPost && relatedPost.post_type && cptBaseSlugs[relatedPost.post_type]){
-                                        relatedPost.slug = `${cptBaseSlugs[relatedPost.post_type]}${relatedPost.post_name}`
-                                    }
-                                    return relatedPost
-                                })
-                            }
-                            return [key, val]
-                        })
-                        block.attrs.data = Object.fromEntries(blockFields);
-                    }
-                    return block
-                })
-            }
+    //         return post
+    //     })
+    // }
 
-            return post
-        })
-    }
-
-    if (json.errors) {
-        console.error(json.errors);
-        throw new Error('Failed to fetch data from REST API: ', json.errors);
+    if (posts.errors) {
+        console.error(posts.errors);
+        throw new Error('Failed to fetch data from REST API: ', posts.errors);
     }
     if (res.status !== 200) {
         console.error(res.status, res.statusText);
     }
-    return json;
+    return posts;
 }

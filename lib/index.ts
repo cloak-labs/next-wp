@@ -9,6 +9,7 @@ export { default as Block } from './Block'
 // Hooks
 export { useGlobalConfig } from './hooks/useGlobalConfig';
 export { useBlockConfig } from './hooks/useBlockConfig';
+export { useSlugModifier } from './hooks/useSlugModifier';
 export { useBlockStyleBuilder } from './hooks/useBlockStyleBuilder';
 export { usePage } from './hooks/usePage';
 export { usePreview } from './hooks/usePreview';

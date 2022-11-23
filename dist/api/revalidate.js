@@ -37,31 +37,37 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var useGlobalConfig_1 = require("../hooks/useGlobalConfig");
+var useSlugModifier_1 = require("../hooks/useSlugModifier");
 function regenerateStaticPage(req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var config, _a, slug, secret, error_1;
+        var config, _a, slug, type, secret, post, error_1;
         return __generator(this, function (_b) {
             switch (_b.label) {
-                case 0:
-                    config = (0, useGlobalConfig_1.useGlobalConfig)();
-                    _a = req.query, slug = _a.slug, secret = _a.secret;
-                    _b.label = 1;
+                case 0: return [4 /*yield*/, (0, useGlobalConfig_1.useGlobalConfig)()];
                 case 1:
-                    _b.trys.push([1, 3, , 4]);
+                    config = _b.sent();
+                    _a = req.query, slug = _a.slug, type = _a.type, secret = _a.secret;
+                    return [4 /*yield*/, (0, useSlugModifier_1.useSlugModifier)({ slug: slug, type: type })];
+                case 2:
+                    post = _b.sent();
+                    console.log('on-demand revalidate page: ', post.slug);
+                    _b.label = 3;
+                case 3:
+                    _b.trys.push([3, 5, , 6]);
                     if (secret !== config.wpSecret) {
                         throw 'Page Revalidation - Invalid preview secret';
                     }
-                    return [4 /*yield*/, res.revalidate("/".concat(slug)).catch(function (err) {
-                            throw "Page Revalidation - Can't revalidate slug '/".concat(slug, "'");
+                    return [4 /*yield*/, res.revalidate("/".concat(post.slug)).catch(function (err) {
+                            throw "Page Revalidation - Can't revalidate slug '/".concat(post.slug, "'");
                         })];
-                case 2:
+                case 4:
                     _b.sent();
-                    return [2 /*return*/, res.json({ page: "/".concat(slug), revalidated: true })];
-                case 3:
+                    return [2 /*return*/, res.json({ page: "/".concat(post.slug), revalidated: true })];
+                case 5:
                     error_1 = _b.sent();
                     console.error(new Error(error_1));
-                    return [2 /*return*/, res.status(500).send({ error: error_1, slug: "/".concat(slug) })];
-                case 4: return [2 /*return*/];
+                    return [2 /*return*/, res.status(500).send({ error: error_1, slug: "/".concat(post.slug) })];
+                case 6: return [2 /*return*/];
             }
         });
     });
