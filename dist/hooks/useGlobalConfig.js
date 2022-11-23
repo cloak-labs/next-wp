@@ -9,11 +9,9 @@ exports.useGlobalConfig = void 0;
 *   In production, we grab the next-wp config using a relative path, which assumes the user's node_modules folder is at the root level, and next-wp.config is also at the root level.. can improve this later to work in edge-case scenarios
 */
 var blockConfig;
-if (process.env.NODE_ENV == 'production') {
-    blockConfig = require('../../../../next-wp.config.js'); // CommonJS version
-}
-else {
-    blockConfig = require('C:/Users/Kaelan Smith/Documents/Stikky Media/Lionheart Coaching/website-2/tailwindui-pocket/next-wp.config.js');
+blockConfig = require('../../../../next-wp.config.js');
+if (process.env.CUSTOM_NEXT_WP_CONFIG_PATH) {
+    blockConfig = require(process.env.CUSTOM_NEXT_WP_CONFIG_PATH);
 }
 // Below, I tried dynamically using the imported config based on whether NODE_ENV == production or development.. but a "Module not found" error will always occur for one of the above imports, so I'm abandoning this for now and just manually commenting out the development/testing import 
 // const config = {
