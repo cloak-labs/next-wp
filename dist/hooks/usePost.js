@@ -39,19 +39,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.usePost = void 0;
 var apiUtils_1 = require("../api/apiUtils");
 function usePost(_a) {
-    var _b = _a.postType, postType = _b === void 0 ? 'posts' : _b, slug = _a.slug, id = _a.id;
+    var _b = _a.postType, postType = _b === void 0 ? 'posts' : _b, slug = _a.slug, id = _a.id, _c = _a.mainQuery, mainQuery = _c === void 0 ? false : _c;
     return __awaiter(this, void 0, void 0, function () {
         var endpoint, data;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
+        return __generator(this, function (_d) {
+            switch (_d.label) {
                 case 0:
                     if (id)
-                        endpoint = "/".concat(postType, "/").concat(id);
+                        endpoint = "/".concat(postType, "/").concat(id).concat(mainQuery && "?mainQuery=true");
                     else
-                        endpoint = (slug && slug != '/') ? "/".concat(postType, "?slug=").concat(slug) : '/frontpage';
+                        endpoint = (slug && slug != '/') ? "/".concat(postType, "?slug=").concat(slug).concat(mainQuery && "&mainQuery=true") : "/frontpage".concat(mainQuery && "?mainQuery=true");
                     return [4 /*yield*/, (0, apiUtils_1.useFetchRestAPI)(endpoint)];
                 case 1:
-                    data = _c.sent();
+                    data = _d.sent();
                     if (Array.isArray(data))
                         data = data[0];
                     return [2 /*return*/, { data: data }];
