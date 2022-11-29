@@ -52,6 +52,7 @@ export default function Block({
             'core/image': {
                 component: Image,
                 container: true,
+                // container: ({block}) => (<Container className={classNames("max-w-2xl", block.config.containerClasses)}>{block.rendered}</Container>),
                 containerClasses: 'py-2',
             },
             'core/embed': {
@@ -87,6 +88,7 @@ export default function Block({
             'core/buttons': {
                 component: Buttons,
                 container: true,
+                containerClasses: 'py-2'
             },
             'core/button': {
                 component: Button,
