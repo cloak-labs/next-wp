@@ -5,7 +5,7 @@ var classNames_1 = require("../utils/classNames");
 function useBlockStyleBuilder(block) {
     var _a, _b, _c, _d;
     var _e = block.attrs, backgroundColor = _e.backgroundColor, textColor = _e.textColor, className = _e.className, fontSize = _e.fontSize, align = _e.align, textAlign = _e.textAlign, style = _e.style, verticalAlignment = _e.verticalAlignment, layout = _e.layout;
-    var layoutKeyword = (layout === null || layout === void 0 ? void 0 : layout.orientation) == "horizontal" ? "justify" : "items";
+    var layoutKeyword = ((layout === null || layout === void 0 ? void 0 : layout.orientation) == "horizontal" || (layout === null || layout === void 0 ? void 0 : layout.type) == "flex") ? "justify" : "items";
     var classes = (0, classNames_1.default)(backgroundColor && "bg-".concat(backgroundColor), textColor && "text-".concat(textColor), fontSize && "text-".concat(fontSize), (align || textAlign) && "text-".concat(textAlign || align), verticalAlignment ? (verticalAlignment == 'center' ? 'justify-center' : (verticalAlignment == 'bottom' ? 'justify-end' : 'justify-start')) : '', (layout && layout.orientation) ? (layout.orientation == "horizontal" ? "flex-row" : "flex-col") : "", layout ? (layout.justifyContent == "center" ? "".concat(layoutKeyword, "-center") : (layout.justifyContent == "right" ? "".concat(layoutKeyword, "-end") : (layout.justifyContent == "space-between" ? "".concat(layoutKeyword, "-between") : ''))) : "", className);
     var styles = {};
     if ((_a = style === null || style === void 0 ? void 0 : style.spacing) === null || _a === void 0 ? void 0 : _a.padding) {

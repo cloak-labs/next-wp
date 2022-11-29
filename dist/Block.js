@@ -67,6 +67,7 @@ function Block(_a) {
             'core/image': {
                 component: coreBlocks_1.Image,
                 container: true,
+                // container: ({block}) => (<Container className={classNames("max-w-2xl", block.config.containerClasses)}>{block.rendered}</Container>),
                 containerClasses: 'py-2',
             },
             'core/embed': {
@@ -102,6 +103,7 @@ function Block(_a) {
             'core/buttons': {
                 component: coreBlocks_1.Buttons,
                 container: true,
+                containerClasses: 'py-2'
             },
             'core/button': {
                 component: coreBlocks_1.Button,
