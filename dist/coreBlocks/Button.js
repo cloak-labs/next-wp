@@ -25,9 +25,9 @@ function ButtonBlock(_a) {
         color = 'green';
     else if (backgroundColor == 'blue-900')
         color = 'navy';
-    var variant = 'outline';
-    if (className.includes('is-style-fill'))
-        variant = 'solid';
+    var variant = 'solid';
+    if (className.includes('is-style-outline'))
+        variant = 'outline';
     if (url.includes(config.wpUrl))
         url = url.replace(config.wpUrl, '/');
     return (0, jsx_runtime_1.jsx)(Button_1.default, __assign({ href: url, color: color, variant: variant }, { children: text }));

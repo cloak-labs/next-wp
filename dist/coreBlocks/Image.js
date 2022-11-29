@@ -12,18 +12,24 @@ var __assign = (this && this.__assign) || function () {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var jsx_runtime_1 = require("react/jsx-runtime");
-var image_1 = require("next/image");
+var image_1 = require("next/future/image");
 var html_react_parser_1 = require("html-react-parser");
 var classNames_1 = require("../utils/classNames");
-var ConditionalWrapper_1 = require("../components/ConditionalWrapper");
 var Link_1 = require("../components/Link");
 var useBlockStyleBuilder_1 = require("../hooks/useBlockStyleBuilder");
 function Image(_a) {
     var _b, _c, _d;
-    var block = _a.block, className = _a.className;
-    var _e = (0, useBlockStyleBuilder_1.useBlockStyleBuilder)(block.data), classes = _e.classes, styles = _e.styles;
-    var _f = (_b = block === null || block === void 0 ? void 0 : block.data) === null || _b === void 0 ? void 0 : _b.attrs, url = _f.url, alt = _f.alt, caption = _f.caption, href = _f.href;
+    var block = _a.block, className = _a.className, _e = _a.quality, quality = _e === void 0 ? 75 : _e, _f = _a.priority, priority = _f === void 0 ? false : _f, _g = _a.placeholder, placeholder = _g === void 0 ? 'empty' : _g, blurDataURL = _a.blurDataURL;
+    var _h = (0, useBlockStyleBuilder_1.useBlockStyleBuilder)(block.data), classes = _h.classes, styles = _h.styles;
+    var _j = (_b = block === null || block === void 0 ? void 0 : block.data) === null || _b === void 0 ? void 0 : _b.attrs, url = _j.url, alt = _j.alt, caption = _j.caption, href = _j.href, width = _j.width, height = _j.height, align = _j.align, wpClassName = _j.className;
     var captionColor = ((_d = (_c = block === null || block === void 0 ? void 0 : block.parent) === null || _c === void 0 ? void 0 : _c.attrs) === null || _d === void 0 ? void 0 : _d.textColor) || 'gray-700';
-    return ((0, jsx_runtime_1.jsxs)("div", __assign({ className: (0, classNames_1.default)('relative', className), style: styles }, { children: [(0, jsx_runtime_1.jsx)(ConditionalWrapper_1.default, __assign({ condition: href, wrapper: function (children) { return (0, jsx_runtime_1.jsx)(Link_1.default, __assign({ href: href }, { children: children })); } }, { children: (0, jsx_runtime_1.jsx)(image_1.default, { src: url, className: (0, classNames_1.default)("rounded-lg", classes), objectFit: 'cover', alt: alt, width: "100%", height: "100%", layout: "responsive" }) })), caption && (0, jsx_runtime_1.jsx)("p", __assign({ className: (0, classNames_1.default)('text-sm text-center mt-2', "text-".concat(captionColor)) }, { children: (0, html_react_parser_1.default)(caption) }))] })));
+    // width = !block.isNested && width ? width : '1300'
+    // height = !block.isNested && height ? height : '1300'
+    // width = !block.isNested && width ? width : '1300'
+    // height = !block.isNested && height ? height : '1300'
+    styles = __assign(__assign({}, styles), { width: width || '100%', maxWidth: '100%' });
+    return ((0, jsx_runtime_1.jsxs)("div", __assign({ className: (0, classNames_1.default)('relative', align == 'center' && 'mx-auto', align == 'right' && 'ml-auto'), style: styles }, { children: [(0, jsx_runtime_1.jsx)(Link_1.default, __assign({ href: href, className: "relative" }, { children: (0, jsx_runtime_1.jsx)(image_1.default, { src: url, className: (0, classNames_1.default)("rounded-lg", (block.isNested || width == 0) && "w-full h-full", wpClassName.includes("is-style-rounded") && "rounded-full", className, classes), alt: alt, 
+                    // fill={true}
+                    quality: quality, priority: priority, placeholder: (placeholder == 'blur' && !blurDataURL) ? 'empty' : placeholder, blurDataURL: blurDataURL, width: width || 1300, height: height }) })), caption && (0, jsx_runtime_1.jsx)("p", __assign({ className: (0, classNames_1.default)('text-sm text-center mt-2', "text-".concat(captionColor)), style: { width: width || '100%', maxWidth: "100%" } }, { children: (0, html_react_parser_1.default)(caption) }))] })));
 }
 exports.default = Image;

@@ -28,23 +28,21 @@ export default function Group({block}) {
         return (
             <Container className={classNames("relative")}>
                 <div
-                    className={classNames(groupClasses, classes)}
+                    className={classNames(styles.margin && 'rounded-lg', groupClasses, classes)}
                     style={styles}
                 >
-                    {block?.data?.innerBlocks?.map((innerBlock, index) => <Block key={index} block={innerBlock} parentBlock={block} isNested={true} className="min-w-[150px]" /> )}
+                    {block?.data?.innerBlocks?.map((innerBlock, index) => <Block key={index} block={innerBlock} parentBlock={block.data} isNested={true} className="min-w-[150px]" /> )}
                 </div>
             </Container>
         )
     }else{
         return (
             <div
-                className={classNames(
-                    classes,
-                )}
+                className={classNames(classes)}
                 style={styles}
             >
                 <Container className="relative" innerClassName={groupClasses}>
-                    {block?.data?.innerBlocks?.map((innerBlock, index) => <Block key={index} block={innerBlock} parentBlock={block} isNested={true} className="min-w-[150px]" /> )}
+                    {block?.data?.innerBlocks?.map((innerBlock, index) => <Block key={index} block={innerBlock} parentBlock={block.data} isNested={true} className="min-w-[150px]" /> )}
                 </Container>
             </div>
         )
