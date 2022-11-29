@@ -39,11 +39,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.usePage = void 0;
 var usePost_1 = require("./usePost");
 function usePage(_a) {
-    var slug = _a.slug, id = _a.id;
+    var slug = _a.slug, id = _a.id, _b = _a.mainQuery, mainQuery = _b === void 0 ? false : _b;
     return __awaiter(this, void 0, void 0, function () {
         var page;
-        return __generator(this, function (_b) {
-            page = (0, usePost_1.usePost)({ postType: 'pages', slug: slug, id: id });
+        return __generator(this, function (_c) {
+            page = (0, usePost_1.usePost)({ postType: 'pages', slug: slug, id: id, mainQuery: mainQuery });
             return [2 /*return*/, page];
         });
     });
