@@ -11,8 +11,8 @@ export default function ButtonBlock({block}) {
     if(backgroundColor.includes('green')) color = 'green'
     else if(backgroundColor == 'blue-900') color = 'navy'
 
-    let variant = 'outline'
-    if(className.includes('is-style-fill')) variant = 'solid'
+    let variant = 'solid'
+    if(className.includes('is-style-outline')) variant = 'outline'
 
     if(url.includes(config.wpUrl)) url = url.replace(config.wpUrl, '/')
 

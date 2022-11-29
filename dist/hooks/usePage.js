@@ -43,7 +43,7 @@ function usePage(_a) {
     return __awaiter(this, void 0, void 0, function () {
         var page;
         return __generator(this, function (_b) {
-            page = (0, usePost_1.usePost)({ postType: 'pages', slug: slug, id: id });
+            page = (0, usePost_1.usePost)({ postType: "pages", slug: slug, id: id });
             return [2 /*return*/, page];
         });
     });

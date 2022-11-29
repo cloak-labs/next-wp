@@ -25,17 +25,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var jsx_runtime_1 = require("react/jsx-runtime");
 var link_1 = require("next/link");
 var CustomLink = function (_a) {
-    var href = _a.href, rest = __rest(_a, ["href"]);
+    var href = _a.href, ref = _a.ref, children = _a.children, rest = __rest(_a, ["href", "ref", "children"]);
+    if (!href)
+        return (0, jsx_runtime_1.jsx)("span", __assign({ ref: ref }, rest, { children: children }));
     var isInternalLink = href && href.startsWith('/');
     var isAnchorLink = href && href.startsWith('#');
     if (isInternalLink) {
-        return ((0, jsx_runtime_1.jsx)(link_1.default, __assign({ href: href }, { children: (0, jsx_runtime_1.jsx)("a", __assign({}, rest)) })));
+        return ((0, jsx_runtime_1.jsx)(link_1.default, __assign({ ref: ref, href: href }, { children: (0, jsx_runtime_1.jsx)("a", __assign({}, rest)) })));
     }
     if (isAnchorLink) {
-        return (0, jsx_runtime_1.jsx)("a", __assign({ href: href }, rest));
+        return (0, jsx_runtime_1.jsx)("a", __assign({ ref: ref, href: href }, rest));
     }
-    if (!href.startsWith('http'))
+    if (!href.startsWith('/') && !href.startsWith('http') && !href.startsWith('mailto:') && !href.startsWith('tel:'))
         href = "https://".concat(href);
-    return (0, jsx_runtime_1.jsx)("a", __assign({ target: "_blank", rel: "noopener noreferrer", href: href }, rest));
+    return (0, jsx_runtime_1.jsx)("a", __assign({ target: "_blank", rel: "noopener noreferrer", ref: ref, href: href }, rest));
 };
 exports.default = CustomLink;

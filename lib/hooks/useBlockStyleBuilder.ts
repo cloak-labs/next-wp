@@ -3,7 +3,7 @@ import classNames from "../utils/classNames";
 export function useBlockStyleBuilder(block) {
   const {backgroundColor, textColor, className, fontSize, align, textAlign, style, verticalAlignment, layout} = block.attrs
   
-  const layoutKeyword = layout?.orientation == "horizontal" ? "justify" : "items"
+  const layoutKeyword = (layout?.orientation == "horizontal" || layout?.type == "flex") ? "justify" : "items"
 
   const classes = classNames(
     backgroundColor && `bg-${backgroundColor}`,

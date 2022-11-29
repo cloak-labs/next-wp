@@ -48,7 +48,7 @@ function usePost(_a) {
                     if (id)
                         endpoint = "/".concat(postType, "/").concat(id);
                     else
-                        endpoint = (slug && slug != '/') ? "/".concat(postType, "?slug=").concat(slug) : '/frontpage';
+                        endpoint = (slug && slug != '/') ? "/".concat(postType, "?slug=").concat(slug) : "/frontpage";
                     return [4 /*yield*/, (0, apiUtils_1.useFetchRestAPI)(endpoint)];
                 case 1:
                     data = _c.sent();
