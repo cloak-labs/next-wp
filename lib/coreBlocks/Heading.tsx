@@ -18,5 +18,5 @@ export default function Heading({block, className, tags}) {
         ...tags // dev can override how 1 or more headings get rendered by providing an object "tags" in global config or as Block prop 
     }[level]
     
-    return <Tag className={classNames(classes, className)} style={styles} block={block}>{parse(content)}</Tag>
+    return <Tag className={classNames(block.isNested && "py-2", classes, className)} style={styles} block={block}>{parse(content)}</Tag>
 }
