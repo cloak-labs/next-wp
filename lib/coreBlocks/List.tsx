@@ -19,7 +19,7 @@ export default function List({block, className}) {
     console.log()
 
     return (
-        <ListType className={classNames("space-y-3 pb-6 list-disc", classes, className)} style={styles}>
+        <ListType className={classNames("space-y-3 pb-6", ListType == 'ul' ? "list-disc" : "list-decimal", classes, className)} style={styles}>
             {newListItemRenderingMethod ? (
                 innerBlocks?.map((block, i) => <Block key={i} block={block} />)
             ) : parse(values)}
