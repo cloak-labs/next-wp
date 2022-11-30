@@ -25,7 +25,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var jsx_runtime_1 = require("react/jsx-runtime");
 var classNames_1 = require("../utils/classNames");
 function Container(_a) {
-    var className = _a.className, innerClassName = _a.innerClassName, _b = _a.mobileFullWidth, mobileFullWidth = _b === void 0 ? false : _b, children = _a.children, props = __rest(_a, ["className", "innerClassName", "mobileFullWidth", "children"]);
-    return ((0, jsx_runtime_1.jsx)("div", __assign({ className: (0, classNames_1.default)('sm:px-6 lg:px-9', !mobileFullWidth && 'px-4', className) }, props, { children: (0, jsx_runtime_1.jsx)("div", __assign({ className: (0, classNames_1.default)('mx-auto max-w-7xl lg:max-w-8xl', innerClassName) }, { children: children })) })));
+    var className = _a.className, innerClassName = _a.innerClassName, children = _a.children, props = __rest(_a, ["className", "innerClassName", "children"]);
+    var defaultInnerClassNames = 'px-4 sm:px-6 lg:px-9 mx-auto max-w-7xl lg:max-w-8xl';
+    var hasBgColor = (className === null || className === void 0 ? void 0 : className.includes('bg-')) || false;
+    return ((0, jsx_runtime_1.jsx)("div", __assign({ className: (0, classNames_1.default)(!hasBgColor && defaultInnerClassNames, !hasBgColor && innerClassName, className) }, props, { children: hasBgColor ? ((0, jsx_runtime_1.jsx)("div", __assign({ className: (0, classNames_1.default)(defaultInnerClassNames, innerClassName) }, { children: children }))) : children })));
 }
 exports.default = Container;

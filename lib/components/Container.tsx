@@ -1,14 +1,24 @@
 import classNames from '../utils/classNames';
 
-export default function Container({ className, innerClassName, mobileFullWidth = false, children, ...props }) {
+export default function Container({ className, innerClassName, children, ...props }) {
+  const defaultInnerClassNames = 'px-4 sm:px-6 lg:px-9 mx-auto max-w-7xl lg:max-w-8xl'
+  const hasBgColor = className?.includes('bg-') || false
+
   return (
     <div
-      className={classNames('sm:px-6 lg:px-9', !mobileFullWidth && 'px-4', className)}
+      className={classNames(
+        !hasBgColor && defaultInnerClassNames,
+        !hasBgColor && innerClassName,
+        className
+      )}
       {...props}
     >
-      <div className={classNames('mx-auto max-w-7xl lg:max-w-8xl', innerClassName)}>
+      {hasBgColor ? (
+        <div className={classNames(defaultInnerClassNames, innerClassName)}>
           {children}
-      </div>
+        </div>
+      ) : children
+      }
     </div>
   )
 }
