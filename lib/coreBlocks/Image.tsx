@@ -36,7 +36,7 @@ export default function Image({block, className, quality = 75, priority = false,
           width={width || 1300}
           height={height}
           // layout="responsive"
-        >
+        />
       </Link>
       {caption && <p className={classNames('text-sm text-center mt-2', `text-${captionColor}`)} style={{width: width || '100%', maxWidth: "100%"}}>{parse(caption)}</p>}
     </div>
