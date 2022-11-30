@@ -31,7 +31,7 @@ export async function fetchGraphAPI(query = '', { variables } = {}) {
     return json.data;
 }
 
-export async function useFetchRestAPI(endpoint, embed = true, modifyBaseSlugs = true) {
+export async function useFetchRestAPI(endpoint, embed = true, modifyBaseSlugs = true, convertToRelativeURLs = true) {
     if(!endpoint) throw new Error('You must pass in an endpoint to useFetchRestAPI')
     const config = await useGlobalConfig()
 
@@ -62,45 +62,17 @@ export async function useFetchRestAPI(endpoint, embed = true, modifyBaseSlugs = 
     );
 
     let posts = await res.json();
-    posts = useSlugModifier(posts) // adjust post slugs if necessary
+    posts = await useSlugModifier(posts) // adjust post slugs if necessary
+
+    // remove all references to WP URL in data
+    if(convertToRelativeURLs){
+      let postsString = JSON.stringify(posts)
+      const hasTrailingSlash = config.wpUrl.slice(-1) == '/'
+      const url = hasTrailingSlash ? config.wpUrl.slice(0, -1) : config.wpUrl
+      postsString = postsString.replaceAll(url, '').replaceAll('/wp-content', `${url}/wp-content`) // removes all references to WordPress URL but then adds them back for any URLs referencing content under /wp-content folder, where the WP URL reference is required
+      posts = JSON.parse(postsString)
+    }
     
-    // const { postBaseSlugs } = config
-    // if(modifyBaseSlugs && postBaseSlugs){
-    //     // the dev has provided baseSlugs to prepend to certain post type's slugs, which we do below:
-    //     if(!Array.isArray(json)) json = [json]
-    //     json.map(post => {
-    //         // modify post object's slug:
-    //         if(post && post.type && postBaseSlugs[post.type]){
-    //             post.slug = `${postBaseSlugs[post.type]}${post.slug}`
-    //         }
-
-    //         // modify any post slugs for any posts in ACF relationship fields
-    //         if(post.has_blocks && post.blocksData && post.blocksData.length){
-    //             post.blocksData.map(block => {
-    //                 if(block.attrs.hasRelationshipFields){
-    //                     // let blockFieldValues = Object.values(block.attrs.data)
-    //                     let blockFields = Object.entries(block.attrs.data)
-    //                     blockFields = blockFields.map(([key, val]) => {
-    //                         if(val && val.value && (val.type == 'relationship' || val.type == 'page_link' || val.type == 'post_object')){
-    //                             val.value = val.value.map(relatedPost => {
-    //                                 if(relatedPost && relatedPost.post_type && postBaseSlugs[relatedPost.post_type]){
-    //                                     relatedPost.slug = `${postBaseSlugs[relatedPost.post_type]}${relatedPost.post_name}`
-    //                                 }
-    //                                 return relatedPost
-    //                             })
-    //                         }
-    //                         return [key, val]
-    //                     })
-    //                     block.attrs.data = Object.fromEntries(blockFields);
-    //                 }
-    //                 return block
-    //             })
-    //         }
-
-    //         return post
-    //     })
-    // }
-
     if (posts.errors) {
         console.error(posts.errors);
         throw new Error('Failed to fetch data from REST API: ', posts.errors);
