@@ -35,9 +35,9 @@ export default function Columns({block}) {
         <ConditionalWrapper
             condition={block.isNested == false}
             wrapper={(children) => (
+              <div style={styles}>
                 <Container
                     className={classNames("py-2", classes)}
-                    style={styles}
                     innerClassName={classNames(
                         "grid",
                         numColumns == 2 && 'gap-10 lg:gap-16 2xl:gap-20 grid-cols-1 sm:grid-cols-12',
@@ -48,6 +48,7 @@ export default function Columns({block}) {
                 >
                     {children}
                 </Container>
+              </div>
             )}
         >
             {columns?.map((column, i) => (
