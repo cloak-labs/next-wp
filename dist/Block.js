@@ -44,6 +44,10 @@ function Block(_a) {
         and the condition for which the block container is used (devs can override all these
         defaults via the Block component's props or the global config's props)
     */
+    var SmallContainer = function (_a) {
+        var block = _a.block;
+        return (0, jsx_runtime_1.jsx)(Container_1.default, __assign({ innerClassName: (0, classNames_1.default)("max-w-3xl lg:max-w-4xl", block.config.containerClasses) }, { children: block.rendered }));
+    };
     var defaults = {
         container: function (_a) {
             var block = _a.block;
@@ -56,23 +60,23 @@ function Block(_a) {
         blocks: {
             'core/paragraph': {
                 component: coreBlocks_1.Paragraph,
-                container: true,
+                container: SmallContainer,
                 containerClasses: 'py-2',
             },
             'core/heading': {
                 component: coreBlocks_1.Heading,
-                container: true,
+                container: SmallContainer,
                 containerClasses: 'py-2',
             },
             'core/image': {
                 component: coreBlocks_1.Image,
-                container: true,
+                container: SmallContainer,
                 // container: ({block}) => (<Container className={classNames("max-w-2xl", block.config.containerClasses)}>{block.rendered}</Container>),
                 containerClasses: 'py-2',
             },
             'core/embed': {
                 component: coreBlocks_1.Embed,
-                container: true,
+                container: SmallContainer,
                 containerClasses: 'py-2',
             },
             'core/html': {
@@ -94,7 +98,7 @@ function Block(_a) {
             },
             'core/list': {
                 component: coreBlocks_1.List,
-                container: true,
+                container: SmallContainer,
             },
             'core/list-item': {
                 component: coreBlocks_1.ListItem,
@@ -102,7 +106,7 @@ function Block(_a) {
             },
             'core/buttons': {
                 component: coreBlocks_1.Buttons,
-                container: true,
+                container: SmallContainer,
                 containerClasses: 'py-2'
             },
             'core/button': {
