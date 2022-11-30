@@ -79,11 +79,12 @@ function fetchGraphAPI(query, _a) {
     });
 }
 exports.fetchGraphAPI = fetchGraphAPI;
-function useFetchRestAPI(endpoint, embed, modifyBaseSlugs) {
+function useFetchRestAPI(endpoint, embed, modifyBaseSlugs, convertToRelativeURLs) {
     if (embed === void 0) { embed = true; }
     if (modifyBaseSlugs === void 0) { modifyBaseSlugs = true; }
+    if (convertToRelativeURLs === void 0) { convertToRelativeURLs = true; }
     return __awaiter(this, void 0, void 0, function () {
-        var config, headers, embedParam, url, res, posts;
+        var config, headers, embedParam, url, res, posts, postsString, hasTrailingSlash, url_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -119,41 +120,19 @@ function useFetchRestAPI(endpoint, embed, modifyBaseSlugs) {
                     return [4 /*yield*/, res.json()];
                 case 3:
                     posts = _a.sent();
-                    posts = (0, useSlugModifier_1.useSlugModifier)(posts); // adjust post slugs if necessary
-                    // const { postBaseSlugs } = config
-                    // if(modifyBaseSlugs && postBaseSlugs){
-                    //     // the dev has provided baseSlugs to prepend to certain post type's slugs, which we do below:
-                    //     if(!Array.isArray(json)) json = [json]
-                    //     json.map(post => {
-                    //         // modify post object's slug:
-                    //         if(post && post.type && postBaseSlugs[post.type]){
-                    //             post.slug = `${postBaseSlugs[post.type]}${post.slug}`
-                    //         }
-                    //         // modify any post slugs for any posts in ACF relationship fields
-                    //         if(post.has_blocks && post.blocksData && post.blocksData.length){
-                    //             post.blocksData.map(block => {
-                    //                 if(block.attrs.hasRelationshipFields){
-                    //                     // let blockFieldValues = Object.values(block.attrs.data)
-                    //                     let blockFields = Object.entries(block.attrs.data)
-                    //                     blockFields = blockFields.map(([key, val]) => {
-                    //                         if(val && val.value && (val.type == 'relationship' || val.type == 'page_link' || val.type == 'post_object')){
-                    //                             val.value = val.value.map(relatedPost => {
-                    //                                 if(relatedPost && relatedPost.post_type && postBaseSlugs[relatedPost.post_type]){
-                    //                                     relatedPost.slug = `${postBaseSlugs[relatedPost.post_type]}${relatedPost.post_name}`
-                    //                                 }
-                    //                                 return relatedPost
-                    //                             })
-                    //                         }
-                    //                         return [key, val]
-                    //                     })
-                    //                     block.attrs.data = Object.fromEntries(blockFields);
-                    //                 }
-                    //                 return block
-                    //             })
-                    //         }
-                    //         return post
-                    //     })
-                    // }
+                    return [4 /*yield*/, (0, useSlugModifier_1.useSlugModifier)(posts)
+                        // remove all references to WP URL in data
+                    ]; // adjust post slugs if necessary
+                case 4:
+                    posts = _a.sent(); // adjust post slugs if necessary
+                    // remove all references to WP URL in data
+                    if (convertToRelativeURLs) {
+                        postsString = JSON.stringify(posts);
+                        hasTrailingSlash = config.wpUrl.slice(-1) == '/';
+                        url_1 = hasTrailingSlash ? config.wpUrl.slice(0, -1) : config.wpUrl;
+                        postsString = postsString.replaceAll(url_1, '').replaceAll('/wp-content', "".concat(url_1, "/wp-content")); // removes all references to WordPress URL but then adds them back for any URLs referencing content under /wp-content folder, where the WP URL reference is required
+                        posts = JSON.parse(postsString);
+                    }
                     if (posts.errors) {
                         console.error(posts.errors);
                         throw new Error('Failed to fetch data from REST API: ', posts.errors);
