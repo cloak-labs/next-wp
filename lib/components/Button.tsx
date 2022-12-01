@@ -1,4 +1,4 @@
-import classNames from '../utils/classNames';
+import { classNames } from '../utils/classNames';
 import ConditionalWrapper from './ConditionalWrapper';
 import Link from 'next/link';
 import HeroIcon from './HeroIcon';

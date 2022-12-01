@@ -14,7 +14,7 @@ import {
 } from './coreBlocks'
 import Container from './components/Container'
 import ConditionalWrapper from './components/ConditionalWrapper'
-import classNames from './utils/classNames'
+import { classNames } from './utils/classNames'
 import { deepMerge } from './utils/deepMerge'
 import { useBlockConfig } from './hooks/useBlockConfig'
 

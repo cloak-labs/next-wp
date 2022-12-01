@@ -1,6 +1,6 @@
 import NextImage from 'next/future/image'
 import parse from 'html-react-parser'
-import classNames from '../utils/classNames';
+import { classNames } from '../utils/classNames';
 import ConditionalWrapper from '../components/ConditionalWrapper';
 import Link from '../components/Link'
 import { useBlockStyleBuilder } from '../hooks/useBlockStyleBuilder';

@@ -1,4 +1,4 @@
-import classNames from "../utils/classNames"
+import { classNames } from "../utils/classNames"
 
 export default function ListItem({block}) {
   const { content, className } = block.data.attrs

@@ -1,6 +1,6 @@
 import { useBlockStyleBuilder } from '../hooks/useBlockStyleBuilder'
 import parse from 'html-react-parser'
-import classNames from '../utils/classNames'
+import { classNames } from '../utils/classNames'
 import Block from '../Block'
 
 export default function List({block, className}) {

@@ -1,6 +1,6 @@
 import Block from "../Block";
 import { useBlockStyleBuilder } from "../hooks/useBlockStyleBuilder";
-import classNames from "../utils/classNames";
+import { classNames } from "../utils/classNames";
 
 export default function Column({block, width, index, numColumns}) {
     console.log('** column block: ', block)

@@ -1,4 +1,4 @@
-import classNames from '../utils/classNames';
+import { classNames } from '../utils/classNames';
 
 export default function Container({ className, innerClassName, children, ...props }) {
   const defaultInnerClassNames = 'px-4 sm:px-6 lg:px-9 mx-auto max-w-7xl lg:max-w-8xl'

@@ -1,4 +1,4 @@
-import classNames from "../utils/classNames";
+import { classNames } from "../utils/classNames";
 
 export function useBlockStyleBuilder(block) {
   const {backgroundColor, textColor, className, fontSize, align, textAlign, style, verticalAlignment, layout} = block.attrs

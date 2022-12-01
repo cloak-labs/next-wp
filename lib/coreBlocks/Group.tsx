@@ -2,7 +2,7 @@ import Block from "../Block"
 import ConditionalWrapper from "../components/ConditionalWrapper"
 import Container from "../components/Container"
 import { useBlockStyleBuilder } from "../hooks/useBlockStyleBuilder"
-import classNames from "../utils/classNames"
+import { classNames } from "../utils/classNames"
 
 export default function Group({block}) {
     const {classes, styles} = useBlockStyleBuilder(block.data)

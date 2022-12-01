@@ -1,7 +1,7 @@
 import Button from "./Button" 
 import { useBlockStyleBuilder } from "../hooks/useBlockStyleBuilder"
 import { Fragment } from "react"
-import classNames from "../utils/classNames"
+import { classNames } from "../utils/classNames"
 
 export default function Buttons({block, className}) {
     const {classes, styles} = useBlockStyleBuilder(block.data)

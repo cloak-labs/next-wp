@@ -2,7 +2,7 @@ import ConditionalWrapper from "../components/ConditionalWrapper"
 import Container from "../components/Container"
 import { useBlockStyleBuilder } from "../hooks/useBlockStyleBuilder"
 import { Fragment } from "react"
-import classNames from "../utils/classNames"
+import { classNames } from "../utils/classNames"
 import Column from "./Column"
 import Block from "../Block"
 
