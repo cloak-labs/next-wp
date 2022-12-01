@@ -5,6 +5,9 @@ export { default as BlockConfigProvider } from './context/blockConfig';
 // Components
 export { default as Blocks } from './Blocks'
 export { default as Block } from './Block'
+export { default as Container } from './components/Container'
+export { default as ConditionalWrapper } from './components/ConditionalWrapper'
+export { default as Link } from './components/Link'
 
 // Hooks
 export { useGlobalConfig } from './hooks/useGlobalConfig';
@@ -16,13 +19,12 @@ export { usePreview } from './hooks/usePreview';
 export { usePost } from './hooks/usePost';
 export { usePosts } from './hooks/usePosts';
 export { usePaths } from './hooks/usePaths';
+export { useFetchGraphAPI } from './hooks/useFetchGraphAPI';
+export { useFetchRestAPI } from './hooks/useFetchRestAPI';
 
 // Utils
 export { deepMerge } from './utils/deepMerge'
+export { classNames } from './utils/classNames'
 
 // API
 export { default as regenerateStaticPage } from './api/revalidate'
-export { 
-    fetchGraphAPI,
-    useFetchRestAPI
-} from './api/apiUtils';
