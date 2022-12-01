@@ -1,4 +1,4 @@
-import { useFetchRestAPI } from "../api/apiUtils";
+import { useFetchRestAPI } from "./useFetchRestAPI";
 import { usePosts } from "./usePosts";
 
 export async function usePaths(postType = 'pages', prependSlug = false) {

@@ -1,4 +1,4 @@
-import { useFetchRestAPI } from "../api/apiUtils";
+import { useFetchRestAPI } from "./useFetchRestAPI";
 
 export async function usePosts(postType = 'posts') {
     // WordPress limits us to retrieve at most 100 pages/posts at a time, so the following loop logic retrieves all posts/pages using multiple requests if needed.

@@ -1,4 +1,4 @@
-import { useFetchRestAPI } from "../api/apiUtils";
+import { useFetchRestAPI } from "./useFetchRestAPI";
 
 export async function usePreview(previewParams, postType = 'pages') {
   const { id, parent, parentSlug } = previewParams.post

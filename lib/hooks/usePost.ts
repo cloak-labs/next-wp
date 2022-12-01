@@ -1,4 +1,4 @@
-import { useFetchRestAPI } from "../api/apiUtils";
+import { useFetchRestAPI } from "./useFetchRestAPI";
 
 export async function usePost({ postType = 'posts', slug, id }) {
   let endpoint
