@@ -8,6 +8,7 @@ export { default as Block } from './Block'
 export { default as Container } from './components/Container'
 export { default as ConditionalWrapper } from './components/ConditionalWrapper'
 export { default as Link } from './components/Link'
+export { AdminBar } from './components/AdminBar'
 
 // Hooks
 export { useGlobalConfig } from './hooks/useGlobalConfig';
@@ -28,3 +29,5 @@ export { classNames } from './utils/classNames'
 
 // API
 export { default as regenerateStaticPage } from './api/revalidate'
+export { default as enablePreviewMode } from './api/enablePreviewMode'
+export { default as exitPreviewMode } from './api/exitPreviewMode'
