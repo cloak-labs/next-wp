@@ -13,8 +13,8 @@ const CustomLink = ({
 
   if (isInternalLink) {
     return (
-      <Link ref={ref} href={href}>
-        <a {...rest} />
+      <Link ref={ref} href={href} {...rest}>
+        {children}
       </Link>
     )
   }
