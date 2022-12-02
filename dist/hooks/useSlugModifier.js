@@ -90,7 +90,6 @@ function useSlugModifier(posts) {
                         }
                         return post;
                     });
-                    console.log('slug modified posts: ', posts);
                     return [2 /*return*/, posts.length > 1 ? posts : posts[0]];
             }
         });

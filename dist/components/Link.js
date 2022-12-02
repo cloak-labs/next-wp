@@ -31,7 +31,7 @@ var CustomLink = function (_a) {
     var isInternalLink = href && href.startsWith('/');
     var isAnchorLink = href && href.startsWith('#');
     if (isInternalLink) {
-        return ((0, jsx_runtime_1.jsx)(link_1.default, __assign({ ref: ref, href: href }, rest, { children: children })));
+        return ((0, jsx_runtime_1.jsx)(link_1.default, __assign({ ref: ref, href: href }, rest, { children: (0, jsx_runtime_1.jsx)("a", { children: children }) })));
     }
     if (isAnchorLink) {
         return (0, jsx_runtime_1.jsx)("a", __assign({ ref: ref, href: href }, rest));
