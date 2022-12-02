@@ -25,7 +25,7 @@ export default async function enablePreviewMode(req, res) {
   else if(postType == 'post') postTypeRestEndpoint = 'posts'
 
   // Fetch WordPress to check if the provided `id` or `slug` exists
-  const { data: {slug: postSlug} } = await usePost({
+  const { data: {slug: postSlug} } = await usePost({ // usePost calls useSlugModifier internally to correct slugs that need a sub-directory prepended.. so postSlug shoudl equal the final front-end slug
     postType: postTypeRestEndpoint,
     id: postId
   });
@@ -34,32 +34,23 @@ export default async function enablePreviewMode(req, res) {
   if (!postSlug) {
     return res.status(401).json({ message: `Post of type "${postType}" with ID "${postId}" was not found; therefore, we abandoned preview mode.` });
   }
-  
-  const { slug: frontEndSlug } = await useSlugModifier({slug: postSlug, type: postType})
-  
-  if (!frontEndSlug) {
-    return res.status(401).json({ message: `Error: frontEndSlug is undefined -- might be a bug.` });
-  }
-
-  console.log("frontEndSlug : ", frontEndSlug)
-
+    
   // Enable Preview Mode by setting the cookies
   res.setPreviewData({
     post: {
       revisionId,
       postId,
       postSlug,
-      frontEndSlug,
       postType,
       postTypeRestEndpoint,
     },
   }, {
     maxAge: 60 * 60, // The preview mode cookies expire in 1 hour
-    path: `/${frontEndSlug}`, // The preview mode cookies apply to the page we're previewing (visiting any other page turns off preview mode)
+    path: `/${postSlug}`, // The preview mode cookies apply to the page we're previewing (visiting any other page turns off preview mode)
   });
 
   // Redirect to the path from the fetched post
   // We don't redirect to `req.query.slug` as that might lead to open redirect vulnerabilities
-  res.writeHead(307, { Location: `/${frontEndSlug}`});
+  res.writeHead(307, { Location: `/${postSlug}`});
   res.end();
 }
