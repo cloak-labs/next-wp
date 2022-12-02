@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.classNames = void 0;
 var tailwind_merge_1 = require("tailwind-merge");
 var classNames = function () {
     var classes = [];
@@ -8,4 +9,4 @@ var classNames = function () {
     }
     return (0, tailwind_merge_1.twMerge)(classes.filter(Boolean).join(' '));
 };
-exports.default = classNames;
+exports.classNames = classNames;

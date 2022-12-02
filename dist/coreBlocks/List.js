@@ -29,6 +29,6 @@ function List(_a) {
     }
     var ListType = ordered ? 'ol' : 'ul';
     console.log();
-    return ((0, jsx_runtime_1.jsx)(ListType, __assign({ className: (0, classNames_1.default)("space-y-3 pb-6", ListType == 'ul' ? "list-disc" : "list-decimal", classes, className), style: styles }, { children: newListItemRenderingMethod ? (innerBlocks === null || innerBlocks === void 0 ? void 0 : innerBlocks.map(function (block, i) { return (0, jsx_runtime_1.jsx)(Block_1.default, { block: block }, i); })) : (0, html_react_parser_1.default)(values) })));
+    return ((0, jsx_runtime_1.jsx)(ListType, __assign({ className: (0, classNames_1.classNames)("space-y-3 pb-6", ListType == 'ul' ? "list-disc" : "list-decimal", classes, className), style: styles }, { children: newListItemRenderingMethod ? (innerBlocks === null || innerBlocks === void 0 ? void 0 : innerBlocks.map(function (block, i) { return (0, jsx_runtime_1.jsx)(Block_1.default, { block: block }, i); })) : (0, html_react_parser_1.default)(values) })));
 }
 exports.default = List;

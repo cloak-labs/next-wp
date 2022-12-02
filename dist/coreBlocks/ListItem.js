@@ -16,6 +16,6 @@ var classNames_1 = require("../utils/classNames");
 function ListItem(_a) {
     var block = _a.block;
     var _b = block.data.attrs, content = _b.content, className = _b.className;
-    return ((0, jsx_runtime_1.jsx)("li", __assign({ className: (0, classNames_1.default)("list-circle", className) }, { children: content })));
+    return ((0, jsx_runtime_1.jsx)("li", __assign({ className: (0, classNames_1.classNames)("list-circle", className) }, { children: content })));
 }
 exports.default = ListItem;

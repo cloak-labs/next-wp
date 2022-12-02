@@ -20,6 +20,6 @@ function Buttons(_a) {
     var block = _a.block, className = _a.className;
     var _b = (0, useBlockStyleBuilder_1.useBlockStyleBuilder)(block.data), classes = _b.classes, styles = _b.styles;
     console.log('%%% button classes', classes);
-    return ((0, jsx_runtime_1.jsx)("div", __assign({ className: (0, classNames_1.default)("flex items-start gap-3", classes, className), style: styles }, { children: block.data.innerBlocks.map(function (buttonBlock, i) { return ((0, jsx_runtime_1.jsx)(react_1.Fragment, { children: (0, jsx_runtime_1.jsx)(Button_1.default, { block: { data: buttonBlock, parent: block.data, isNested: true } }) }, i)); }) })));
+    return ((0, jsx_runtime_1.jsx)("div", __assign({ className: (0, classNames_1.classNames)("flex items-start gap-3", classes, className), style: styles }, { children: block.data.innerBlocks.map(function (buttonBlock, i) { return ((0, jsx_runtime_1.jsx)(react_1.Fragment, { children: (0, jsx_runtime_1.jsx)(Button_1.default, { block: { data: buttonBlock, parent: block.data, isNested: true } }) }, i)); }) })));
 }
 exports.default = Buttons;

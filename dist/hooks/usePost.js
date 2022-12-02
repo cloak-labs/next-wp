@@ -37,7 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.usePost = void 0;
-var apiUtils_1 = require("../api/apiUtils");
+var useFetchRestAPI_1 = require("./useFetchRestAPI");
 function usePost(_a) {
     var _b = _a.postType, postType = _b === void 0 ? 'posts' : _b, slug = _a.slug, id = _a.id;
     return __awaiter(this, void 0, void 0, function () {
@@ -49,7 +49,7 @@ function usePost(_a) {
                         endpoint = "/".concat(postType, "/").concat(id);
                     else
                         endpoint = (slug && slug != '/') ? "/".concat(postType, "?slug=").concat(slug) : "/frontpage";
-                    return [4 /*yield*/, (0, apiUtils_1.useFetchRestAPI)(endpoint)];
+                    return [4 /*yield*/, (0, useFetchRestAPI_1.useFetchRestAPI)(endpoint)];
                 case 1:
                     data = _c.sent();
                     if (Array.isArray(data))

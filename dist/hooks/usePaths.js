@@ -37,7 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.usePaths = void 0;
-var apiUtils_1 = require("../api/apiUtils");
+var useFetchRestAPI_1 = require("./useFetchRestAPI");
 var usePosts_1 = require("./usePosts");
 function usePaths(postType, prependSlug) {
     if (postType === void 0) { postType = 'pages'; }
@@ -48,7 +48,7 @@ function usePaths(postType, prependSlug) {
             switch (_a.label) {
                 case 0:
                     if (!(postType == 'pages')) return [3 /*break*/, 2];
-                    return [4 /*yield*/, (0, apiUtils_1.useFetchRestAPI)('/frontpage')];
+                    return [4 /*yield*/, (0, useFetchRestAPI_1.useFetchRestAPI)('/frontpage')];
                 case 1:
                     home = _a.sent();
                     _a.label = 2;

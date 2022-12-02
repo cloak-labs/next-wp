@@ -36,50 +36,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.useFetchRestAPI = exports.fetchGraphAPI = void 0;
+exports.useFetchRestAPI = void 0;
 var useGlobalConfig_1 = require("../hooks/useGlobalConfig");
 var useSlugModifier_1 = require("../hooks/useSlugModifier");
-function fetchGraphAPI(query, _a) {
-    if (query === void 0) { query = ''; }
-    var _b = _a === void 0 ? {} : _a, variables = _b.variables;
-    return __awaiter(this, void 0, void 0, function () {
-        var config, headers, res, json;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
-                case 0: return [4 /*yield*/, (0, useGlobalConfig_1.useGlobalConfig)()];
-                case 1:
-                    config = _c.sent();
-                    if (!config.wpGraphQlBaseURL)
-                        throw new Error('wpGraphQlBaseURL is missing from NextWP global config -- this is required to use fetchGraphAPI.');
-                    headers = { 'Content-Type': 'application/json' };
-                    if (config.wpAuthRefreshToken) {
-                        headers['Authorization'] = "Bearer ".concat(config.wpAuthRefreshToken);
-                    }
-                    return [4 /*yield*/, fetch(config.wpGraphQlBaseURL, {
-                            headers: headers,
-                            method: 'POST',
-                            body: JSON.stringify({
-                                query: query,
-                                variables: variables,
-                            }),
-                        })];
-                case 2:
-                    res = _c.sent();
-                    return [4 /*yield*/, res.json()];
-                case 3:
-                    json = _c.sent();
-                    // logger(json);
-                    if (json.errors) {
-                        console.error(json.errors);
-                        throw new Error('Failed to fetch data from GraphQL API: ', json.errors);
-                    }
-                    return [2 /*return*/, json.data];
-            }
-        });
-    });
-}
-exports.fetchGraphAPI = fetchGraphAPI;
-function useFetchRestAPI(endpoint, embed, modifyBaseSlugs, convertToRelativeURLs) {
+function useFetchRestAPI(endpoint, // api URL endpoint that comes after `wp-json/wp/v2` (include first slash)
+embed, // the embed param tells WordPress to return expanded data for certain things such as a page/post's full taxonomy data
+modifyBaseSlugs, // when true, our custom hook, useSlugModifier, is used to prepend the page/post slugs returned from WP according to the package user's config
+convertToRelativeURLs // when true, we search/replace all WordPress admin URLs found in data returned from WP with an empty string, except /wp-content URLs. This ensures internal linking always works (including across environments)
+) {
     if (embed === void 0) { embed = true; }
     if (modifyBaseSlugs === void 0) { modifyBaseSlugs = true; }
     if (convertToRelativeURLs === void 0) { convertToRelativeURLs = true; }
@@ -95,11 +59,12 @@ function useFetchRestAPI(endpoint, embed, modifyBaseSlugs, convertToRelativeURLs
                     config = _a.sent();
                     if (!(config === null || config === void 0 ? void 0 : config.wpUrl))
                         throw new Error('wpUrl is missing from NextWP global config -- this is required to use useFetchRestAPI.');
+                    // TODO: consider whether JWT should be required. It's only helpful for protected routes (eg. fetching post revisions for preview feature), so maybe we let it be optional
                     if (!(config === null || config === void 0 ? void 0 : config.wpJwt))
                         throw new Error('wpJwt is missing from NextWP global config -- this is required to use useFetchRestAPI.');
                     headers = {
                         'Content-Type': 'application/json',
-                        Authorization: "Bearer ".concat(config.wpJwt),
+                        Authorization: "Bearer ".concat(config.wpJwt), // including our JWT in all requests just ensures we can fetch data from any protected routes (such as post revisions for our preview feature)
                     };
                     embedParam = '';
                     if (embed) {
@@ -120,13 +85,13 @@ function useFetchRestAPI(endpoint, embed, modifyBaseSlugs, convertToRelativeURLs
                     return [4 /*yield*/, res.json()];
                 case 3:
                     posts = _a.sent();
-                    return [4 /*yield*/, (0, useSlugModifier_1.useSlugModifier)(posts)
-                        // remove all references to WP URL in data
-                    ]; // adjust post slugs if necessary
+                    if (!modifyBaseSlugs) return [3 /*break*/, 5];
+                    return [4 /*yield*/, (0, useSlugModifier_1.useSlugModifier)(posts)]; // adjust post slugs if necessary
                 case 4:
                     posts = _a.sent(); // adjust post slugs if necessary
-                    // remove all references to WP URL in data
-                    if (convertToRelativeURLs) {
+                    _a.label = 5;
+                case 5:
+                    if (convertToRelativeURLs) { // remove all references to WP URL in data
                         postsString = JSON.stringify(posts);
                         hasTrailingSlash = config.wpUrl.slice(-1) == '/';
                         url_1 = hasTrailingSlash ? config.wpUrl.slice(0, -1) : config.wpUrl;

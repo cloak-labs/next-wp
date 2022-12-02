@@ -46,12 +46,12 @@ function Block(_a) {
     */
     var SmallContainer = function (_a) {
         var block = _a.block;
-        return (0, jsx_runtime_1.jsx)(Container_1.default, __assign({ innerClassName: (0, classNames_1.default)("max-w-3xl lg:max-w-4xl", block.config.containerClasses) }, { children: block.rendered }));
+        return (0, jsx_runtime_1.jsx)(Container_1.default, __assign({ innerClassName: (0, classNames_1.classNames)("max-w-3xl lg:max-w-4xl", block.config.containerClasses) }, { children: block.rendered }));
     };
     var defaults = {
         container: function (_a) {
             var block = _a.block;
-            return (0, jsx_runtime_1.jsx)(Container_1.default, __assign({ className: (0, classNames_1.default)("relative", block.config.containerClasses) }, { children: block.rendered }));
+            return (0, jsx_runtime_1.jsx)(Container_1.default, __assign({ className: (0, classNames_1.classNames)("relative", block.config.containerClasses) }, { children: block.rendered }));
         },
         containerCondition: function (_a) {
             var block = _a.block;

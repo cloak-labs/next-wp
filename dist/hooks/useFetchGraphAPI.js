@@ -36,33 +36,44 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.usePosts = void 0;
-var useFetchRestAPI_1 = require("./useFetchRestAPI");
-function usePosts(postType) {
-    if (postType === void 0) { postType = 'posts'; }
+exports.useFetchGraphAPI = void 0;
+var useGlobalConfig_1 = require("../hooks/useGlobalConfig");
+// import { useSlugModifier } from "../hooks/useSlugModifier";
+function useFetchGraphAPI(query, _a) {
+    if (query === void 0) { query = ''; }
+    var _b = _a === void 0 ? {} : _a, variables = _b.variables;
     return __awaiter(this, void 0, void 0, function () {
-        var postsPerCall, numCalls, allPosts, posts;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    postsPerCall = 100;
-                    numCalls = 0;
-                    allPosts = [];
-                    _a.label = 1;
+        var config, headers, res, json;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
+                case 0: return [4 /*yield*/, (0, useGlobalConfig_1.useGlobalConfig)()];
                 case 1:
-                    if (!(allPosts.length == (postsPerCall * numCalls))) return [3 /*break*/, 3];
-                    return [4 /*yield*/, (0, useFetchRestAPI_1.useFetchRestAPI)("/".concat(postType, "?per_page=").concat(postsPerCall))];
+                    config = _c.sent();
+                    if (!config.wpGraphQlBaseURL)
+                        throw new Error('wpGraphQlBaseURL is missing from NextWP global config -- this is required to use useFetchGraphAPI().');
+                    headers = { 'Content-Type': 'application/json' };
+                    if (config.wpAuthRefreshToken)
+                        headers['Authorization'] = "Bearer ".concat(config.wpAuthRefreshToken);
+                    return [4 /*yield*/, fetch(config.wpGraphQlBaseURL, {
+                            headers: headers,
+                            method: 'POST',
+                            body: JSON.stringify({
+                                query: query,
+                                variables: variables,
+                            }),
+                        })];
                 case 2:
-                    posts = _a.sent();
-                    if (posts && posts.length)
-                        allPosts.push.apply(allPosts, posts);
-                    else
-                        return [3 /*break*/, 3];
-                    numCalls++;
-                    return [3 /*break*/, 1];
-                case 3: return [2 /*return*/, allPosts];
+                    res = _c.sent();
+                    return [4 /*yield*/, res.json()];
+                case 3:
+                    json = _c.sent();
+                    if (json.errors) {
+                        console.error(json.errors);
+                        throw new Error('Failed to fetch data from GraphQL API: ', json.errors);
+                    }
+                    return [2 /*return*/, json.data];
             }
         });
     });
 }
-exports.usePosts = usePosts;
+exports.useFetchGraphAPI = useFetchGraphAPI;

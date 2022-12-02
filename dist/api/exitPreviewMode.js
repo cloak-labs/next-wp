@@ -36,33 +36,28 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.usePosts = void 0;
-var useFetchRestAPI_1 = require("./useFetchRestAPI");
-function usePosts(postType) {
-    if (postType === void 0) { postType = 'posts'; }
+function exitPreviewMode(req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var postsPerCall, numCalls, allPosts, posts;
+        var slug;
         return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    postsPerCall = 100;
-                    numCalls = 0;
-                    allPosts = [];
-                    _a.label = 1;
-                case 1:
-                    if (!(allPosts.length == (postsPerCall * numCalls))) return [3 /*break*/, 3];
-                    return [4 /*yield*/, (0, useFetchRestAPI_1.useFetchRestAPI)("/".concat(postType, "?per_page=").concat(postsPerCall))];
-                case 2:
-                    posts = _a.sent();
-                    if (posts && posts.length)
-                        allPosts.push.apply(allPosts, posts);
-                    else
-                        return [3 /*break*/, 3];
-                    numCalls++;
-                    return [3 /*break*/, 1];
-                case 3: return [2 /*return*/, allPosts];
-            }
+            slug = req.query.slug;
+            /* Exit the current user from "Preview Mode".
+               Note: we pass in an options object with path == the path of the page we were previewing.
+                    This is required when setting options.path inside setPreviewData() -- like we're
+                    doing. Otherwise exiting preview mode doesn't work. This was a bug that was
+                    reported here: https://github.com/vercel/next.js/issues/39853, and was fixed in
+                    Next v12.3.0 here: https://github.com/vercel/next.js/pull/40238/files ..
+                    Passing options into clearPreviewData() is currently undocumented, but was discovered
+                    by reading the code changes in the above link.
+          
+                    * Therefore, using next-wp's preview feature requires using Next v12.3.0 or greater
+            */
+            res.clearPreviewData({ path: "/".concat(slug) });
+            // Redirect the user back to the same page they were just previewing -- they'll now see the published version.
+            res.writeHead(307, { Location: "/".concat(slug) });
+            res.end();
+            return [2 /*return*/];
         });
     });
 }
-exports.usePosts = usePosts;
+exports.default = exitPreviewMode;
