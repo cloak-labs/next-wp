@@ -1,14 +1,15 @@
 import { useFetchRestAPI } from "./useFetchRestAPI";
 
-export async function usePreview(previewParams, postType = 'pages') {
-  const { id, parent, parentSlug } = previewParams.post
-  const data = await useFetchRestAPI(`/${postType}/${parent}/revisions/${id}`);
+export async function usePreview(previewParams) {
+  const { revisionId, postId, postTypeRestEndpoint, ...rest } = previewParams.post
+  const data = await useFetchRestAPI(`/${postTypeRestEndpoint}/${postId}/revisions/${revisionId}`);
   return {
     data,
     params: {
-      id,
-      parent,
-      parentSlug
+      revisionId,
+      postId,
+      postTypeRestEndpoint,
+      ...rest
     }
   }
 }
