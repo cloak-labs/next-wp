@@ -14,35 +14,35 @@ export async function useSlugModifier(posts) {
   // the package user has provided baseSlugs to prepend to certain post type slugs, which we do below:
   if(!Array.isArray(posts)) posts = [posts]
   posts = posts.map(post => {
-      // modify post object's slug:
-      if(post && post.type && postBaseSlugs[post.type]){
-          post.slug = `${postBaseSlugs[post.type]}${post.slug}`
-      }
+    // modify post object's slug:
+    if(post && post.type && postBaseSlugs[post.type]){
+      post.slug = `${postBaseSlugs[post.type]}${post.slug}`
+    }
 
-      // modify any post slugs for any posts in ACF relationship/page_link/post_object fields
-      if(post.has_blocks && post.blocksData && post.blocksData.length){
-          post.blocksData.map(block => {
-              if(block.attrs.hasRelationshipFields){
-                  // let blockFieldValues = Object.values(block.attrs.data)
-                  let blockFields = Object.entries(block.attrs.data)
-                  blockFields = blockFields.map(([key, val]) => {
-                      if(val && val.value && (val.type == 'relationship' || val.type == 'page_link' || val.type == 'post_object')){
-                          val.value = val.value.map(relatedPost => {
-                              if(relatedPost && relatedPost.post_type && postBaseSlugs[relatedPost.post_type]){
-                                  relatedPost.slug = `${postBaseSlugs[relatedPost.post_type]}${relatedPost.post_name}`
-                              }
-                              return relatedPost
-                          })
-                      }
-                      return [key, val]
-                  })
-                  block.attrs.data = Object.fromEntries(blockFields);
-              }
-              return block
+    // modify any post slugs for any posts in ACF relationship/page_link/post_object fields
+    if(post.has_blocks && post.blocksData && post.blocksData.length){
+      post.blocksData.map(block => {
+        if(block.attrs.hasRelationshipFields){
+          // let blockFieldValues = Object.values(block.attrs.data)
+          let blockFields = Object.entries(block.attrs.data)
+          blockFields = blockFields.map(([key, val]) => {
+            if(val && val.value && (val.type == 'relationship' || val.type == 'page_link' || val.type == 'post_object')){
+              val.value = val.value.map(relatedPost => {
+                if(relatedPost && relatedPost.post_type && postBaseSlugs[relatedPost.post_type]){
+                  relatedPost.slug = `${postBaseSlugs[relatedPost.post_type]}${relatedPost.post_name}`
+                }
+                return relatedPost
+              })
+            }
+            return [key, val]
           })
-      }
+          block.attrs.data = Object.fromEntries(blockFields);
+        }
+        return block
+      })
+    }
 
-      return post
+    return post
   })
 
   console.log('slug modified posts: ', posts)
