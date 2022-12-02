@@ -1,6 +1,6 @@
 import { classNames } from '../utils/classNames';
 import ConditionalWrapper from './ConditionalWrapper';
-import Link from 'next/link';
+import Link from './Link';
 import HeroIcon from './HeroIcon';
 
 const baseStyles = {
@@ -11,14 +11,14 @@ const baseStyles = {
 
 const variantStyles = {
   solid: {
-    green: 'text-white bg-green-100 hover:bg-green-200 hover:text-blue-800',
-    navy: 'text-white bg-blue-900 hover:bg-blue-700',
-    blue: 'text-white bg-blue-800 hover:bg-blue-400',
+    white: 'text-gray-800 bg-white hover:bg-gray-100',
+    gray: 'text-white bg-gray-700 hover:bg-gray-800',
+    black: 'text-white bg-black hover:bg-gray-900',
   },
   outline: {
-    green: 'border-green-100 text-blue-800 hover:border-green-300 hover:bg-green-100 hover:text-white',
-    navy: 'border-blue-900 text-blue-800 hover:border-blue-700 hover:bg-blue-900 hover:text-white',
-    blue: 'border-blue-800 text-blue-800 hover:border-blue-400 hover:bg-blue-800 hover:text-white',
+    white: 'border-white text-black hover:bg-white hover:text-gray-800',
+    gray: 'border-gray-700 text-gray-700 hover:bg-gray-700 hover:text-white',
+    black: 'border-black text-black hover:bg-black hover:text-white',
   },
   link: {
     green: 'text-green-100 hover:text-green-300 active:text-green-100/80',
@@ -34,14 +34,11 @@ export default function Button({
   trailingIcon = true,
   isLoading = false,
   className,
+  linkProps = {},
   children
 }) {
-  
   return (
-    <ConditionalWrapper
-      condition={href}
-      wrapper={children => <Link href={href}><a className={className}>{children}</a></Link>}
-    >
+    <Link href={href} {...linkProps}>
       <button
         type="button"
         className={classNames(
@@ -51,11 +48,11 @@ export default function Button({
           size === 'large' && 'text-base px-8 py-3',
           baseStyles[variant],
           variantStyles[variant][color],
-          !href && className,
+          className,
         )}
       >
         <span className="w-full">{children}</span>
       </button>
-    </ConditionalWrapper>
-  );
+    </Link>
+  )
 }
