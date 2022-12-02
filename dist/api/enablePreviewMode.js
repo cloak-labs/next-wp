@@ -38,10 +38,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var usePost_1 = require("../hooks/usePost");
 var useGlobalConfig_1 = require("../hooks/useGlobalConfig");
-var useSlugModifier_1 = require("../hooks/useSlugModifier");
 function enablePreviewMode(req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var config, _a, secret, revisionId, postId, postType, postTypeRestEndpoint, postSlug, frontEndSlug;
+        var config, _a, secret, revisionId, postId, postType, postTypeRestEndpoint, postSlug;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0: return [4 /*yield*/, (0, useGlobalConfig_1.useGlobalConfig)()];
@@ -77,30 +76,22 @@ function enablePreviewMode(req, res) {
                     if (!postSlug) {
                         return [2 /*return*/, res.status(401).json({ message: "Post of type \"".concat(postType, "\" with ID \"").concat(postId, "\" was not found; therefore, we abandoned preview mode.") })];
                     }
-                    return [4 /*yield*/, (0, useSlugModifier_1.useSlugModifier)({ slug: postSlug, type: postType })];
-                case 3:
-                    frontEndSlug = (_b.sent()).slug;
-                    if (!frontEndSlug) {
-                        return [2 /*return*/, res.status(401).json({ message: "Error: frontEndSlug is undefined -- might be a bug." })];
-                    }
-                    console.log("frontEndSlug : ", frontEndSlug);
                     // Enable Preview Mode by setting the cookies
                     res.setPreviewData({
                         post: {
                             revisionId: revisionId,
                             postId: postId,
                             postSlug: postSlug,
-                            frontEndSlug: frontEndSlug,
                             postType: postType,
                             postTypeRestEndpoint: postTypeRestEndpoint,
                         },
                     }, {
                         maxAge: 60 * 60,
-                        path: "/".concat(frontEndSlug), // The preview mode cookies apply to the page we're previewing (visiting any other page turns off preview mode)
+                        path: "/".concat(postSlug), // The preview mode cookies apply to the page we're previewing (visiting any other page turns off preview mode)
                     });
                     // Redirect to the path from the fetched post
                     // We don't redirect to `req.query.slug` as that might lead to open redirect vulnerabilities
-                    res.writeHead(307, { Location: "/".concat(frontEndSlug) });
+                    res.writeHead(307, { Location: "/".concat(postSlug) });
                     res.end();
                     return [2 /*return*/];
             }
