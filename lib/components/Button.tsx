@@ -21,7 +21,7 @@ const variantStyles = {
     black: 'border-black text-black hover:bg-black hover:text-white',
   },
   link: {
-    green: 'text-green-100 hover:text-green-300 active:text-green-100/80',
+    gray: 'text-gray-100 hover:text-gray-300 active:text-gray-100/80',
   },
 }
 
@@ -29,30 +29,43 @@ export default function Button({
   color = 'navy',
   variant = 'solid',
   size = 'reg',
+  type = 'button',
   href,
-  icon,
-  trailingIcon = true,
-  isLoading = false,
   className,
-  linkProps = {},
-  children
+  children,
+  ...props
 }) {
+
+  const classes = classNames(
+    "inline-flex items-center justify-center border border-transparent font-semibold rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2",
+    size === 'small' && 'text-xs px-4 py-1.5',
+    size === 'reg' && 'text-sm px-6 py-2.5',
+    size === 'large' && 'text-base px-8 py-3',
+    baseStyles[variant],
+    variantStyles[variant][color],
+    className,
+  )
+
+  // note: when an href is passed in, we just render a Link styled as a button --> HTML5 doesn't want interactive elements (i.e. button) inside <a> tags. So putting <button> in <Link> can lead to hydration error.
   return (
-    <Link href={href} {...linkProps}>
-      <button
-        type="button"
-        className={classNames(
-          "inline-flex items-center justify-center border border-transparent font-semibold rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2",
-          size === 'small' && 'text-xs px-4 py-1.5',
-          size === 'reg' && 'text-sm px-6 py-2.5',
-          size === 'large' && 'text-base px-8 py-3',
-          baseStyles[variant],
-          variantStyles[variant][color],
-          className,
-        )}
-      >
-        <span className="w-full">{children}</span>
-      </button>
-    </Link>
+    <>
+      {href ? (
+        <Link
+          href={href}
+          className={classes}
+          {...props}
+        >
+          {children}
+        </Link>
+      ) : (
+        <button
+          type={type}
+          className={classes}
+          {...props}
+        >
+          <span className="w-full">{children}</span>
+        </button>
+      )}
+    </>
   )
 }
