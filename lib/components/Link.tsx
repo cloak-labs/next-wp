@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import NextLink from 'next/link'
 
 const CustomLink = ({
   href,
@@ -13,21 +13,21 @@ const CustomLink = ({
 
   if (isInternalLink) {
     return (
-      <Link ref={ref} href={href} {...rest}>
-        <a>
+      <NextLink href={href} {...rest}>
+        <span ref={ref}>
           {children}
-        </a>
-      </Link>
+        </span>
+      </NextLink>
     )
   }
 
   if (isAnchorLink) {
-    return <a ref={ref} href={href} {...rest} />
+    return <a ref={ref} href={href} {...rest}>{children}</a>
   }
 
   if(!href.startsWith('/') && !href.startsWith('http') && !href.startsWith('mailto:') && !href.startsWith('tel:')) href = `https://${href}`
 
-  return <a target="_blank" rel="noopener noreferrer" ref={ref} href={href} {...rest} />
+  return <a target="_blank" rel="noopener noreferrer" ref={ref} href={href} {...rest}>{children}</a>
 }
 
 export default CustomLink
