@@ -25,7 +25,8 @@ export default async function enablePreviewMode(req, res) {
   else if(postType == 'post') postTypeRestEndpoint = 'posts'
 
   // Fetch WordPress to check if the provided `id` or `slug` exists
-  const { data: {slug: postSlug} } = await usePost({ // usePost calls useSlugModifier internally to correct slugs that need a sub-directory prepended.. so postSlug shoudl equal the final front-end slug
+  // Note: usePost calls useSlugModifier internally to correct slugs that need a sub-directory prepended.. so postSlug shoudl equal the final front-end slug
+  const { data: {slug: postSlug} } = await usePost({
     postType: postTypeRestEndpoint,
     id: postId
   });
