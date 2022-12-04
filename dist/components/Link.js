@@ -31,13 +31,13 @@ var CustomLink = function (_a) {
     var isInternalLink = href && href.startsWith('/');
     var isAnchorLink = href && href.startsWith('#');
     if (isInternalLink) {
-        return ((0, jsx_runtime_1.jsx)(link_1.default, __assign({ ref: ref, href: href }, rest, { children: (0, jsx_runtime_1.jsx)("a", { children: children }) })));
+        return ((0, jsx_runtime_1.jsx)(link_1.default, __assign({ href: href }, rest, { children: (0, jsx_runtime_1.jsx)("span", __assign({ ref: ref }, { children: children })) })));
     }
     if (isAnchorLink) {
-        return (0, jsx_runtime_1.jsx)("a", __assign({ ref: ref, href: href }, rest));
+        return (0, jsx_runtime_1.jsx)("a", __assign({ ref: ref, href: href }, rest, { children: children }));
     }
     if (!href.startsWith('/') && !href.startsWith('http') && !href.startsWith('mailto:') && !href.startsWith('tel:'))
         href = "https://".concat(href);
-    return (0, jsx_runtime_1.jsx)("a", __assign({ target: "_blank", rel: "noopener noreferrer", ref: ref, href: href }, rest));
+    return (0, jsx_runtime_1.jsx)("a", __assign({ target: "_blank", rel: "noopener noreferrer", ref: ref, href: href }, rest, { children: children }));
 };
 exports.default = CustomLink;

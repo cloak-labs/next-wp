@@ -13,7 +13,7 @@ var __assign = (this && this.__assign) || function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AdminBar = void 0;
 var jsx_runtime_1 = require("react/jsx-runtime");
-var Button_1 = require("../components/Button");
+var Button_1 = require("./Button");
 function AdminBar(_a) {
     var previewParams = _a.previewParams;
     var href = '/api/exit-preview';
