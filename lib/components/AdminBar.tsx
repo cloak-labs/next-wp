@@ -1,4 +1,4 @@
-import Button from '../components/Button';
+import Button from './Button';
 
 export function AdminBar({ previewParams }) {
   let href = '/api/exit-preview';
