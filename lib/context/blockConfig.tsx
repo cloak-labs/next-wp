@@ -2,7 +2,15 @@ import { createContext } from "react";
 
 export const BlockConfigContext = createContext();
 
-const BlockConfigProvider = ({value, children}) => <BlockConfigContext.Provider value={value}>{children}</BlockConfigContext.Provider>
+const BlockConfigProvider = ({value, children}) => (
+  <>
+    {value ? (
+      <BlockConfigContext.Provider value={value}>
+        {children}
+      </BlockConfigContext.Provider>
+    ) : children}
+  </>
+)
 
 export default BlockConfigProvider
 
