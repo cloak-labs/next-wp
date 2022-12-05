@@ -39,10 +39,11 @@ function Block(_a) {
     containerCondition = _a.containerCondition, // dev has the ability to override the default condition that determines whether to wrap a block with a container
     props = __rest(_a, ["block", "isNested", "parentBlock", "containerClasses", "container", "containerCondition"]);
     var blockConfig = (0, useBlockConfig_1.useBlockConfig)();
+    console.log('*** block config:', blockConfig);
     /*
-        next-wp provides simple/sensible defaults for core block components, the block container,
-        and the condition for which the block container is used (devs can override all these
-        defaults via the Block component's props or the global config's props)
+      next-wp provides simple/sensible defaults for core block components, the block container,
+      and the condition for which the block container is used (devs can override all these
+      defaults via the Block component's props or the global config's props)
     */
     var SmallContainer = function (_a) {
         var block = _a.block;
@@ -116,9 +117,7 @@ function Block(_a) {
         }
     };
     // A collection of Booleans that tell us whether a user-provided 'container' prop is a function at all the possible levels (helps us determine which container to use later)
-    var blockConfigComponentLevel = typeof ((_b = blockConfig[block.blockName]) === null || _b === void 0 ? void 0 : _b.container) == "function", componentContainerPropLevel = typeof container == "function", 
-    // globalCustomBlocksLevel = typeof globalConfig?.blockConfig[block.blockName]?.container == "function",
-    blockConfigGlobalLevel = typeof (blockConfig === null || blockConfig === void 0 ? void 0 : blockConfig.container) == "function", defaultComponentLevel = typeof ((_c = defaults.blocks[block.blockName]) === null || _c === void 0 ? void 0 : _c.container) == "function";
+    var blockConfigComponentLevel = typeof ((_b = blockConfig[block.blockName]) === null || _b === void 0 ? void 0 : _b.container) == "function", componentContainerPropLevel = typeof container == "function", blockConfigGlobalLevel = typeof (blockConfig === null || blockConfig === void 0 ? void 0 : blockConfig.container) == "function", defaultComponentLevel = typeof ((_c = defaults.blocks[block.blockName]) === null || _c === void 0 ? void 0 : _c.container) == "function";
     var finalConfig = (0, deepMerge_1.deepMerge)(__assign({}, defaults.blocks), __assign({}, blockConfig))[block.blockName]; // immediately after deep merging, we pick out the specific block we're currently rendering from the final config
     if (!finalConfig) {
         console.error("Failed to render Block (".concat(block.blockName, ") due to missing config object for this particular block. You probably didn't provide a 'blockConfig' prop to your <Blocks /> component, or failed to include a sub-object for '").concat(block.blockName, "'."));
@@ -126,11 +125,7 @@ function Block(_a) {
     }
     var Component = finalConfig.component, _k = finalConfig.props, configProps = _k === void 0 ? {} : _k;
     container =
-        blockConfigComponentLevel ? (_d = blockConfig[block.blockName]) === null || _d === void 0 ? void 0 : _d.container : (componentContainerPropLevel ? container : (
-        // globalCustomBlocksLevel ? blockConfig?.blockConfig[block.blockName]?.container : (
-        blockConfigGlobalLevel ? blockConfig === null || blockConfig === void 0 ? void 0 : blockConfig.container : (defaultComponentLevel ? (_e = defaults.blocks[block.blockName]) === null || _e === void 0 ? void 0 : _e.container : defaults.container)
-        // )
-        )); // lots of ways for devs to provide a custom container, each way takes a higher/lower precedent over the next way
+        blockConfigComponentLevel ? (_d = blockConfig[block.blockName]) === null || _d === void 0 ? void 0 : _d.container : (componentContainerPropLevel ? container : (blockConfigGlobalLevel ? blockConfig === null || blockConfig === void 0 ? void 0 : blockConfig.container : (defaultComponentLevel ? (_e = defaults.blocks[block.blockName]) === null || _e === void 0 ? void 0 : _e.container : defaults.container))); // lots of ways for devs to provide a custom container, each way takes a higher/lower precedent over the next way
     containerCondition = (_g = (_f = containerCondition !== null && containerCondition !== void 0 ? containerCondition : finalConfig.containerCondition) !== null && _f !== void 0 ? _f : blockConfig.containerCondition) !== null && _g !== void 0 ? _g : defaults.containerCondition;
     var finalProps = (0, deepMerge_1.deepMerge)(// merge custom props provided to Block component with custom props provided by default/block config
     configProps, props);

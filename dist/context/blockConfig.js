@@ -17,6 +17,6 @@ var react_1 = require("react");
 exports.BlockConfigContext = (0, react_1.createContext)();
 var BlockConfigProvider = function (_a) {
     var value = _a.value, children = _a.children;
-    return (0, jsx_runtime_1.jsx)(exports.BlockConfigContext.Provider, __assign({ value: value }, { children: children }));
+    return ((0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, { children: value ? ((0, jsx_runtime_1.jsx)(exports.BlockConfigContext.Provider, __assign({ value: value }, { children: children }))) : children }));
 };
 exports.default = BlockConfigProvider;
