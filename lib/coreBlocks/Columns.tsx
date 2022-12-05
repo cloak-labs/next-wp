@@ -17,11 +17,11 @@ export default function Columns({block}) {
     
     // .. Ensure column widths add up to 100% (Gutenberg doesn't force the columns to add up to 100%; they can add up to more or less but we don't want that!)
     // eg. 2 columns with 60% and 45% widths (total of 105%) will be adjusted below to become 57.5% and 42.5% (total of 100%)
-    console.log('col widths BEFORE', columnWidths)
     let totalWidth = 0
     columnWidths.forEach(width => {
         if(width) totalWidth += width
     })
+    
     const isOver = totalWidth > 100
     const isUnder = totalWidth < 100
     if(isOver || isUnder){
@@ -29,7 +29,6 @@ export default function Columns({block}) {
         const adjustment = extra / columns.length
         columnWidths = columnWidths.map(width => isOver ? width - adjustment : width + adjustment)
     }
-    console.log('col widths AFTER', columnWidths)
 
     return (
         <ConditionalWrapper
