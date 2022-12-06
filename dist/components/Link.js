@@ -28,7 +28,7 @@ var CustomLink = function (_a) {
     var href = _a.href, ref = _a.ref, children = _a.children, rest = __rest(_a, ["href", "ref", "children"]);
     if (!href)
         return (0, jsx_runtime_1.jsx)("span", __assign({ ref: ref }, rest, { children: children }));
-    var isInternalLink = href && href.startsWith('/');
+    var isInternalLink = href && href.startsWith('/') && !href.startsWith('/api/');
     var isAnchorLink = href && href.startsWith('#');
     if (isInternalLink) {
         return ((0, jsx_runtime_1.jsx)(link_1.default, __assign({ ref: ref, href: href }, rest, { children: children })));
