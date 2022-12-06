@@ -2,6 +2,7 @@
 An NPM package for integrating WordPress into your NextJS front-end.
 
 ## Package development with Yalc
+This is for next-wp package developers only:
 1. Install Yalc globally `npm i yalc -g`
 2. `cd next-wp`
 3. `yalc publish`
