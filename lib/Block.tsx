@@ -29,7 +29,8 @@ export default function Block({
 	...props
 }) {
   const blockConfig = useBlockConfig()
-    console.log('*** block config:', blockConfig)
+  // console.log('*** block config:', blockConfig)
+  
   /*  
     next-wp provides simple/sensible defaults for core block components, the block container, 
     and the condition for which the block container is used (devs can override all these 
