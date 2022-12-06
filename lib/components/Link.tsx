@@ -8,7 +8,7 @@ const CustomLink = ({
 }) => {
   if(!href) return <span ref={ref} {...rest}>{children}</span>
 
-  const isInternalLink = href && href.startsWith('/')
+  const isInternalLink = href && href.startsWith('/') && !href.startsWith('/api/')
   const isAnchorLink = href && href.startsWith('#')
 
   if (isInternalLink) {
