@@ -8,7 +8,6 @@
     "test": "cross-env NODE_ENV=development npm run watch",
     "build": "cross-env NODE_ENV=production tsc",
     "watch": "tsc-watch --onSuccess 'yalc push' --onFailure 'yalc push' --noClear",
-    "prepublishOnly": "npm run build",
     "postpublish": "git push --tags"
   },
   "repository": {
