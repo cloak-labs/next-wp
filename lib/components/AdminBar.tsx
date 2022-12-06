@@ -9,7 +9,7 @@ export function AdminBar({ previewParams }) {
         <p className="font-medium mb-0 text-base leading-7 flew-grow mr-4">
           You are previewing unpublished changes.
         </p>
-        <Button color='gray' className="py-1" href={href} size="small">Exit Preview</Button>
+        <Button color='gray' className="py-1" href={href} size="small" openInNewTab={false}>Exit Preview</Button>
       </div>
     </div>
   );
