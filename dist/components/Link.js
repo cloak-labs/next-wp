@@ -25,7 +25,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var jsx_runtime_1 = require("react/jsx-runtime");
 var link_1 = require("next/link");
 var CustomLink = function (_a) {
-    var href = _a.href, ref = _a.ref, children = _a.children, rest = __rest(_a, ["href", "ref", "children"]);
+    var href = _a.href, ref = _a.ref, children = _a.children, _b = _a.openInNewTab, openInNewTab = _b === void 0 ? true : _b, rest = __rest(_a, ["href", "ref", "children", "openInNewTab"]);
     if (!href)
         return (0, jsx_runtime_1.jsx)("span", __assign({ ref: ref }, rest, { children: children }));
     var isInternalLink = href && href.startsWith('/') && !href.startsWith('/api/');
@@ -38,6 +38,6 @@ var CustomLink = function (_a) {
     }
     if (!href.startsWith('/') && !href.startsWith('http') && !href.startsWith('mailto:') && !href.startsWith('tel:'))
         href = "https://".concat(href);
-    return (0, jsx_runtime_1.jsx)("a", __assign({ target: "_blank", rel: "noopener noreferrer", ref: ref, href: href }, rest, { children: children }));
+    return (0, jsx_runtime_1.jsx)("a", __assign({ target: openInNewTab ? "_blank" : "", rel: "noopener noreferrer", ref: ref, href: href }, rest, { children: children }));
 };
 exports.default = CustomLink;
