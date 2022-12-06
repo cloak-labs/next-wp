@@ -39,7 +39,7 @@ function Block(_a) {
     containerCondition = _a.containerCondition, // dev has the ability to override the default condition that determines whether to wrap a block with a container
     props = __rest(_a, ["block", "isNested", "parentBlock", "containerClasses", "container", "containerCondition"]);
     var blockConfig = (0, useBlockConfig_1.useBlockConfig)();
-    console.log('*** block config:', blockConfig);
+    // console.log('*** block config:', blockConfig)
     /*
       next-wp provides simple/sensible defaults for core block components, the block container,
       and the condition for which the block container is used (devs can override all these
