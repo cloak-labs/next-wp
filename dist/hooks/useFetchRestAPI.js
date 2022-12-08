@@ -44,19 +44,20 @@ embed, // the embed param tells WordPress to return expanded data for certain th
 modifyBaseSlugs, // when true, our custom hook, useSlugModifier, is used to prepend the page/post slugs returned from WP according to the package user's config
 convertToRelativeURLs // when true, we search/replace all WordPress admin URLs found in data returned from WP with an empty string, except /wp-content URLs. This ensures internal linking always works (including across environments)
 ) {
+    var _a;
     if (embed === void 0) { embed = true; }
     if (modifyBaseSlugs === void 0) { modifyBaseSlugs = true; }
     if (convertToRelativeURLs === void 0) { convertToRelativeURLs = true; }
     return __awaiter(this, void 0, void 0, function () {
         var config, headers, embedParam, url, res, posts, postsString, hasTrailingSlash, url_1;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        return __generator(this, function (_b) {
+            switch (_b.label) {
                 case 0:
                     if (!endpoint)
                         throw new Error('You must pass in an endpoint to useFetchRestAPI');
                     return [4 /*yield*/, (0, useGlobalConfig_1.useGlobalConfig)()];
                 case 1:
-                    config = _a.sent();
+                    config = _b.sent();
                     if (!(config === null || config === void 0 ? void 0 : config.wpUrl))
                         throw new Error('wpUrl is missing from NextWP global config -- this is required to use useFetchRestAPI.');
                     // TODO: consider whether JWT should be required. It's only helpful for protected routes (eg. fetching post revisions for preview feature), so maybe we let it be optional
@@ -81,29 +82,29 @@ convertToRelativeURLs // when true, we search/replace all WordPress admin URLs f
                             method: 'GET',
                         })];
                 case 2:
-                    res = _a.sent();
+                    res = _b.sent();
                     return [4 /*yield*/, res.json()];
                 case 3:
-                    posts = _a.sent();
-                    if (!modifyBaseSlugs) return [3 /*break*/, 5];
-                    return [4 /*yield*/, (0, useSlugModifier_1.useSlugModifier)(posts)]; // adjust post slugs if necessary
-                case 4:
-                    posts = _a.sent(); // adjust post slugs if necessary
-                    _a.label = 5;
-                case 5:
-                    if (convertToRelativeURLs) { // remove all references to WP URL in data
-                        postsString = JSON.stringify(posts);
-                        hasTrailingSlash = config.wpUrl.slice(-1) == '/';
-                        url_1 = hasTrailingSlash ? config.wpUrl.slice(0, -1) : config.wpUrl;
-                        postsString = postsString.replaceAll(url_1, '').replaceAll('/wp-content', "".concat(url_1, "/wp-content")); // removes all references to WordPress URL but then adds them back for any URLs referencing content under /wp-content folder, where the WP URL reference is required
-                        posts = JSON.parse(postsString);
-                    }
+                    posts = _b.sent();
                     if (posts.errors) {
                         console.error(posts.errors);
                         throw new Error('Failed to fetch data from REST API: ', posts.errors);
                     }
                     if (res.status !== 200) {
                         console.error(res.status, res.statusText);
+                    }
+                    if (!modifyBaseSlugs) return [3 /*break*/, 5];
+                    return [4 /*yield*/, (0, useSlugModifier_1.useSlugModifier)(posts)]; // adjust post slugs if necessary
+                case 4:
+                    posts = _b.sent(); // adjust post slugs if necessary
+                    _b.label = 5;
+                case 5:
+                    if (posts && convertToRelativeURLs) { // remove all references to WP URL in data
+                        postsString = JSON.stringify(posts);
+                        hasTrailingSlash = config.wpUrl.slice(-1) == '/';
+                        url_1 = hasTrailingSlash ? config.wpUrl.slice(0, -1) : config.wpUrl;
+                        postsString = (_a = postsString === null || postsString === void 0 ? void 0 : postsString.replaceAll(url_1, '')) === null || _a === void 0 ? void 0 : _a.replaceAll('/wp-content', "".concat(url_1, "/wp-content")); // removes all references to WordPress URL but then adds them back for any URLs referencing content under /wp-content folder, where the WP URL reference is required
+                        posts = JSON.parse(postsString);
                     }
                     return [2 /*return*/, posts];
             }

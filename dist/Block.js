@@ -30,25 +30,26 @@ var classNames_1 = require("./utils/classNames");
 var deepMerge_1 = require("./utils/deepMerge");
 var useBlockConfig_1 = require("./hooks/useBlockConfig");
 function Block(_a) {
-    var _b, _c, _d, _e, _f, _g;
+    var _b, _c, _d, _e;
     var block = _a.block, 
     // blockConfig, at some point in future, allow this prop to override the blockConfig on a per-block basis by conditionally wrapping the rendered block with another <BlockConfigProvider />
-    _h = _a.isNested, 
+    _f = _a.isNested, 
     // blockConfig, at some point in future, allow this prop to override the blockConfig on a per-block basis by conditionally wrapping the rendered block with another <BlockConfigProvider />
-    isNested = _h === void 0 ? false : _h, parentBlock = _a.parentBlock, _j = _a.containerClasses, containerClasses = _j === void 0 ? '' : _j, container = _a.container, // dev has the ability to override the default container function below: we pass all props to it so devs can do all kinds of custom/conditional rendering
-    containerCondition = _a.containerCondition, // dev has the ability to override the default condition that determines whether to wrap a block with a container
-    props = __rest(_a, ["block", "isNested", "parentBlock", "containerClasses", "container", "containerCondition"]);
-    var blockConfig = (0, useBlockConfig_1.useBlockConfig)();
-    // console.log('*** block config:', blockConfig)
-    /*
-      next-wp provides simple/sensible defaults for core block components, the block container,
-      and the condition for which the block container is used (devs can override all these
-      defaults via the Block component's props or the global config's props)
-    */
+    isNested = _f === void 0 ? false : _f, parentBlock = _a.parentBlock, _g = _a.containerClasses, containerClasses = _g === void 0 ? '' : _g, container = _a.container, // dev has the ability to override the default container function -- this prop is only useful when dev is explicitly rendering <Block /> (not common) --> <Blocks /> does not pass 'container' to Block as prop, instead it uses context (see useBlockConfig() below)
+    containerCondition = _a.containerCondition, // dev has the ability to override the default condition that determines whether to wrap a block with a container -- this prop is only useful when dev is explicitly rendering <Block /> (not common) --> <Blocks /> does not pass 'container' to Block as prop, instead it uses context (see useBlockConfig() below)
+    prevSibling = _a.prevSibling, // the block data for the current block's previous sibling block
+    nextSibling = _a.nextSibling, // the block data for the current block's next sibling block
+    props = __rest(_a, ["block", "isNested", "parentBlock", "containerClasses", "container", "containerCondition", "prevSibling", "nextSibling"]);
+    var _h = (0, useBlockConfig_1.useBlockConfig)(), globalCustomContainer = _h.container, globalCustomContainerCondition = _h.containerCondition, blockConfig = _h.blocks;
     var SmallContainer = function (_a) {
         var block = _a.block;
         return (0, jsx_runtime_1.jsx)(Container_1.default, __assign({ innerClassName: (0, classNames_1.classNames)("max-w-3xl lg:max-w-4xl", block.config.containerClasses) }, { children: block.rendered }));
     };
+    /*
+      next-wp provides simple/sensible defaults for core block components, the block container,
+      and the condition for which the block container is used --> devs can override all these
+      defaults via props or context (when using our <BlockConfigProvider>)
+    */
     var defaults = {
         container: function (_a) {
             var block = _a.block;
@@ -56,7 +57,7 @@ function Block(_a) {
         },
         containerCondition: function (_a) {
             var block = _a.block;
-            return block.isNested == false && block.config.container;
+            return !block.isNested;
         },
         blocks: {
             'core/paragraph': {
@@ -72,7 +73,6 @@ function Block(_a) {
             'core/image': {
                 component: coreBlocks_1.Image,
                 container: SmallContainer,
-                // container: ({block}) => (<Container className={classNames("max-w-2xl", block.config.containerClasses)}>{block.rendered}</Container>),
                 containerClasses: 'py-2',
             },
             'core/embed': {
@@ -116,29 +116,52 @@ function Block(_a) {
             },
         }
     };
-    // A collection of Booleans that tell us whether a user-provided 'container' prop is a function at all the possible levels (helps us determine which container to use later)
-    var blockConfigComponentLevel = typeof ((_b = blockConfig[block.blockName]) === null || _b === void 0 ? void 0 : _b.container) == "function", componentContainerPropLevel = typeof container == "function", blockConfigGlobalLevel = typeof (blockConfig === null || blockConfig === void 0 ? void 0 : blockConfig.container) == "function", defaultComponentLevel = typeof ((_c = defaults.blocks[block.blockName]) === null || _c === void 0 ? void 0 : _c.container) == "function";
     var finalConfig = (0, deepMerge_1.deepMerge)(__assign({}, defaults.blocks), __assign({}, blockConfig))[block.blockName]; // immediately after deep merging, we pick out the specific block we're currently rendering from the final config
     if (!finalConfig) {
-        console.error("Failed to render Block (".concat(block.blockName, ") due to missing config object for this particular block. You probably didn't provide a 'blockConfig' prop to your <Blocks /> component, or failed to include a sub-object for '").concat(block.blockName, "'."));
+        console.error("Failed to render Block (".concat(block.blockName, ") due to missing config object for this particular block. You probably didn't provide a 'blocks' prop to your <Blocks /> component, or failed to include a sub-object for '").concat(block.blockName, "'."));
         return (0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, {});
     }
-    var Component = finalConfig.component, _k = finalConfig.props, configProps = _k === void 0 ? {} : _k;
-    container =
-        blockConfigComponentLevel ? (_d = blockConfig[block.blockName]) === null || _d === void 0 ? void 0 : _d.container : (componentContainerPropLevel ? container : (blockConfigGlobalLevel ? blockConfig === null || blockConfig === void 0 ? void 0 : blockConfig.container : (defaultComponentLevel ? (_e = defaults.blocks[block.blockName]) === null || _e === void 0 ? void 0 : _e.container : defaults.container))); // lots of ways for devs to provide a custom container, each way takes a higher/lower precedent over the next way
-    containerCondition = (_g = (_f = containerCondition !== null && containerCondition !== void 0 ? containerCondition : finalConfig.containerCondition) !== null && _f !== void 0 ? _f : blockConfig.containerCondition) !== null && _g !== void 0 ? _g : defaults.containerCondition;
+    var possibleContainers = [
+        container,
+        (_b = blockConfig[block.blockName]) === null || _b === void 0 ? void 0 : _b.container,
+        globalCustomContainer,
+        (_c = defaults.blocks[block.blockName]) === null || _c === void 0 ? void 0 : _c.container,
+        defaults.container // default global container specified by next-wp (last priority)
+    ]; // note: there are 4 ways for package users to provide a custom container (and a default container provided by us)
+    var finalContainer = possibleContainers.filter(function (cntr) { return typeof cntr == "function"; })[0]; // filter out non-component containers and pick off the 1st one (smallest index == highest priority)
+    var containerEnabled = true;
+    possibleContainers.every(function (cntr, index) {
+        if (cntr === false) { // we found a falsy container value before we found a container function, which means we set containerEnabled = false and don't render a container
+            containerEnabled = false;
+            return false; // equivalent to 'break;'
+        }
+        if (typeof cntr == "function")
+            return false; // we found a container function before we found a falsy value, which means we leave containerEnabled = true
+        return true; // equivalent to 'continue;' and is required for 'every()'
+    });
+    var possibleContainerConditions = [
+        containerCondition,
+        (_d = blockConfig[block.blockName]) === null || _d === void 0 ? void 0 : _d.containerCondition,
+        globalCustomContainerCondition,
+        (_e = defaults.blocks[block.blockName]) === null || _e === void 0 ? void 0 : _e.containerCondition,
+        defaults.containerCondition,
+    ];
+    var finalContainerCondition = possibleContainerConditions.filter(function (condition) { return typeof condition == "function"; })[0];
+    var Component = finalConfig.component, _j = finalConfig.props, configProps = _j === void 0 ? {} : _j;
     var finalProps = (0, deepMerge_1.deepMerge)(// merge custom props provided to Block component with custom props provided by default/block config
     configProps, props);
     if (!Component) {
-        console.error("Failed to render Block (".concat(block.blockName, ") due to a missing component. You probably didn't provide this block with a 'component' prop in your 'blockConfig'."));
+        console.error("Failed to render Block (".concat(block.blockName, ") due to a missing component. You probably didn't provide this block with a 'component' property in your 'blocks' object."));
         return (0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, {});
     }
     var blockObj = {
         isNested: isNested,
         data: block,
         parent: parentBlock,
-        config: finalConfig
+        config: finalConfig,
+        prevSibling: prevSibling,
+        nextSibling: nextSibling,
     };
-    return ((0, jsx_runtime_1.jsx)(ConditionalWrapper_1.default, __assign({ condition: function () { return containerCondition({ block: blockObj, finalProps: finalProps }); }, wrapper: function (children) { return container({ block: __assign(__assign({}, blockObj), { rendered: children }), finalProps: finalProps }); } }, { children: (0, jsx_runtime_1.jsx)(Component, __assign({ block: blockObj }, finalProps)) })));
+    return ((0, jsx_runtime_1.jsx)(ConditionalWrapper_1.default, __assign({ condition: function () { return containerEnabled ? finalContainerCondition === null || finalContainerCondition === void 0 ? void 0 : finalContainerCondition({ block: blockObj, finalProps: finalProps }) : false; }, wrapper: function (children) { return finalContainer === null || finalContainer === void 0 ? void 0 : finalContainer({ block: __assign(__assign({}, blockObj), { rendered: children }), finalProps: finalProps }); } }, { children: (0, jsx_runtime_1.jsx)(Component, __assign({ block: blockObj }, finalProps)) })));
 }
 exports.default = Block;
