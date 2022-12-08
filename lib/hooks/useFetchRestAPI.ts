@@ -38,15 +38,6 @@ export async function useFetchRestAPI(
   );
 
   let posts = await res.json();
-  if(modifyBaseSlugs) posts = await useSlugModifier(posts) // adjust post slugs if necessary
-
-  if(convertToRelativeURLs){ // remove all references to WP URL in data
-    let postsString = JSON.stringify(posts)
-    const hasTrailingSlash = config.wpUrl.slice(-1) == '/'
-    const url = hasTrailingSlash ? config.wpUrl.slice(0, -1) : config.wpUrl
-    postsString = postsString.replaceAll(url, '').replaceAll('/wp-content', `${url}/wp-content`) // removes all references to WordPress URL but then adds them back for any URLs referencing content under /wp-content folder, where the WP URL reference is required
-    posts = JSON.parse(postsString)
-  }
 
   if (posts.errors) {
     console.error(posts.errors);
@@ -56,6 +47,17 @@ export async function useFetchRestAPI(
   if (res.status !== 200) {
     console.error(res.status, res.statusText);
   }
+
+  if(modifyBaseSlugs) posts = await useSlugModifier(posts) // adjust post slugs if necessary
+
+  if(posts && convertToRelativeURLs){ // remove all references to WP URL in data
+    let postsString = JSON.stringify(posts)
+    const hasTrailingSlash = config.wpUrl.slice(-1) == '/'
+    const url = hasTrailingSlash ? config.wpUrl.slice(0, -1) : config.wpUrl
+    postsString = postsString?.replaceAll(url, '')?.replaceAll('/wp-content', `${url}/wp-content`) // removes all references to WordPress URL but then adds them back for any URLs referencing content under /wp-content folder, where the WP URL reference is required
+    posts = JSON.parse(postsString)
+  }
+
 
   return posts;
 }
