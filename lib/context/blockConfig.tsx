@@ -1,29 +1,40 @@
 import { createContext } from "react";
+import { useBlockConfig } from '../hooks/useBlockConfig'
+import { deepMerge } from '../utils/deepMerge'
 
-export const BlockConfigContext = createContext();
+export const BlockConfigContext = createContext({});
 
-const BlockConfigProvider = ({value, children}) => (
-  <>
-    {value ? (
-      <BlockConfigContext.Provider value={value}>
-        {children}
-      </BlockConfigContext.Provider>
-    ) : children}
-  </>
-)
+const BlockConfigProvider = ({
+  blocks,
+  container,
+  containerCondition,
+  merge = true, // when true, we deepMerge 'blocks' with previously set blocks from higher-up context.. otherwise when false, 'blocks' totally overrides previous context
+  children
+}) => {
+
+  const {
+    container: prevContainer = null,
+    containerCondition: prevContainerCondition = null,
+    blocks: prevBlocks = {}
+  } = useBlockConfig() // grabs next closest block config from higher up the component tree (doesn't necessarily exist)
+
+  const isNewConfig = blocks || container || containerCondition // boolean --> when false (no props provided), we don't bother rendering Context Provider, we just render the children
+
+  let config = {
+    container: container ?? prevContainer,
+    containerCondition: containerCondition ?? prevContainerCondition,
+    blocks: merge ? deepMerge(prevBlocks, blocks) : blocks ?? prevBlocks,
+  }
+
+  return (
+    <>
+      {isNewConfig ? (
+        <BlockConfigContext.Provider value={config}>
+          {children}
+        </BlockConfigContext.Provider>
+      ) : children}
+    </>
+  )
+}
 
 export default BlockConfigProvider
-
-
-// Not sure this NextWP is needed.. might help ensure it's structured a certain way, or maybe Typescript will solve that.. for now we just allow the config to be any JS object
-// export class NextWP {
-//     constructor(config = {}) {
-//         this.blockConfig = config.blockConfig
-//         this.wpUrl = config.wpUrl
-//         this.wpSecret = config.wpSecret
-//         this.wpJwt = config.wpJwt
-//         this.wpGraphQlBaseURL = config.wpGraphQlBaseURL
-//         this.wpAuthRefreshToken = config.wpAuthRefreshToken
-//         this.postBaseSlugs = config.postBaseSlugs
-//     }
-// } 
