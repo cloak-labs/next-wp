@@ -46,7 +46,7 @@ var useGlobalConfig_1 = require("./useGlobalConfig");
 */
 function useSlugModifier(posts) {
     return __awaiter(this, void 0, void 0, function () {
-        var config, postBaseSlugs;
+        var config, postBaseSlugs, convertedToArray;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, (0, useGlobalConfig_1.useGlobalConfig)()];
@@ -57,9 +57,11 @@ function useSlugModifier(posts) {
                         return [2 /*return*/, posts
                             // the package user has provided baseSlugs to prepend to certain post type slugs, which we do below:
                         ];
-                    // the package user has provided baseSlugs to prepend to certain post type slugs, which we do below:
-                    if (!Array.isArray(posts))
+                    convertedToArray = false;
+                    if (!Array.isArray(posts)) {
+                        convertedToArray = true;
                         posts = [posts];
+                    }
                     posts = posts.map(function (post) {
                         // modify post object's slug:
                         if (post && post.type && postBaseSlugs[post.type]) {
@@ -90,7 +92,7 @@ function useSlugModifier(posts) {
                         }
                         return post;
                     });
-                    return [2 /*return*/, posts.length > 1 ? posts : posts[0]];
+                    return [2 /*return*/, posts.length > 1 ? posts : (convertedToArray ? posts[0] : posts)];
             }
         });
     });
