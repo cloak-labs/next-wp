@@ -22,6 +22,7 @@ export { usePosts } from './hooks/usePosts';
 export { usePaths } from './hooks/usePaths';
 export { useFetchGraphAPI } from './hooks/useFetchGraphAPI';
 export { useFetchRestAPI } from './hooks/useFetchRestAPI';
+export { useUser } from './hooks/useUser';
 
 // Utils
 export { deepMerge } from './utils/deepMerge'
@@ -31,3 +32,5 @@ export { classNames } from './utils/classNames'
 export { default as regenerateStaticPage } from './api/revalidate'
 export { default as enablePreviewMode } from './api/enablePreviewMode'
 export { default as exitPreviewMode } from './api/exitPreviewMode'
+export { default as setLoggedIn } from './api/setLoggedIn'
+export { default as setLoggedOut } from './api/setLoggedOut'
