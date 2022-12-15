@@ -12,7 +12,11 @@ export async function useSlugModifier(posts) {
   if(!postBaseSlugs) return posts
   
   // the package user has provided baseSlugs to prepend to certain post type slugs, which we do below:
-  if(!Array.isArray(posts)) posts = [posts]
+  let convertedToArray = false
+  if(!Array.isArray(posts)) {
+    convertedToArray = true
+    posts = [posts]
+  }
   posts = posts.map(post => {
     // modify post object's slug:
     if(post && post.type && postBaseSlugs[post.type]){
@@ -45,5 +49,7 @@ export async function useSlugModifier(posts) {
     return post
   })
 
-  return posts.length > 1 ? posts : posts[0]
+  return posts.length > 1 ? posts : (
+    convertedToArray ? posts[0] : posts
+  )
 }
