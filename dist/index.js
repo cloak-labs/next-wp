@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.exitPreviewMode = exports.enablePreviewMode = exports.regenerateStaticPage = exports.classNames = exports.deepMerge = exports.useFetchRestAPI = exports.useFetchGraphAPI = exports.usePaths = exports.usePosts = exports.usePost = exports.usePreview = exports.usePage = exports.useBlockStyleBuilder = exports.useSlugModifier = exports.useBlockConfig = exports.useGlobalConfig = exports.AdminBar = exports.Link = exports.ConditionalWrapper = exports.Container = exports.Block = exports.Blocks = exports.BlockConfigProvider = void 0;
+exports.setLoggedOut = exports.setLoggedIn = exports.exitPreviewMode = exports.enablePreviewMode = exports.regenerateStaticPage = exports.classNames = exports.deepMerge = exports.useUser = exports.useFetchRestAPI = exports.useFetchGraphAPI = exports.usePaths = exports.usePosts = exports.usePost = exports.usePreview = exports.usePage = exports.useBlockStyleBuilder = exports.useSlugModifier = exports.useBlockConfig = exports.useGlobalConfig = exports.AdminBar = exports.Link = exports.ConditionalWrapper = exports.Container = exports.Block = exports.Blocks = exports.BlockConfigProvider = void 0;
 // Context
 // export { NextWP } from './context/blockConfig';
 var blockConfig_1 = require("./context/blockConfig");
@@ -41,6 +41,8 @@ var useFetchGraphAPI_1 = require("./hooks/useFetchGraphAPI");
 Object.defineProperty(exports, "useFetchGraphAPI", { enumerable: true, get: function () { return useFetchGraphAPI_1.useFetchGraphAPI; } });
 var useFetchRestAPI_1 = require("./hooks/useFetchRestAPI");
 Object.defineProperty(exports, "useFetchRestAPI", { enumerable: true, get: function () { return useFetchRestAPI_1.useFetchRestAPI; } });
+var useUser_1 = require("./hooks/useUser");
+Object.defineProperty(exports, "useUser", { enumerable: true, get: function () { return useUser_1.useUser; } });
 // Utils
 var deepMerge_1 = require("./utils/deepMerge");
 Object.defineProperty(exports, "deepMerge", { enumerable: true, get: function () { return deepMerge_1.deepMerge; } });
@@ -53,3 +55,7 @@ var enablePreviewMode_1 = require("./api/enablePreviewMode");
 Object.defineProperty(exports, "enablePreviewMode", { enumerable: true, get: function () { return enablePreviewMode_1.default; } });
 var exitPreviewMode_1 = require("./api/exitPreviewMode");
 Object.defineProperty(exports, "exitPreviewMode", { enumerable: true, get: function () { return exitPreviewMode_1.default; } });
+var setLoggedIn_1 = require("./api/setLoggedIn");
+Object.defineProperty(exports, "setLoggedIn", { enumerable: true, get: function () { return setLoggedIn_1.default; } });
+var setLoggedOut_1 = require("./api/setLoggedOut");
+Object.defineProperty(exports, "setLoggedOut", { enumerable: true, get: function () { return setLoggedOut_1.default; } });

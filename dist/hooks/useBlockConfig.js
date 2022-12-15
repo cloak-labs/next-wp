@@ -5,8 +5,6 @@ var react_1 = require("react");
 var blockConfig_1 = require("../context/blockConfig");
 function useBlockConfig() {
     var config = (0, react_1.useContext)(blockConfig_1.BlockConfigContext);
-    if (config && !config.blocks && !config.container)
-        config = { blocks: config }; // allows backwards-compatibility with <= v0.2.11
     return config;
 }
 exports.useBlockConfig = useBlockConfig;

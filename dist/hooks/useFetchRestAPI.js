@@ -60,7 +60,7 @@ convertToRelativeURLs // when true, we search/replace all WordPress admin URLs f
                     config = _b.sent();
                     if (!(config === null || config === void 0 ? void 0 : config.wpUrl))
                         throw new Error('wpUrl is missing from NextWP global config -- this is required to use useFetchRestAPI.');
-                    // TODO: consider whether JWT should be required. It's only helpful for protected routes (eg. fetching post revisions for preview feature), so maybe we let it be optional
+                    // JWT is required for fetching post revisions (for preview feature), and for fetching draft posts (so logged in users can preview drafts)
                     if (!(config === null || config === void 0 ? void 0 : config.wpJwt))
                         throw new Error('wpJwt is missing from NextWP global config -- this is required to use useFetchRestAPI.');
                     headers = {

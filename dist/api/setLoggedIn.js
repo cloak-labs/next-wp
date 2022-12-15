@@ -1,15 +1,4 @@
 "use strict";
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -46,42 +35,32 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __rest = (this && this.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.usePreview = void 0;
-var useFetchRestAPI_1 = require("./useFetchRestAPI");
-function usePreview(previewParams) {
+var cookies_next_1 = require("cookies-next");
+var useGlobalConfig_1 = require("../hooks/useGlobalConfig");
+function setLoggedIn(req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, _b, revisionId, postId, postTypeRestEndpoint, rest, data;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
-                case 0:
-                    _a = previewParams.post, _b = _a.revisionId, revisionId = _b === void 0 ? null : _b, postId = _a.postId, postTypeRestEndpoint = _a.postTypeRestEndpoint, rest = __rest(_a, ["revisionId", "postId", "postTypeRestEndpoint"]);
-                    if (!revisionId) return [3 /*break*/, 2];
-                    return [4 /*yield*/, (0, useFetchRestAPI_1.useFetchRestAPI)("/".concat(postTypeRestEndpoint, "/").concat(postId, "/revisions/").concat(revisionId))];
+        var config, secret;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, (0, useGlobalConfig_1.useGlobalConfig)()];
                 case 1:
-                    data = _c.sent();
-                    return [3 /*break*/, 4];
-                case 2: return [4 /*yield*/, (0, useFetchRestAPI_1.useFetchRestAPI)("/".concat(postTypeRestEndpoint, "/").concat(postId))];
-                case 3:
-                    data = _c.sent();
-                    _c.label = 4;
-                case 4: return [2 /*return*/, {
-                        data: data,
-                        params: __assign({ revisionId: revisionId, postId: postId, postTypeRestEndpoint: postTypeRestEndpoint }, rest)
-                    }];
+                    config = _a.sent();
+                    secret = req.query.secret;
+                    // Check the secret and next parameters.
+                    // This secret should only be known by this API route
+                    if (!config.wpSecret) {
+                        return [2 /*return*/, res.status(401).json({ message: "You haven't supplied a secret via the 'wpSecret' prop in your next-wp.config.js file." })];
+                    }
+                    if (secret !== config.wpSecret) {
+                        return [2 /*return*/, res.status(401).json({ message: 'Invalid secret token -- pass in a valid secret via a "secret" parameter that matches the secret you supplied as "wpSecret" in your next-wp.config.js file.' })];
+                    }
+                    (0, cookies_next_1.setCookie)('next-wp-logged-in', 'true', { req: req, res: res, maxAge: 60 * 60 * 48 }); // logged in status expires in 48 hours (the default session length for WordPress)
+                    // redirect back to WordPress wp-admin "posts" page (opinion: the dashboard page is useless)
+                    res.writeHead(307, { Location: "".concat(config.wpUrl).concat(config.wpAdminUrl || 'wp-admin', "/edit.php") }).end();
+                    return [2 /*return*/];
             }
         });
     });
 }
-exports.usePreview = usePreview;
+exports.default = setLoggedIn;
