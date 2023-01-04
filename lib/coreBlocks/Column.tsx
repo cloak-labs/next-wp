@@ -2,7 +2,7 @@ import Block from "../Block";
 import { useBlockStyleBuilder } from "../hooks/useBlockStyleBuilder";
 import { classNames } from "../utils/classNames";
 
-export default function Column({block, width, index, numColumns}) {
+export default function Column({block, width, index, numColumns, className}) {
     console.log('** column block: ', block)
     const {classes, styles} = useBlockStyleBuilder(block.data)
 
@@ -31,11 +31,12 @@ export default function Column({block, width, index, numColumns}) {
             className={classNames(
                 'flex flex-col',
                 `col-span-${colSpan}`,
-                classes,
                 numColumns == 2 && 'space-y-3',
                 (numColumns > 2 && numColumns <= 4) && 'space-y-2',
                 (numColumns > 4 && numColumns <= 6) && 'space-y-1',
                 numColumns > 6 && 'space-y-0.5',
+                classes,
+                className
             )} 
             style={styles}
         >
