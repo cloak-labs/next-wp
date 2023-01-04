@@ -17,7 +17,7 @@ export default async function setLoggedOut(req, res) {
   
   setCookie('next-wp-logged-in', 'false', { req, res });
   
-  console.log('log out and redirect back to wp-admin')
+  // console.log('log out and redirect back to wp-admin')
   res.writeHead(307, { Location: `${config.wpUrl}/${config.wpAdminUrl || 'wp-admin'}` }).end()
 
   // return res.status(200).json({ login: 'false' });
