@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 
 export function useUser(options = {}) {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  
   useEffect(() => {
     const loggedIn = getCookie('next-wp-logged-in', options);
     setIsLoggedIn(loggedIn)
