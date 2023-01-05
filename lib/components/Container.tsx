@@ -11,6 +11,7 @@ export default function Container({ className, innerClassName, children, ...prop
         !hasBgColor && innerClassName,
         className
       )}
+      data-nextwp-container="true"
       {...props}
     >
       {hasBgColor ? (
