@@ -36,6 +36,7 @@ export default function Block({
     containerCondition: globalCustomContainerCondition,
     blocks: blockConfig
   } = useBlockConfig()
+  
     
   const SmallContainer = ({block}) => <Container innerClassName={classNames("max-w-3xl lg:max-w-4xl", block.config.containerClasses)}>{block.rendered}</Container>
   
@@ -122,7 +123,7 @@ export default function Block({
     defaults.blocks[block.blockName]?.container, // default container specified by next-wp for this specific block (4th priority)
     defaults.container // default global container specified by next-wp (last priority)
   ] // note: there are 4 ways for package users to provide a custom container (and a default container provided by us)
-  const finalContainer = possibleContainers.filter(cntr => typeof cntr == "function")[0] // filter out non-component containers and pick off the 1st one (smallest index == highest priority)
+  const finalContainer = possibleContainers.filter(cntr => typeof cntr == "function")[0] // filter out non-component & non-boolean containers, then pick off the 1st one (smallest index == highest priority)
 
   let containerEnabled = true;
   possibleContainers.every((cntr, index) => { // stops iterating when we return false
@@ -130,7 +131,9 @@ export default function Block({
       containerEnabled = false
       return false // equivalent to 'break;'
     }
-    if(typeof cntr == "function") return false // we found a container function before we found a falsy value, which means we leave containerEnabled = true
+    if(typeof cntr == "function") {
+      return false // we found a container function before we found a falsy value, which means we leave containerEnabled = true
+    }
     return true // equivalent to 'continue;' and is required for 'every()'
   })
 
