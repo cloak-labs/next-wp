@@ -21,7 +21,7 @@ var BlockConfigProvider = function (_a) {
     var blocks = _a.blocks, container = _a.container, containerCondition = _a.containerCondition, _b = _a.merge, merge = _b === void 0 ? true : _b, // when true, we deepMerge 'blocks' with previously set blocks from higher-up context.. otherwise when false, 'blocks' totally overrides previous context
     children = _a.children;
     var _c = (0, useBlockConfig_1.useBlockConfig)(), _d = _c.container, prevContainer = _d === void 0 ? null : _d, _e = _c.containerCondition, prevContainerCondition = _e === void 0 ? null : _e, _f = _c.blocks, prevBlocks = _f === void 0 ? {} : _f; // grabs next closest block config from higher up the component tree (doesn't necessarily exist)
-    var isNewConfig = blocks || container || containerCondition; // boolean --> when false (no props provided), we don't bother rendering Context Provider, we just render the children
+    var isNewConfig = blocks || container || container == false || containerCondition; // boolean --> when false (no props provided), we don't bother rendering Context Provider, we just render the children
     var config = {
         container: container !== null && container !== void 0 ? container : prevContainer,
         containerCondition: containerCondition !== null && containerCondition !== void 0 ? containerCondition : prevContainerCondition,

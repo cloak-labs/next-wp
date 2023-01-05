@@ -128,15 +128,16 @@ function Block(_a) {
         (_c = defaults.blocks[block.blockName]) === null || _c === void 0 ? void 0 : _c.container,
         defaults.container // default global container specified by next-wp (last priority)
     ]; // note: there are 4 ways for package users to provide a custom container (and a default container provided by us)
-    var finalContainer = possibleContainers.filter(function (cntr) { return typeof cntr == "function"; })[0]; // filter out non-component containers and pick off the 1st one (smallest index == highest priority)
+    var finalContainer = possibleContainers.filter(function (cntr) { return typeof cntr == "function"; })[0]; // filter out non-component & non-boolean containers, then pick off the 1st one (smallest index == highest priority)
     var containerEnabled = true;
     possibleContainers.every(function (cntr, index) {
         if (cntr === false) { // we found a falsy container value before we found a container function, which means we set containerEnabled = false and don't render a container
             containerEnabled = false;
             return false; // equivalent to 'break;'
         }
-        if (typeof cntr == "function")
+        if (typeof cntr == "function") {
             return false; // we found a container function before we found a falsy value, which means we leave containerEnabled = true
+        }
         return true; // equivalent to 'continue;' and is required for 'every()'
     });
     var possibleContainerConditions = [

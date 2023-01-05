@@ -17,7 +17,7 @@ var useBlockStyleBuilder_1 = require("../hooks/useBlockStyleBuilder");
 var classNames_1 = require("../utils/classNames");
 function Column(_a) {
     var _b, _c;
-    var block = _a.block, width = _a.width, index = _a.index, numColumns = _a.numColumns;
+    var block = _a.block, width = _a.width, index = _a.index, numColumns = _a.numColumns, className = _a.className;
     console.log('** column block: ', block);
     var _d = (0, useBlockStyleBuilder_1.useBlockStyleBuilder)(block.data), classes = _d.classes, styles = _d.styles;
     var colSpan = 6; // default to 50% if no column width is defined
@@ -39,6 +39,6 @@ function Column(_a) {
             lastDiff = diff;
         }
     }
-    return ((0, jsx_runtime_1.jsx)("div", __assign({ className: (0, classNames_1.classNames)('flex flex-col', "col-span-".concat(colSpan), classes, numColumns == 2 && 'space-y-3', (numColumns > 2 && numColumns <= 4) && 'space-y-2', (numColumns > 4 && numColumns <= 6) && 'space-y-1', numColumns > 6 && 'space-y-0.5'), style: styles }, { children: (_c = (_b = block === null || block === void 0 ? void 0 : block.data) === null || _b === void 0 ? void 0 : _b.innerBlocks) === null || _c === void 0 ? void 0 : _c.map(function (innerBlock, index) { return (0, jsx_runtime_1.jsx)(Block_1.default, { block: innerBlock, parentBlock: block, isNested: true }, index); }) })));
+    return ((0, jsx_runtime_1.jsx)("div", __assign({ className: (0, classNames_1.classNames)('flex flex-col', "col-span-".concat(colSpan), numColumns == 2 && 'space-y-3', (numColumns > 2 && numColumns <= 4) && 'space-y-2', (numColumns > 4 && numColumns <= 6) && 'space-y-1', numColumns > 6 && 'space-y-0.5', classes, className), style: styles, "data-nextwp-column": "true" }, { children: (_c = (_b = block === null || block === void 0 ? void 0 : block.data) === null || _b === void 0 ? void 0 : _b.innerBlocks) === null || _c === void 0 ? void 0 : _c.map(function (innerBlock, index) { return (0, jsx_runtime_1.jsx)(Block_1.default, { block: innerBlock, parentBlock: block, isNested: true }, index); }) })));
 }
 exports.default = Column;

@@ -56,7 +56,7 @@ function setLoggedOut(req, res) {
                         return [2 /*return*/, res.status(401).json({ message: 'Invalid secret token -- pass in a valid secret via a "secret" parameter that matches the secret you supplied as "wpSecret" in your next-wp.config.js file.' })];
                     }
                     (0, cookies_next_1.setCookie)('next-wp-logged-in', 'false', { req: req, res: res });
-                    console.log('log out and redirect back to wp-admin');
+                    // console.log('log out and redirect back to wp-admin')
                     res.writeHead(307, { Location: "".concat(config.wpUrl, "/").concat(config.wpAdminUrl || 'wp-admin') }).end();
                     return [2 /*return*/];
             }
