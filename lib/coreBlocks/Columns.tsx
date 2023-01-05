@@ -34,7 +34,7 @@ export default function Columns({block}) {
         <ConditionalWrapper
             condition={block.isNested == false}
             wrapper={(children) => (
-              <div style={styles}>
+              <div style={styles} data-nextwp-columns="true">
                 <Container
                     className={classNames("py-2", classes)}
                     innerClassName={classNames(

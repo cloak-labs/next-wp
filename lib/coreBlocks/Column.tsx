@@ -39,6 +39,7 @@ export default function Column({block, width, index, numColumns, className}) {
                 className
             )} 
             style={styles}
+            data-nextwp-column="true"
         >
             {block?.data?.innerBlocks?.map((innerBlock, index) => <Block key={index} block={innerBlock} parentBlock={block} isNested={true} /> )}  
         </div>
