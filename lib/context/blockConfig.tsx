@@ -18,7 +18,7 @@ const BlockConfigProvider = ({
     blocks: prevBlocks = {}
   } = useBlockConfig() // grabs next closest block config from higher up the component tree (doesn't necessarily exist)
 
-  const isNewConfig = blocks || container || containerCondition // boolean --> when false (no props provided), we don't bother rendering Context Provider, we just render the children
+  const isNewConfig = blocks || container || container == false || containerCondition // boolean --> when false (no props provided), we don't bother rendering Context Provider, we just render the children
 
   let config = {
     container: container ?? prevContainer,
