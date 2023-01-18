@@ -1,20 +1,25 @@
-import Button from "./Button" 
-import { useBlockStyleBuilder } from "../hooks/useBlockStyleBuilder"
-import { Fragment } from "react"
-import { classNames } from "../utils/classNames"
+import { useBlockStyleBuilder } from "../hooks/useBlockStyleBuilder";
+import { Fragment } from "react";
+import { classNames } from "../utils/classNames";
+import Block from "../Block";
 
-export default function Buttons({block, className}) {
-    const {classes, styles} = useBlockStyleBuilder(block.data)
+export default function Buttons({ block, className }) {
+  const { classes, styles } = useBlockStyleBuilder(block.data);
 
-    console.log('%%% button classes', classes)
-
-    return (
-        <div className={classNames("flex items-start gap-3", classes, className)} style={styles}>
-            {block.data.innerBlocks.map((buttonBlock, i) => (
-                <Fragment key={i}>
-                    <Button block={{data: buttonBlock, parent: block.data, isNested: true}} />
-                </Fragment>
-            ))}
-        </div>
-    )
+  return (
+    <div
+      className={classNames("flex items-start gap-3", classes, className)}
+      style={styles}
+    >
+      {block.data.innerBlocks.map((buttonBlock, i) => (
+        <Fragment key={i}>
+          <Block
+            block={buttonBlock}
+            parentBlock={block.data}
+            isNested={true}
+          />
+        </Fragment>
+      ))}
+    </div>
+  );
 }
