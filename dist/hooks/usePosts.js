@@ -38,6 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.usePosts = void 0;
 var useFetchRestAPI_1 = require("./useFetchRestAPI");
+// TODO: add param that allows you to append custom query parameters (eg. filtering by tags)
 function usePosts(postType) {
     if (postType === void 0) { postType = 'posts'; }
     return __awaiter(this, void 0, void 0, function () {

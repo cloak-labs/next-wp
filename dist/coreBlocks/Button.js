@@ -20,16 +20,16 @@ function ButtonBlock(_a) {
     var config = (0, useGlobalConfig_1.useGlobalConfig)();
     var _b = (0, useBlockStyleBuilder_1.useBlockStyleBuilder)(block.data), classes = _b.classes, styles = _b.styles;
     var _c = block.data.attrs, backgroundColor = _c.backgroundColor, className = _c.className, text = _c.text, url = _c.url;
-    var color = 'blue';
-    if (backgroundColor.includes('green'))
-        color = 'green';
-    else if (backgroundColor == 'blue-900')
-        color = 'navy';
+    var color = 'white';
+    if (backgroundColor == 'gray-900')
+        color = 'black';
+    else if (backgroundColor.includes('gray'))
+        color = 'gray';
     var variant = 'solid';
     if (className.includes('is-style-outline'))
         variant = 'outline';
     if (url.includes(config.wpUrl))
         url = url.replace(config.wpUrl, '/');
-    return (0, jsx_runtime_1.jsx)(Button_1.default, __assign({ href: url, color: color, variant: variant }, { children: text }));
+    return (0, jsx_runtime_1.jsx)(Button_1.default, __assign({ href: url, color: color, variant: variant, wpClasses: classes, style: styles }, { children: text }));
 }
 exports.default = ButtonBlock;
