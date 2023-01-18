@@ -1,12 +1,6 @@
 import { getQueryParamsString } from "../utils/getQueryParamsString";
 import { useFetchRestAPI } from "./useFetchRestAPI";
 
-{
-  '_fields': 'acf'
-}
-
-
-// TODO: add param that allows you to append custom query parameters (eg. filtering by tags)
 export async function usePosts(postType = 'posts', options = {}) {
   let { queryParams = '', postsPerCall = 100 } = options
 
