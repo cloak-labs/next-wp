@@ -7,14 +7,14 @@ export default function ButtonBlock({block}) {
     const {classes, styles} = useBlockStyleBuilder(block.data)
     let { backgroundColor, className, text, url } = block.data.attrs
 
-    let color = 'blue'
-    if(backgroundColor.includes('green')) color = 'green'
-    else if(backgroundColor == 'blue-900') color = 'navy'
+    let color = 'white'
+    if(backgroundColor == 'gray-900') color = 'black'
+    else if(backgroundColor.includes('gray')) color = 'gray'
 
     let variant = 'solid'
     if(className.includes('is-style-outline')) variant = 'outline'
 
     if(url.includes(config.wpUrl)) url = url.replace(config.wpUrl, '/')
 
-    return <Button href={url} color={color} variant={variant}>{text}</Button>
+    return <Button href={url} color={color} variant={variant} wpClasses={classes} style={styles}>{text}</Button>
 }
