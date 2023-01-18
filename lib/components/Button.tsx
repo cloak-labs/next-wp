@@ -25,12 +25,14 @@ const variantStyles = {
 }
 
 export default function Button({
-  color = 'navy',
+  color = 'gray',
   variant = 'solid',
   size = 'reg',
   type = 'button',
   href,
   className,
+  wpClasses,
+  style,
   children,
   ...props
 }) {
@@ -42,6 +44,7 @@ export default function Button({
     size === 'large' && 'text-base px-8 py-3',
     baseStyles[variant],
     variantStyles[variant][color],
+    wpClasses,
     className,
   )
 
@@ -52,6 +55,7 @@ export default function Button({
         <Link
           href={href}
           className={classes}
+          style={style}
           {...props}
         >
           {children}
@@ -60,6 +64,7 @@ export default function Button({
         <button
           type={type}
           className={classes}
+          style={style}
           {...props}
         >
           <span className="w-full">{children}</span>
