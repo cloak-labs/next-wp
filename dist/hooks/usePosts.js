@@ -37,24 +37,27 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.usePosts = void 0;
+var getQueryParamsString_1 = require("../utils/getQueryParamsString");
 var useFetchRestAPI_1 = require("./useFetchRestAPI");
-// TODO: add param that allows you to append custom query parameters (eg. filtering by tags)
-function usePosts(postType) {
+function usePosts(postType, options) {
     if (postType === void 0) { postType = 'posts'; }
+    if (options === void 0) { options = {}; }
     return __awaiter(this, void 0, void 0, function () {
-        var postsPerCall, numCalls, allPosts, posts;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var _a, queryParams, _b, postsPerCall, numCalls, allPosts, endpoint, queryParamsString, posts;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
                 case 0:
-                    postsPerCall = 100;
+                    _a = options.queryParams, queryParams = _a === void 0 ? '' : _a, _b = options.postsPerCall, postsPerCall = _b === void 0 ? 100 : _b;
                     numCalls = 0;
                     allPosts = [];
-                    _a.label = 1;
+                    endpoint = "/".concat(postType, "?per_page=").concat(postsPerCall);
+                    queryParamsString = (0, getQueryParamsString_1.getQueryParamsString)(queryParams, endpoint);
+                    _c.label = 1;
                 case 1:
                     if (!(allPosts.length == (postsPerCall * numCalls))) return [3 /*break*/, 3];
-                    return [4 /*yield*/, (0, useFetchRestAPI_1.useFetchRestAPI)("/".concat(postType, "?per_page=").concat(postsPerCall))];
+                    return [4 /*yield*/, (0, useFetchRestAPI_1.useFetchRestAPI)("".concat(endpoint).concat(queryParamsString))];
                 case 2:
-                    posts = _a.sent();
+                    posts = _c.sent();
                     if (posts && posts.length)
                         allPosts.push.apply(allPosts, posts);
                     else
