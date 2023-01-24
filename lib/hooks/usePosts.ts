@@ -10,7 +10,7 @@ export async function usePosts(postType = 'posts', options = {}) {
   let endpoint = `/${postType}?per_page=${postsPerCall}`
   let queryParamsString = getQueryParamsString(queryParams, endpoint)
   while(allPosts.length == (postsPerCall * numCalls)){ // this loop will finish once a fetch returns less posts than the postsPerCall value
-    let posts = await useFetchRestAPI(`${endpoint}${queryParamsString}`);
+    let posts = await useFetchRestAPI(`${endpoint}&offset=${postsPerCall * numCalls}${queryParamsString}`);
     if(posts && posts.length) allPosts.push(...posts)
     else break
     numCalls++

@@ -55,7 +55,7 @@ function usePosts(postType, options) {
                     _c.label = 1;
                 case 1:
                     if (!(allPosts.length == (postsPerCall * numCalls))) return [3 /*break*/, 3];
-                    return [4 /*yield*/, (0, useFetchRestAPI_1.useFetchRestAPI)("".concat(endpoint).concat(queryParamsString))];
+                    return [4 /*yield*/, (0, useFetchRestAPI_1.useFetchRestAPI)("".concat(endpoint, "&offset=").concat(postsPerCall * numCalls).concat(queryParamsString))];
                 case 2:
                     posts = _c.sent();
                     if (posts && posts.length)
