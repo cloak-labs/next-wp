@@ -1,6 +1,6 @@
 {
   "name": "next-wp",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "description": "An NPM package for integrating WordPress into your NextJS front-end.",
   "main": "dist/index",
   "typings": "dist/next-wp.d.ts",
@@ -35,7 +35,6 @@
     "html-react-parser": "3.x",
     "next": ">= 12.3",
     "react": ">= 17.0.2",
-    "react-dom": ">= 17.0.2",
-    "react-player": "2.x"
+    "react-dom": ">= 17.0.2"
   }
 }
