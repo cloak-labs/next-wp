@@ -59,3 +59,5 @@ var setLoggedIn_1 = require("./api/setLoggedIn");
 Object.defineProperty(exports, "setLoggedIn", { enumerable: true, get: function () { return setLoggedIn_1.default; } });
 var setLoggedOut_1 = require("./api/setLoggedOut");
 Object.defineProperty(exports, "setLoggedOut", { enumerable: true, get: function () { return setLoggedOut_1.default; } });
+// Context
+// export { NextWP } from './context/blockConfig';

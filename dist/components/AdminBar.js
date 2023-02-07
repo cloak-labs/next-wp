@@ -30,20 +30,20 @@ var useGlobalConfig_1 = require("../hooks/useGlobalConfig");
 var icons_1 = require("./icons");
 var classNames_1 = require("../utils/classNames");
 function AdminBar(_a) {
-    var _b;
-    var previewParams = _a.previewParams, isPreview = _a.isPreview, _c = _a.alwaysVisible, alwaysVisible = _c === void 0 ? false : _c, pageData = _a.pageData, className = _a.className, props = __rest(_a, ["previewParams", "isPreview", "alwaysVisible", "pageData", "className"]);
-    var _d = (0, useUser_1.useUser)().isLoggedIn, isLoggedIn = _d === void 0 ? false : _d;
+    var _b, _c;
+    var previewParams = _a.previewParams, isPreview = _a.isPreview, _d = _a.alwaysVisible, alwaysVisible = _d === void 0 ? false : _d, pageData = _a.pageData, className = _a.className, props = __rest(_a, ["previewParams", "isPreview", "alwaysVisible", "pageData", "className"]);
+    var _e = (0, useUser_1.useUser)().isLoggedIn, isLoggedIn = _e === void 0 ? false : _e;
     var config = (0, useGlobalConfig_1.useGlobalConfig)();
-    var href = '/api/exit-preview';
+    var href = "/api/exit-preview";
     if (previewParams)
         href = "/api/exit-preview?slug=".concat(previewParams.postSlug);
-    var status = (_b = {
+    var status = (_c = (_b = {
         publish: 'published',
         draft: 'draft',
         pending: 'pending',
         future: 'scheduled',
         private: 'private'
-    }[pageData === null || pageData === void 0 ? void 0 : pageData.status]) !== null && _b !== void 0 ? _b : pageData === null || pageData === void 0 ? void 0 : pageData.status;
+    }[pageData === null || pageData === void 0 ? void 0 : pageData.status]) !== null && _b !== void 0 ? _b : pageData === null || pageData === void 0 ? void 0 : pageData.status) !== null && _c !== void 0 ? _c : 'revision';
     return ((0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, { children: (alwaysVisible || isLoggedIn) &&
             (0, jsx_runtime_1.jsx)("div", __assign({ id: "next-wp-admin-bar", className: (0, classNames_1.classNames)("w-full h-[38px] flex items-center bg-gray-900 text-gray-200 px-3 lg:px-4 py-1.5", className) }, props, { children: (0, jsx_runtime_1.jsxs)("div", __assign({ className: 'w-full flex gap-x-2 sm:gap-x-6 mb-0 text-sm' }, { children: [(0, jsx_runtime_1.jsxs)("a", __assign({ href: "".concat(config.wpUrl).concat(config.wpAdminUrl || 'wp-admin', "/edit.php"), target: "_blank", className: 'flex items-center' }, { children: [(0, jsx_runtime_1.jsx)(icons_1.HomeIcon, { className: "mr-1.5" }), (0, jsx_runtime_1.jsx)("span", __assign({ className: 'hidden sm:flex' }, { children: "Dashboard" }))] })), pageData &&
                             (0, jsx_runtime_1.jsxs)("a", __assign({ href: "".concat(config.wpUrl).concat(config.wpAdminUrl || 'wp-admin', "/post.php?post=").concat(pageData.id, "&action=edit"), target: "_blank", className: 'flex items-center' }, { children: [(0, jsx_runtime_1.jsx)(icons_1.EditIcon, { className: "mr-1.5" }), "Edit Page"] })), isPreview && ((0, jsx_runtime_1.jsx)(Button_1.default, __assign({ color: 'gray', className: "py-0.5 px-3 ml-auto", href: href, size: "small", openInNewTab: false }, { children: "Exit Preview" }))), pageData &&

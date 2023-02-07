@@ -18,7 +18,7 @@ var classNames_1 = require("../utils/classNames");
 function Column(_a) {
     var _b, _c;
     var block = _a.block, width = _a.width, index = _a.index, numColumns = _a.numColumns, className = _a.className;
-    console.log('** column block: ', block);
+    // console.log('** column block: ', block)
     var _d = (0, useBlockStyleBuilder_1.useBlockStyleBuilder)(block.data), classes = _d.classes, styles = _d.styles;
     var colSpan = 6; // default to 50% if no column width is defined
     if (width) { // given a percentage width, we need to find the closest matching column width from our 12-column grid system (i.e. 50% == col-span-6, and 52% also == col-span-6)

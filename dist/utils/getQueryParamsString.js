@@ -14,7 +14,7 @@ var getQueryParamsString = function (queryParams, url) {
             queryParamsString += "".concat(firstParam ? '?' : (i == 0 && url.endsWith('?') ? '' : '&')).concat(param[0], "=").concat(param[1]);
         });
     }
-    else if (typeof queryParams === 'string') {
+    else if (queryParams && typeof queryParams === 'string') {
         queryParamsString = queryParams;
         if (!url.includes('?')) {
             if (!queryParams.startsWith('?'))

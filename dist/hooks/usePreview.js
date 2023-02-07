@@ -61,21 +61,25 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.usePreview = void 0;
 var useFetchRestAPI_1 = require("./useFetchRestAPI");
 function usePreview(previewParams) {
+    var _a;
     return __awaiter(this, void 0, void 0, function () {
-        var _a, _b, revisionId, postId, postTypeRestEndpoint, rest, data;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
+        var _b, _c, revisionId, postId, postTypeRestEndpoint, rest, data;
+        return __generator(this, function (_d) {
+            switch (_d.label) {
                 case 0:
-                    _a = previewParams.post, _b = _a.revisionId, revisionId = _b === void 0 ? null : _b, postId = _a.postId, postTypeRestEndpoint = _a.postTypeRestEndpoint, rest = __rest(_a, ["revisionId", "postId", "postTypeRestEndpoint"]);
+                    _b = previewParams.post, _c = _b.revisionId, revisionId = _c === void 0 ? null : _c, postId = _b.postId, postTypeRestEndpoint = _b.postTypeRestEndpoint, rest = __rest(_b, ["revisionId", "postId", "postTypeRestEndpoint"]);
                     if (!revisionId) return [3 /*break*/, 2];
                     return [4 /*yield*/, (0, useFetchRestAPI_1.useFetchRestAPI)("/".concat(postTypeRestEndpoint, "/").concat(postId, "/revisions/").concat(revisionId))];
                 case 1:
-                    data = _c.sent();
-                    return [3 /*break*/, 4];
-                case 2: return [4 /*yield*/, (0, useFetchRestAPI_1.useFetchRestAPI)("/".concat(postTypeRestEndpoint, "/").concat(postId))];
+                    data = _d.sent();
+                    _d.label = 2;
+                case 2:
+                    if (!(!revisionId || !data || ((_a = data === null || data === void 0 ? void 0 : data.data) === null || _a === void 0 ? void 0 : _a.status) == 404)) return [3 /*break*/, 4];
+                    return [4 /*yield*/, (0, useFetchRestAPI_1.useFetchRestAPI)("/".concat(postTypeRestEndpoint, "/").concat(postId))];
                 case 3:
-                    data = _c.sent();
-                    _c.label = 4;
+                    data = _d.sent();
+                    console.log('no revision found, falling back to published post data for preview: ', data);
+                    _d.label = 4;
                 case 4: return [2 /*return*/, {
                         data: data,
                         params: __assign({ revisionId: revisionId, postId: postId, postTypeRestEndpoint: postTypeRestEndpoint }, rest)
