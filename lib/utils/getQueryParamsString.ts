@@ -13,7 +13,7 @@ export const getQueryParamsString = (queryParams, url = '') => {
       queryParamsString += `${firstParam ? '?' : (i == 0 && url.endsWith('?') ? '' : '&')}${param[0]}=${param[1]}`
     })
 
-  } else if(typeof queryParams === 'string') {
+  } else if(queryParams && typeof queryParams === 'string') {
 
     queryParamsString = queryParams
     if(!url.includes('?')) {
