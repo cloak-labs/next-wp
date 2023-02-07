@@ -6,7 +6,7 @@ export default function Heading({ block, className, tags }) {
   const { classes, styles } = useBlockStyleBuilder(block.data);
   const { level, content } = block.data.attrs;
 
-  console.log("heading tags: ", tags);
+  // console.log("heading tags: ", tags);
 
   const Tag = {
     1: "h1",
