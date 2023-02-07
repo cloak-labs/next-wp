@@ -17,7 +17,7 @@ export function AdminBar({ previewParams, isPreview, alwaysVisible = false, page
     pending: 'pending',
     future: 'scheduled',
     private: 'private'
-  }[pageData?.status] ?? pageData?.status;
+  }[pageData?.status] ?? pageData?.status ?? 'revision';
 
   return (
     <>
