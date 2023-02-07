@@ -11,7 +11,8 @@ export default function Image({
   quality = 75,
   priority = false,
   placeholder = 'empty',
-  blurDataURL
+  blurDataURL,
+  containerClassName
 }) {
 
   let {classes, styles} = useBlockStyleBuilder(block.data)
@@ -24,12 +25,14 @@ export default function Image({
     maxWidth: '100%'
   }
   
+  // TODO: add containerClassName prop
   return (
     <div
       className={classNames(
         'relative',
         align == 'center' && 'mx-auto',
-        align == 'right' && 'ml-auto'
+        align == 'right' && 'ml-auto',
+        containerClassName
       )}
       style={styles}
     >
