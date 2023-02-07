@@ -6,7 +6,9 @@ export async function usePreview(previewParams) {
   let data
   if(revisionId){
     data = await useFetchRestAPI(`/${postTypeRestEndpoint}/${postId}/revisions/${revisionId}`);
-  }else{
+  }
+  
+  if(!revisionId || !data || data?.data?.status == 404) { // sometimes someone is previewing a post with no revisions, so we just show them the published data:
     data = await useFetchRestAPI(`/${postTypeRestEndpoint}/${postId}`);
   }
 
