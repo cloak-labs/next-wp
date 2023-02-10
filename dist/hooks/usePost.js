@@ -51,7 +51,6 @@ function usePost(_a) {
                     else
                         endpoint = (slug && slug != '/') ? "/".concat(postType, "?slug=").concat(slug) : "/frontpage";
                     queryParamsString = (0, getQueryParamsString_1.getQueryParamsString)(queryParams, endpoint);
-                    console.log("usePost endpoint: ".concat(endpoint).concat(queryParamsString));
                     return [4 /*yield*/, (0, useFetchRestAPI_1.useFetchRestAPI)("".concat(endpoint).concat(queryParamsString))];
                 case 1:
                     data = _d.sent();

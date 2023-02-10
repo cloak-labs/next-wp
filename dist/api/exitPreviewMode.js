@@ -41,8 +41,6 @@ function exitPreviewMode(req, res) {
         var slug;
         return __generator(this, function (_a) {
             slug = req.query.slug;
-            console.log('exitPreviewMode req.query: ', req.query);
-            console.log('exitPreviewMode slug: ', slug);
             /* Exit the current user from "Preview Mode".
                Note: we pass in an options object with path == the path of the page we were previewing.
                     This is required when setting options.path inside setPreviewData() -- like we're

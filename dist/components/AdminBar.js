@@ -34,7 +34,7 @@ function AdminBar(_a) {
     var previewParams = _a.previewParams, isPreview = _a.isPreview, _d = _a.alwaysVisible, alwaysVisible = _d === void 0 ? false : _d, pageData = _a.pageData, className = _a.className, props = __rest(_a, ["previewParams", "isPreview", "alwaysVisible", "pageData", "className"]);
     var _e = (0, useUser_1.useUser)().isLoggedIn, isLoggedIn = _e === void 0 ? false : _e;
     var config = (0, useGlobalConfig_1.useGlobalConfig)();
-    var href = "/api/exit-preview";
+    var href = '/api/exit-preview';
     if (previewParams)
         href = "/api/exit-preview?slug=".concat(previewParams.postSlug);
     var status = (_c = (_b = {

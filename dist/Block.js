@@ -23,12 +23,24 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var jsx_runtime_1 = require("react/jsx-runtime");
-var coreBlocks_1 = require("./coreBlocks");
-var Container_1 = require("./components/Container");
-var ConditionalWrapper_1 = require("./components/ConditionalWrapper");
+var dynamic_1 = require("next/dynamic");
 var classNames_1 = require("./utils/classNames");
 var deepMerge_1 = require("./utils/deepMerge");
 var useBlockConfig_1 = require("./hooks/useBlockConfig");
+var Heading = (0, dynamic_1.default)(function () { return Promise.resolve().then(function () { return require('./components/coreBlocks/Heading'); }); });
+var Paragraph = (0, dynamic_1.default)(function () { return Promise.resolve().then(function () { return require('./components/coreBlocks/Paragraph'); }); });
+var Columns = (0, dynamic_1.default)(function () { return Promise.resolve().then(function () { return require('./components/coreBlocks/Columns'); }); });
+var Column = (0, dynamic_1.default)(function () { return Promise.resolve().then(function () { return require('./components/coreBlocks/Column'); }); });
+var Group = (0, dynamic_1.default)(function () { return Promise.resolve().then(function () { return require('./components/coreBlocks/Group'); }); });
+var List = (0, dynamic_1.default)(function () { return Promise.resolve().then(function () { return require('./components/coreBlocks/List'); }); });
+var ListItem = (0, dynamic_1.default)(function () { return Promise.resolve().then(function () { return require('./components/coreBlocks/ListItem'); }); });
+var Buttons = (0, dynamic_1.default)(function () { return Promise.resolve().then(function () { return require('./components/coreBlocks/Buttons'); }); });
+var Button = (0, dynamic_1.default)(function () { return Promise.resolve().then(function () { return require('./components/coreBlocks/Button'); }); });
+var Image = (0, dynamic_1.default)(function () { return Promise.resolve().then(function () { return require('./components/coreBlocks/Image'); }); });
+var Html = (0, dynamic_1.default)(function () { return Promise.resolve().then(function () { return require('./components/coreBlocks/Html'); }); });
+var Embed = (0, dynamic_1.default)(function () { return Promise.resolve().then(function () { return require('./components/coreBlocks/Embed'); }); });
+var Container = (0, dynamic_1.default)(function () { return Promise.resolve().then(function () { return require('./components/coreBlocks/Container'); }); });
+var ConditionalWrapper = (0, dynamic_1.default)(function () { return Promise.resolve().then(function () { return require('./components/coreBlocks/ConditionalWrapper'); }); });
 function Block(_a) {
     var _b, _c, _d, _e;
     var block = _a.block, 
@@ -43,7 +55,7 @@ function Block(_a) {
     var _h = (0, useBlockConfig_1.useBlockConfig)(), globalCustomContainer = _h.container, globalCustomContainerCondition = _h.containerCondition, blockConfig = _h.blocks;
     var SmallContainer = function (_a) {
         var block = _a.block;
-        return (0, jsx_runtime_1.jsx)(Container_1.default, __assign({ innerClassName: (0, classNames_1.classNames)("max-w-3xl lg:max-w-4xl", block.config.containerClasses) }, { children: block.rendered }));
+        return (0, jsx_runtime_1.jsx)(Container, __assign({ innerClassName: (0, classNames_1.classNames)("max-w-3xl lg:max-w-4xl", block.config.containerClasses) }, { children: block.rendered }));
     };
     /*
       next-wp provides simple/sensible defaults for core block components, the block container,
@@ -53,7 +65,7 @@ function Block(_a) {
     var defaults = {
         container: function (_a) {
             var block = _a.block;
-            return (0, jsx_runtime_1.jsx)(Container_1.default, __assign({ className: (0, classNames_1.classNames)("relative", block.config.containerClasses) }, { children: block.rendered }));
+            return (0, jsx_runtime_1.jsx)(Container, __assign({ className: (0, classNames_1.classNames)("relative", block.config.containerClasses) }, { children: block.rendered }));
         },
         containerCondition: function (_a) {
             var block = _a.block;
@@ -61,57 +73,57 @@ function Block(_a) {
         },
         blocks: {
             'core/paragraph': {
-                component: coreBlocks_1.Paragraph,
+                component: Paragraph,
                 container: SmallContainer,
                 containerClasses: 'py-2',
             },
             'core/heading': {
-                component: coreBlocks_1.Heading,
+                component: Heading,
                 container: SmallContainer,
                 containerClasses: 'py-2',
             },
             'core/image': {
-                component: coreBlocks_1.Image,
+                component: Image,
                 container: SmallContainer,
                 containerClasses: 'py-2',
             },
             'core/embed': {
-                component: coreBlocks_1.Embed,
+                component: Embed,
                 container: SmallContainer,
                 containerClasses: 'py-2',
             },
             'core/html': {
-                component: coreBlocks_1.Html,
+                component: Html,
                 container: true,
                 containerClasses: 'py-2',
             },
             'core/columns': {
-                component: coreBlocks_1.Columns,
+                component: Columns,
                 container: false,
             },
             'core/column': {
-                component: coreBlocks_1.Column,
+                component: Column,
                 container: false,
             },
             'core/group': {
-                component: coreBlocks_1.Group,
+                component: Group,
                 container: false,
             },
             'core/list': {
-                component: coreBlocks_1.List,
+                component: List,
                 container: SmallContainer,
             },
             'core/list-item': {
-                component: coreBlocks_1.ListItem,
+                component: ListItem,
                 container: false,
             },
             'core/buttons': {
-                component: coreBlocks_1.Buttons,
+                component: Buttons,
                 container: SmallContainer,
                 containerClasses: 'py-2'
             },
             'core/button': {
-                component: coreBlocks_1.Button,
+                component: Button,
                 container: true,
             },
         }
@@ -163,6 +175,6 @@ function Block(_a) {
         prevSibling: prevSibling,
         nextSibling: nextSibling,
     };
-    return ((0, jsx_runtime_1.jsx)(ConditionalWrapper_1.default, __assign({ condition: function () { return containerEnabled ? finalContainerCondition === null || finalContainerCondition === void 0 ? void 0 : finalContainerCondition({ block: blockObj, finalProps: finalProps }) : false; }, wrapper: function (children) { return finalContainer === null || finalContainer === void 0 ? void 0 : finalContainer({ block: __assign(__assign({}, blockObj), { rendered: children }), finalProps: finalProps }); } }, { children: (0, jsx_runtime_1.jsx)(Component, __assign({ block: blockObj }, finalProps)) })));
+    return ((0, jsx_runtime_1.jsx)(ConditionalWrapper, __assign({ condition: function () { return containerEnabled ? finalContainerCondition === null || finalContainerCondition === void 0 ? void 0 : finalContainerCondition({ block: blockObj, finalProps: finalProps }) : false; }, wrapper: function (children) { return finalContainer === null || finalContainer === void 0 ? void 0 : finalContainer({ block: __assign(__assign({}, blockObj), { rendered: children }), finalProps: finalProps }); } }, { children: (0, jsx_runtime_1.jsx)(Component, __assign({ block: blockObj }, finalProps)) })));
 }
 exports.default = Block;
