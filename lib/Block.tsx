@@ -1,22 +1,23 @@
-import {
-	Heading,
-	Paragraph,
-	Columns,
-  Column,
-	Group,
-	List,
-  ListItem,
-	Buttons,
-  Button,
-	Image,
-  Html,
-	Embed,
-} from './coreBlocks'
-import Container from './components/Container'
-import ConditionalWrapper from './components/ConditionalWrapper'
+import dynamic from 'next/dynamic'
+
 import { classNames } from './utils/classNames'
 import { deepMerge } from './utils/deepMerge'
 import { useBlockConfig } from './hooks/useBlockConfig'
+
+const Heading = dynamic(() => import('./components/coreBlocks/Heading'))
+const Paragraph = dynamic(() => import('./components/coreBlocks/Paragraph'))
+const Columns = dynamic(() => import('./components/coreBlocks/Columns'))
+const Column = dynamic(() => import('./components/coreBlocks/Column'))
+const Group = dynamic(() => import('./components/coreBlocks/Group'))
+const List = dynamic(() => import('./components/coreBlocks/List'))
+const ListItem = dynamic(() => import('./components/coreBlocks/ListItem'))
+const Buttons = dynamic(() => import('./components/coreBlocks/Buttons'))
+const Button = dynamic(() => import('./components/coreBlocks/Button'))
+const Image = dynamic(() => import('./components/coreBlocks/Image'))
+const Html = dynamic(() => import('./components/coreBlocks/Html'))
+const Embed = dynamic(() => import('./components/coreBlocks/Embed'))
+const Container = dynamic(() => import('./components/coreBlocks/Container'))
+const ConditionalWrapper = dynamic(() => import('./components/coreBlocks/ConditionalWrapper'))
 
 export default function Block({
 	block,
