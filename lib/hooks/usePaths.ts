@@ -6,7 +6,7 @@ export async function usePaths(postType = 'pages', prependSlug = false) {
     let home
     if(postType == 'pages') home = await useFetchRestAPI('/frontpage')
 
-    const posts = await usePosts(postType);
+    const posts = await usePosts(postType, {queryParams: {_fields: 'slug'}});
 
     const prepend = prependSlug ? (
         typeof prependSlug == "boolean" ? `/${postType}` : `/${prependSlug}` // you can either set prependSlug to true/false or a custom string -- if true, we'll use the postType string as the prepend string
