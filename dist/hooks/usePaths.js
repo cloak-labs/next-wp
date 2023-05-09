@@ -52,7 +52,7 @@ function usePaths(postType, prependSlug) {
                 case 1:
                     home = _a.sent();
                     _a.label = 2;
-                case 2: return [4 /*yield*/, (0, usePosts_1.usePosts)(postType)];
+                case 2: return [4 /*yield*/, (0, usePosts_1.usePosts)(postType, { queryParams: { _fields: 'slug' } })];
                 case 3:
                     posts = _a.sent();
                     prepend = prependSlug ? (typeof prependSlug == "boolean" ? "/".concat(postType) : "/".concat(prependSlug) // you can either set prependSlug to true/false or a custom string -- if true, we'll use the postType string as the prepend string

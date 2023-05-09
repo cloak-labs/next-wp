@@ -78,7 +78,6 @@ function usePreview(previewParams) {
                     return [4 /*yield*/, (0, useFetchRestAPI_1.useFetchRestAPI)("/".concat(postTypeRestEndpoint, "/").concat(postId))];
                 case 3:
                     data = _d.sent();
-                    console.log('no revision found, falling back to published post data for preview: ', data);
                     _d.label = 4;
                 case 4: return [2 /*return*/, {
                         data: data,

@@ -77,7 +77,6 @@ convertToRelativeURLs // when true, we search/replace all WordPress admin URLs f
                     url = config.wpUrl;
                     if (url.slice(-1) != "/")
                         url += '/'; // add trailing slash if missing
-                    console.log("fetch from: ".concat(url, "wp-json/wp/v2").concat(endpoint).concat(embedParam));
                     return [4 /*yield*/, fetch("".concat(url, "wp-json/wp/v2").concat(endpoint).concat(embedParam), {
                             headers: headers,
                             method: 'GET',
