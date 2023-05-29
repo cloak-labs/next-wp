@@ -1,15 +1,17 @@
 import { classNames } from "../utils/classNames";
 
 export function useBlockStyleBuilder(block) {
-  const backgroundColor = block.attrs.backgroundColor ?? "";
-  const textColor = block.attrs.textColor ?? "";
-  const className = block.attrs.className ?? "";
-  const fontSize = block.attrs.fontSize ?? "";
-  const align = block.attrs.align ?? "";
-  const textAlign = block.attrs.textAlign ?? "";
-  const style = block.attrs.style ?? {};
-  const verticalAlignment = block.attrs.verticalAlignment ?? "";
-  const layout = block.attrs.layout ?? null;
+  const {
+    backgroundColor = '',
+    textColor = '',
+    className = '',
+    fontSize = '',
+    align = '',
+    textAlign = '',
+    style = {},
+    verticalAlignment = '',
+    layout = null,
+  } = block.attrs;
 
   const layoutKeyword = layout?.orientation == "horizontal" || layout?.type == "flex" ? "justify" : "items";
 
