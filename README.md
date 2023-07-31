@@ -1,3 +1,5 @@
+This package has been revamped and relaunched as [CloakWP.js](https://github.com/cloak-labs/cloakwp-js). Go there.
+
 # next-wp
 An NPM package for integrating WordPress into your NextJS front-end.
 
